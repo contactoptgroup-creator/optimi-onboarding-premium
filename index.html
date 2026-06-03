@@ -80,9 +80,9 @@
       inset: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      padding: 80px 60px 90px;
+      padding: 60px 40px 80px;
       text-align: center;
       opacity: 0;
       pointer-events: none;
@@ -90,6 +90,39 @@
                   transform .5s cubic-bezier(0.2, 0.8, 0.2, 1);
       transform: translateY(30px) scale(0.98);
       overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: border-box;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Centrer verticalement le contenu quand il tient dans la slide */
+    .slide > *:first-child {
+      margin-top: auto;
+    }
+    .slide > *:last-child {
+      margin-bottom: auto;
+    }
+
+    /* S'assurer que les éléments ne débordent jamais */
+    .slide > * {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Conteneur de contenu pour un meilleur cadrage */
+    .slide-content {
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Wrapper pour les tables et éléments larges */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .slide.active {
       opacity: 1;
@@ -161,7 +194,7 @@
       font-size: clamp(14px, 1.8vw, 20px);
       font-weight: 400;
       line-height: 1.7;
-      max-width: 720px;
+      max-width: min(720px, calc(100vw - 60px));
       color: var(--text-muted);
     }
     .t-label {
@@ -275,7 +308,7 @@
 
     .data-table {
       width: 100%;
-      max-width: 920px;
+      max-width: min(920px, calc(100vw - 80px));
       border-collapse: separate;
       border-spacing: 0;
       background: var(--bg-2);
@@ -283,6 +316,7 @@
       border-radius: 16px;
       overflow: hidden;
       font-size: 13px;
+      table-layout: auto;
     }
     .data-table th {
       background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
@@ -320,7 +354,7 @@
       display: flex;
       flex-direction: column;
       gap: 0;
-      max-width: 700px;
+      max-width: min(700px, calc(100vw - 60px));
       width: 100%;
     }
     .timeline-item {
@@ -419,7 +453,7 @@
     }
 
     .services-section {
-      max-width: 900px;
+      max-width: min(900px, calc(100vw - 60px));
       width: 100%;
     }
     .services-category {
@@ -482,7 +516,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      max-width: 800px;
+      max-width: min(800px, calc(100vw - 60px));
       width: 100%;
     }
     .resource-card {
@@ -524,7 +558,7 @@
     }
 
     .info-section {
-      max-width: 800px;
+      max-width: min(800px, calc(100vw - 60px));
       width: 100%;
     }
     .info-category {
@@ -617,7 +651,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      max-width: 800px;
+      max-width: min(800px, calc(100vw - 60px));
       width: 100%;
     }
     .toc-item {
@@ -810,22 +844,47 @@
       border-radius: 100px;
     }
 
+    @media (max-width: 1200px) {
+      .slide { padding: 50px 30px 70px; }
+      .data-table { font-size: 12px; }
+      .stat-card { padding: 30px 36px; }
+    }
     @media (max-width: 900px) {
+      .slide { padding: 45px 25px 65px; }
       .services-grid, .resources-grid, .info-grid, .recap-grid { grid-template-columns: 1fr; }
       .toc-grid { grid-template-columns: repeat(2, 1fr); }
+      .data-table { font-size: 11px; max-width: 100%; }
+      .data-table th, .data-table td { padding: 8px 6px; }
+      .stat-card { padding: 24px 28px; }
+      .stat-card .value { font-size: clamp(36px, 8vw, 60px); }
+      .timeline { max-width: 100%; }
     }
     @media (max-width: 640px) {
-      .slide { padding: 60px 20px 80px; }
+      .slide { padding: 40px 16px 60px; }
       .toc-grid { grid-template-columns: 1fr; }
       .timeline-item { flex-wrap: wrap; }
       .timeline-status { margin-left: 64px; margin-top: 8px; }
+      .data-table th, .data-table td { padding: 6px 4px; font-size: 10px; }
+      .stat-card { padding: 20px 24px; }
+      .stat-card .value { font-size: clamp(32px, 10vw, 48px); }
+      .t-hero { font-size: clamp(32px, 10vw, 60px); }
+      .t-h1 { font-size: clamp(24px, 6vw, 42px); }
+      .t-h2 { font-size: clamp(20px, 5vw, 32px); }
+      .t-body { font-size: clamp(13px, 3.5vw, 16px); }
+    }
+    @media (max-width: 480px) {
+      .slide { padding: 35px 12px 55px; }
+      .badge { padding: 6px 12px; font-size: 10px; }
+      .timeline-num { width: 36px; height: 36px; font-size: 11px; }
+      .timeline-title { font-size: 13px; }
+      .timeline-desc { font-size: 11px; }
     }
 
     /* ═══════════════════════════════════════════════════════════════
        STYLES FORMULAIRES SUPABASE
     ═══════════════════════════════════════════════════════════════ */
     .form-section {
-      max-width: 800px;
+      max-width: min(800px, calc(100vw - 60px));
       width: 100%;
     }
     .form-category {
@@ -1381,7 +1440,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      max-width: 900px;
+      max-width: min(900px, calc(100vw - 60px));
       width: 100%;
     }
     .testimonial-card {
@@ -1472,7 +1531,7 @@
 
     /* Recap section */
     .recap-section {
-      max-width: 800px;
+      max-width: min(800px, calc(100vw - 60px));
       width: 100%;
     }
     .recap-category {
