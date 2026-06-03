@@ -2835,21 +2835,42 @@
           await loadFormFromSupabase();
         } else {
           // Créer un nouveau client
-          const { data: newClient } = await supabaseClient
+          const { data: newClient, error: insertError } = await supabaseClient
             .from('onboarding_clients')
             .insert({
               client_slug: CLIENT_SLUG,
               client_name: name,
+              client_email: email,
+              client_phone: phone,
               commission_rate: 20
             })
             .select('id')
             .single();
 
+          if (insertError) {
+            console.error('Erreur création client:', insertError);
+          }
+
           if (newClient) {
             CLIENT_ID = newClient.id;
+
+            // Sauvegarder les coordonnées dans onboarding_info
+            const { error: infoError } = await supabaseClient
+              .from('onboarding_info')
+              .insert({
+                client_id: CLIENT_ID,
+                full_name: name,
+                email: email,
+                phone: phone
+              });
+
+            if (infoError) {
+              console.error('Erreur sauvegarde coordonnées:', infoError);
+            }
           }
         }
       } catch (e) {
+        console.error('Erreur Supabase:', e);
         console.log('Mode hors-ligne, utilisation localStorage');
       }
     }

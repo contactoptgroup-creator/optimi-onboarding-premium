@@ -13,11 +13,17 @@ CREATE TABLE IF NOT EXISTS onboarding_clients (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     client_slug TEXT UNIQUE NOT NULL,
     client_name TEXT,
+    client_email TEXT,
+    client_phone TEXT,
     commission_rate NUMERIC DEFAULT 20,
     access_token TEXT DEFAULT encode(gen_random_bytes(32), 'hex'),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ajouter les colonnes email et phone si elles n'existent pas (migration)
+ALTER TABLE onboarding_clients ADD COLUMN IF NOT EXISTS client_email TEXT;
+ALTER TABLE onboarding_clients ADD COLUMN IF NOT EXISTS client_phone TEXT;
 
 -- Table de progression
 CREATE TABLE IF NOT EXISTS onboarding_progress (
