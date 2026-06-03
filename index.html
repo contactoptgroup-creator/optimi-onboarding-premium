@@ -2689,6 +2689,138 @@
   document.body.classList.add('verification-mode');
 
   // ═══════════════════════════════════════════════════════════════
+  // FONCTIONS DE VERIFICATION
+  // ═══════════════════════════════════════════════════════════════
+
+  // Valider l'email
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // Valider le téléphone (format français)
+  function isValidPhone(phone) {
+    const cleaned = phone.replace(/\s/g, '');
+    return /^(0|\+33)[1-9][0-9]{8}$/.test(cleaned);
+  }
+
+  // Fonction principale de vérification et passage aux slides
+  async function verifyAndContinue() {
+    const emailInput = document.getElementById('verifyEmail');
+    const phoneInput = document.getElementById('verifyPhone');
+    const nameInput = document.getElementById('verifyName');
+
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const name = nameInput.value.trim();
+
+    // Reset des erreurs
+    document.getElementById('emailGroup').classList.remove('error');
+    document.getElementById('phoneGroup').classList.remove('error');
+    document.getElementById('nameGroup').classList.remove('error');
+
+    let hasError = false;
+
+    // Validation
+    if (!isValidEmail(email)) {
+      document.getElementById('emailGroup').classList.add('error');
+      hasError = true;
+    }
+
+    if (!isValidPhone(phone)) {
+      document.getElementById('phoneGroup').classList.add('error');
+      hasError = true;
+    }
+
+    if (!name || name.length < 2) {
+      document.getElementById('nameGroup').classList.add('error');
+      hasError = true;
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    // Sauvegarder les infos client
+    CLIENT_EMAIL = email;
+    CLIENT_PHONE = phone;
+    CLIENT_NAME = name;
+    CLIENT_SLUG = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '-');
+    VERIFICATION_PASSED = true;
+
+    // Créer/charger le client dans Supabase
+    if (supabaseClient) {
+      try {
+        // Chercher si le client existe déjà
+        const { data: existingClient } = await supabaseClient
+          .from('onboarding_clients')
+          .select('id, client_name')
+          .eq('client_slug', CLIENT_SLUG)
+          .single();
+
+        if (existingClient) {
+          CLIENT_ID = existingClient.id;
+          // Charger les données existantes
+          await loadStatusesFromSupabase();
+          await loadFormFromSupabase();
+        } else {
+          // Créer un nouveau client
+          const { data: newClient } = await supabaseClient
+            .from('onboarding_clients')
+            .insert({
+              client_slug: CLIENT_SLUG,
+              client_name: name,
+              commission_rate: 20
+            })
+            .select('id')
+            .single();
+
+          if (newClient) {
+            CLIENT_ID = newClient.id;
+          }
+        }
+      } catch (e) {
+        console.log('Mode hors-ligne, utilisation localStorage');
+      }
+    }
+
+    // Mettre à jour l'affichage du nom
+    updateClientNameDisplay(name);
+
+    // IMPORTANT: Cacher la slide de vérification et afficher la première slide
+    const verificationSlide = document.getElementById('verificationSlide');
+    verificationSlide.classList.remove('active');
+    verificationSlide.style.display = 'none';
+
+    // Retirer le mode vérification du body
+    document.body.classList.remove('verification-mode');
+
+    // Activer la première slide (Hero)
+    const firstSlide = document.querySelector('.slide:not(.verification-slide)');
+    if (firstSlide) {
+      firstSlide.classList.add('active');
+    }
+
+    // Mettre à jour la navigation
+    updateRoadmapProgress();
+    updateFormProgress();
+    updateAllCategoryProgress();
+    updateRecap();
+
+    showToast('Bienvenue ' + name + ' !', 'success');
+  }
+
+  // Fonction pour permettre la modification après onboarding complété
+  function allowModification() {
+    document.getElementById('alreadyCompleted').style.display = 'none';
+    document.getElementById('verificationForm').style.display = 'block';
+
+    // Pré-remplir avec les anciennes valeurs si disponibles
+    if (CLIENT_EMAIL) document.getElementById('verifyEmail').value = CLIENT_EMAIL;
+    if (CLIENT_PHONE) document.getElementById('verifyPhone').value = CLIENT_PHONE;
+    if (CLIENT_NAME) document.getElementById('verifyName').value = CLIENT_NAME;
+  }
+
+  // ═══════════════════════════════════════════════════════════════
   // NAVIGATION DES SLIDES
   // ═══════════════════════════════════════════════════════════════
   const allSlides = document.querySelectorAll('.slide');
