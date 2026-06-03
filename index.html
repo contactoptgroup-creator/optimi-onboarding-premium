@@ -2857,9 +2857,23 @@
       console.log('goTo: valeur hors limites, annulé');
       return;
     }
-    slides[cur].classList.remove('active');
+
+    // IMPORTANT: Retirer 'active' de TOUTES les slides (pas juste la courante)
+    slides.forEach(slide => {
+      slide.classList.remove('active');
+      slide.style.opacity = '0';
+      slide.style.pointerEvents = 'none';
+      slide.style.zIndex = '1';
+    });
+
     cur = n;
+
+    // Activer uniquement la slide cible
     slides[cur].classList.add('active');
+    slides[cur].style.opacity = '1';
+    slides[cur].style.pointerEvents = 'all';
+    slides[cur].style.zIndex = '10';
+
     document.getElementById('progressBar').style.width = ((cur + 1) / total * 100) + '%';
     document.getElementById('counter').textContent = `${cur + 1} / ${total}`;
     document.getElementById('btnPrev').style.opacity = cur === 0 ? '0.3' : '1';
