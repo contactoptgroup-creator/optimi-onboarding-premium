@@ -1734,7 +1734,11 @@
   document.getElementById('counter').textContent = `1 / ${total}`;
 
   function goTo(n) {
-    if (n < 0 || n >= total) return;
+    console.log('goTo appelé avec n =', n, '| cur =', cur, '| total =', total);
+    if (n < 0 || n >= total) {
+      console.log('goTo: valeur hors limites, annulé');
+      return;
+    }
     slides[cur].classList.remove('active');
     cur = n;
     slides[cur].classList.add('active');
@@ -1742,10 +1746,11 @@
     document.getElementById('counter').textContent = `${cur + 1} / ${total}`;
     document.getElementById('btnPrev').style.opacity = cur === 0 ? '0.3' : '1';
     document.getElementById('btnNext').style.opacity = cur === total - 1 ? '0.3' : '1';
+    console.log('goTo: navigation réussie vers slide', cur + 1);
   }
 
-  function next() { goTo(cur + 1); }
-  function prev() { goTo(cur - 1); }
+  function next() { console.log('next() appelé'); goTo(cur + 1); }
+  function prev() { console.log('prev() appelé'); goTo(cur - 1); }
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
