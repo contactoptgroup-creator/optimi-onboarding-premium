@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OPTIMI GROUP — Onboarding Premium Conciergerie</title>
-  <!-- v2 -->
+  <!-- v3 - Enhanced UX -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1299,6 +1299,329 @@
       .form-grid { grid-template-columns: 1fr; }
       .form-item.full-width { grid-column: span 1; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       NOUVELLES FONCTIONNALITES UX - V3
+    ═══════════════════════════════════════════════════════════════ */
+
+    /* Contact dédié card */
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.02) 100%);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 16px;
+      padding: 16px 24px;
+      margin-top: 24px;
+      max-width: 400px;
+    }
+    .contact-card .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: #000;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .contact-card .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .contact-card .info {
+      flex: 1;
+      text-align: left;
+    }
+    .contact-card .info .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .contact-card .info .name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .contact-card .info .role {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .contact-card .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #25D366;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .contact-card .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 900px;
+      width: 100%;
+    }
+    .testimonial-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 1;
+    }
+    .testimonial-card .quote {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .testimonial-card .author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .testimonial-card .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .testimonial-card .author-info .author-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .testimonial-card .author-info .author-location {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .testimonial-card .result {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 10px;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green-2);
+    }
+    @media (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Time estimate badge */
+    .time-estimate {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(37,99,235,0.1);
+      border: 1px solid rgba(37,99,235,0.25);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-2);
+      margin-bottom: 16px;
+    }
+    .time-estimate::before {
+      content: '⏱';
+    }
+
+    /* Recap section */
+    .recap-section {
+      max-width: 800px;
+      width: 100%;
+    }
+    .recap-category {
+      margin-bottom: 20px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .recap-category-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-2);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .recap-category-title::before {
+      content: '✓';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--green);
+      border-radius: 50%;
+      font-size: 10px;
+      color: #000;
+    }
+    .recap-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .recap-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--bg-3);
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .recap-item .label {
+      color: var(--text-muted);
+    }
+    .recap-item .value {
+      color: var(--text);
+      font-weight: 600;
+      text-align: right;
+      max-width: 60%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .recap-item .value.missing {
+      color: var(--orange);
+      font-style: italic;
+    }
+    .recap-item.file .value {
+      color: var(--green-2);
+    }
+    @media (max-width: 640px) {
+      .recap-list { grid-template-columns: 1fr; }
+    }
+
+    /* Next steps card */
+    .next-steps {
+      max-width: 600px;
+      width: 100%;
+    }
+    .next-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .next-step-item:last-child {
+      border-bottom: none;
+    }
+    .next-step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .next-step-content {
+      flex: 1;
+    }
+    .next-step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .next-step-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .next-step-timing {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    /* Calendly button */
+    .calendly-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+      margin-top: 24px;
+    }
+    .calendly-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37,99,235,0.4);
+    }
+    .calendly-btn::before {
+      content: '📅';
+      font-size: 18px;
+    }
+
+    /* Client name highlight */
+    .client-name {
+      color: var(--gold);
+    }
   </style>
 </head>
 <body>
@@ -1327,7 +1650,7 @@
       OPTIMI GROUP
     </h1>
     <p class="t-h3 anim" style="color:var(--text-muted); font-weight:600; margin-bottom:28px;">
-      Bienvenue dans votre Onboarding
+      Bienvenue <span class="client-name" id="clientNameHero">dans votre Onboarding</span>
     </p>
     <p class="t-body anim" style="margin-bottom:32px;">
       Nous sommes ravis de vous accompagner dans la mise en valeur de votre bien.
@@ -1335,6 +1658,20 @@
     <div class="anim" style="display:flex; flex-direction:column; align-items:center; gap:8px;">
       <span style="font-size:14px; color:var(--green-2); font-weight:600;">Commission tout inclus : 20%</span>
     </div>
+
+    <!-- Contact dédié -->
+    <div class="contact-card anim">
+      <div class="avatar" id="contactAvatar">JM</div>
+      <div class="info">
+        <div class="label">Votre contact dedie</div>
+        <div class="name" id="contactName">Jean-Marc Taouo</div>
+        <div class="role">Directeur de la conciergerie</div>
+      </div>
+      <a href="https://wa.me/33600000000" target="_blank" class="whatsapp-btn" id="whatsappLink" title="Contacter sur WhatsApp">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+
     <a href="https://www.optimi-group.com/" target="_blank" class="anim" style="margin-top:24px; font-size:18px; color:var(--gold); text-decoration:none; font-weight:600;">www.optimi-group.com</a>
   </div>
 
@@ -1555,7 +1892,54 @@
     </p>
   </div>
 
-  <!-- SLIDE 8 — RESSOURCES -->
+  <!-- SLIDE 8 — TEMOIGNAGES -->
+  <div class="slide">
+    <div class="slide-tag">Temoignages</div>
+    <div class="badge anim">Ce que disent nos proprietaires</div>
+    <h2 class="t-h2 anim" style="margin-bottom:28px;">
+      Ils nous font <span class="gradient-text">confiance</span>
+    </h2>
+    <div class="testimonials-grid anim">
+      <div class="testimonial-card">
+        <div class="quote">En 2 semaines mon appartement etait en ligne avec des photos professionnelles. Deja 3 reservations le premier mois !</div>
+        <div class="author">
+          <div class="author-avatar">SM</div>
+          <div class="author-info">
+            <div class="author-name">Sophie M.</div>
+            <div class="author-location">Paris 11e</div>
+          </div>
+        </div>
+        <div class="result">+42% de revenus</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote">Le suivi est impeccable. Je recois mon rapport mensuel et je n'ai plus a m'occuper de rien. Un vrai confort.</div>
+        <div class="author">
+          <div class="author-avatar">PD</div>
+          <div class="author-info">
+            <div class="author-name">Philippe D.</div>
+            <div class="author-location">Paris 15e</div>
+          </div>
+        </div>
+        <div class="result">+35% de revenus</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote">L'equipe est tres reactive. Un probleme de plomberie a ete gere en 2h un dimanche. Tres professionnel.</div>
+        <div class="author">
+          <div class="author-avatar">ML</div>
+          <div class="author-info">
+            <div class="author-name">Marie L.</div>
+            <div class="author-location">Paris 9e</div>
+          </div>
+        </div>
+        <div class="result">+28% de revenus</div>
+      </div>
+    </div>
+    <p class="anim" style="font-size:12px; color:var(--text-dim); margin-top:24px;">
+      Moyennes constatees sur nos proprietaires actifs depuis plus de 6 mois
+    </p>
+  </div>
+
+  <!-- SLIDE 9 — RESSOURCES -->
   <div class="slide">
     <div class="slide-tag">Ressources</div>
     <div class="badge badge-purple anim">Vos ressources & documents</div>
@@ -1596,8 +1980,8 @@
       <div class="resource-card">
         <div class="num">06</div>
         <div class="title">Apercu Dashboard</div>
-        <div class="desc">Decouvrez l'interface de suivi de vos performances</div>
-        <span class="link">Lien a venir</span>
+        <div class="desc">Acces fourni apres la mise en ligne de votre bien</div>
+        <span class="link" style="color:var(--text-dim);">Disponible J+10</span>
       </div>
       <div class="resource-card">
         <div class="num">07</div>
@@ -1608,13 +1992,14 @@
     </div>
   </div>
 
-  <!-- SLIDE 9 — FORMULAIRE INFORMATIONS -->
+  <!-- SLIDE 10 — FORMULAIRE INFORMATIONS -->
   <div class="slide">
     <div class="slide-tag">Informations</div>
     <div class="badge badge-orange anim">Informations a nous fournir</div>
     <h2 class="t-h2 anim" style="margin-bottom:12px;">
       Completez les <span style="color:var(--orange);">informations</span>
     </h2>
+    <div class="time-estimate anim">Temps estime : 5-8 minutes</div>
     <div class="progress-indicator anim">
       <span>Progression:</span>
       <span class="progress-count" id="formProgress1">0/10</span>
@@ -1939,22 +2324,100 @@
     </div>
   </div>
 
-  <!-- SLIDE 10 — RECAPITULATIF & CTA -->
+  <!-- SLIDE 13 — RECAPITULATIF DES INFORMATIONS -->
   <div class="slide">
-    <div class="slide-tag">Contact</div>
-    <div class="badge anim">Bienvenue chez OPTIMI GROUP</div>
-    <h2 class="t-h1 gradient-text anim" style="margin-bottom:28px;">
-      Pret a demarrer ?
+    <div class="slide-tag">Recapitulatif</div>
+    <div class="badge badge-green anim">Vos informations</div>
+    <h2 class="t-h2 anim" style="margin-bottom:24px;">
+      <span style="color:var(--green-2);">Recapitulatif</span> de votre dossier
     </h2>
-    <p class="t-body anim" style="margin-bottom:32px;">
-      Nous sommes ravis de vous accompagner dans la mise en valeur de votre bien.
+    <div class="recap-section anim" id="recapSection">
+      <div class="recap-category">
+        <div class="recap-category-title">Documents Administratifs</div>
+        <div class="recap-list">
+          <div class="recap-item file"><span class="label">Piece d'identite</span><span class="value" id="recap-identity">Non fourni</span></div>
+          <div class="recap-item file"><span class="label">RIB / IBAN</span><span class="value" id="recap-iban">Non fourni</span></div>
+          <div class="recap-item"><span class="label">N° enregistrement</span><span class="value" id="recap-registration">-</span></div>
+          <div class="recap-item"><span class="label">N° assurance</span><span class="value" id="recap-insurance">-</span></div>
+        </div>
+      </div>
+      <div class="recap-category">
+        <div class="recap-category-title">Informations du bien</div>
+        <div class="recap-list">
+          <div class="recap-item"><span class="label">Adresse</span><span class="value" id="recap-address">-</span></div>
+          <div class="recap-item"><span class="label">Etage</span><span class="value" id="recap-floor">-</span></div>
+          <div class="recap-item"><span class="label">Surface</span><span class="value" id="recap-surface">-</span></div>
+          <div class="recap-item"><span class="label">Capacite</span><span class="value" id="recap-capacity">-</span></div>
+          <div class="recap-item"><span class="label">WiFi</span><span class="value" id="recap-wifi">-</span></div>
+          <div class="recap-item"><span class="label">Serrure connectee</span><span class="value" id="recap-smartlock">-</span></div>
+        </div>
+      </div>
+      <div class="recap-category">
+        <div class="recap-category-title">Logistique</div>
+        <div class="recap-list">
+          <div class="recap-item"><span class="label">Dispo shooting</span><span class="value" id="recap-shooting">-</span></div>
+          <div class="recap-item"><span class="label">Date lancement</span><span class="value" id="recap-launch">-</span></div>
+          <div class="recap-item"><span class="label">Contact urgence</span><span class="value" id="recap-emergency">-</span></div>
+          <div class="recap-item"><span class="label">Service linge</span><span class="value" id="recap-linen">-</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="anim" style="font-size:12px; color:var(--text-dim); margin-top:16px;">
+      Vous pouvez modifier ces informations a tout moment en revenant aux slides precedentes
     </p>
-    <button class="cta-btn anim">
-      contactoptgroup@gmail.com
-    </button>
-    <p class="anim" style="font-size:13px; color:var(--text-dim); margin-top:20px;">
-      Questions ? Contactez-nous a tout moment.
-    </p>
+  </div>
+
+  <!-- SLIDE 14 — PROCHAINES ETAPES & CTA -->
+  <div class="slide">
+    <div class="slide-tag">Prochaines etapes</div>
+    <div class="badge anim">Et maintenant ?</div>
+    <h2 class="t-h1 gradient-text anim" style="margin-bottom:28px;">
+      Prochaines etapes
+    </h2>
+
+    <div class="next-steps anim">
+      <div class="next-step-item">
+        <div class="next-step-num">1</div>
+        <div class="next-step-content">
+          <div class="next-step-title">Verification de votre dossier</div>
+          <div class="next-step-desc">Nous verifions que toutes vos informations sont completes et vous contactons si besoin.</div>
+          <div class="next-step-timing">Dans les 24h</div>
+        </div>
+      </div>
+      <div class="next-step-item">
+        <div class="next-step-num">2</div>
+        <div class="next-step-content">
+          <div class="next-step-title">Planification du shooting photo</div>
+          <div class="next-step-desc">Nous vous proposons des creneaux pour la seance photo professionnelle de votre bien.</div>
+          <div class="next-step-timing">J+1 a J+3</div>
+        </div>
+      </div>
+      <div class="next-step-item">
+        <div class="next-step-num">3</div>
+        <div class="next-step-content">
+          <div class="next-step-title">Visite et shooting</div>
+          <div class="next-step-desc">Notre equipe vient sur place pour la visite technique et la seance photo.</div>
+          <div class="next-step-timing">J+3 a J+5</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://calendly.com/VOTRE_LIEN" target="_blank" class="calendly-btn anim" id="calendlyBtn">
+      Reserver mon creneau shooting
+    </a>
+
+    <div class="contact-card anim" style="margin-top:32px;">
+      <div class="avatar" id="contactAvatar2">JM</div>
+      <div class="info">
+        <div class="label">Une question ?</div>
+        <div class="name" id="contactName2">Jean-Marc Taouo</div>
+        <div class="role">Disponible 7j/7</div>
+      </div>
+      <a href="https://wa.me/33600000000" target="_blank" class="whatsapp-btn" id="whatsappLink2" title="Contacter sur WhatsApp">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+
     <a href="https://www.optimi-group.com/" target="_blank" class="anim" style="margin-top:24px; font-size:18px; color:var(--gold); text-decoration:none; font-weight:600;">www.optimi-group.com</a>
   </div>
 
@@ -2464,7 +2927,9 @@
       }, 500);
 
       updateFieldIndicator(`doc_${type}_file`, 'saved');
-      showToast('Fichier telecharge avec succes', 'success');
+      const docName = type === 'identity' ? 'Piece d\'identite' : 'RIB';
+      showToast(`${docName} recu — Nous le traiterons sous 24h`, 'success');
+      updateRecap();
 
     } catch (e) {
       console.error('Erreur upload:', e);
@@ -2872,12 +3337,172 @@
     if (CLIENT_ID) {
       await loadStatusesFromSupabase();
       await loadFormFromSupabase();
+      await loadClientName();
       updateRoadmapProgress();
       updateAllCategoryProgress();
       console.log('Donnees Supabase chargees pour client:', CLIENT_SLUG);
     } else {
       console.log('Mode hors-ligne: utilisation du localStorage');
     }
+
+    // Initialiser le récapitulatif
+    initRecapUpdates();
+    updateRecap();
+
+    // Configurer le contact dédié
+    updateContactInfo();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // CONFIGURATION DU CONTACT DEDIE
+  // ═══════════════════════════════════════════════════════════════
+  const CONTACT_CONFIG = {
+    name: 'Jean-Marc Taouo',
+    initials: 'JM',
+    role: 'Directeur de la conciergerie',
+    whatsapp: '33600000000', // A REMPLACER par le vrai numéro (format: 33612345678)
+    calendlyUrl: 'https://calendly.com/VOTRE_LIEN' // A REMPLACER par le vrai lien Calendly
+  };
+
+  function updateContactInfo() {
+    // Mettre à jour tous les éléments de contact
+    const avatars = ['contactAvatar', 'contactAvatar2'];
+    const names = ['contactName', 'contactName2'];
+    const whatsappLinks = ['whatsappLink', 'whatsappLink2'];
+
+    avatars.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = CONTACT_CONFIG.initials;
+    });
+
+    names.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = CONTACT_CONFIG.name;
+    });
+
+    whatsappLinks.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.href = `https://wa.me/${CONTACT_CONFIG.whatsapp}`;
+    });
+
+    // Mettre à jour le lien Calendly
+    const calendlyBtn = document.getElementById('calendlyBtn');
+    if (calendlyBtn) {
+      calendlyBtn.href = CONTACT_CONFIG.calendlyUrl;
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // CHARGEMENT DU NOM DU CLIENT
+  // ═══════════════════════════════════════════════════════════════
+  async function loadClientName() {
+    if (!supabaseClient || !CLIENT_ID) return;
+
+    try {
+      const { data, error } = await supabaseClient
+        .from('onboarding_clients')
+        .select('client_name')
+        .eq('id', CLIENT_ID)
+        .single();
+
+      if (data && data.client_name) {
+        updateClientNameDisplay(data.client_name);
+      } else {
+        // Utiliser le slug formaté comme fallback
+        const formattedName = formatSlugAsName(CLIENT_SLUG);
+        updateClientNameDisplay(formattedName);
+      }
+    } catch (e) {
+      console.log('Erreur chargement nom client:', e);
+      const formattedName = formatSlugAsName(CLIENT_SLUG);
+      updateClientNameDisplay(formattedName);
+    }
+  }
+
+  function formatSlugAsName(slug) {
+    // Convertir "moreau-paris12" en "M. Moreau"
+    const parts = slug.split('-');
+    if (parts.length > 0) {
+      const name = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+      return `M. ${name}`;
+    }
+    return '';
+  }
+
+  function updateClientNameDisplay(clientName) {
+    const heroEl = document.getElementById('clientNameHero');
+    if (heroEl && clientName) {
+      heroEl.textContent = clientName;
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // MISE A JOUR DU RECAPITULATIF
+  // ═══════════════════════════════════════════════════════════════
+  function updateRecap() {
+    // Documents
+    updateRecapField('recap-identity', uploadedFiles.identity ? 'Fourni' : 'Non fourni', uploadedFiles.identity);
+    updateRecapField('recap-iban', uploadedFiles.iban ? 'Fourni' : 'Non fourni', uploadedFiles.iban);
+    updateRecapField('recap-registration', document.getElementById('doc_registration_number')?.value);
+    updateRecapField('recap-insurance', document.getElementById('doc_insurance')?.value);
+
+    // Informations du bien
+    updateRecapField('recap-address', document.getElementById('property_full_address')?.value);
+    updateRecapField('recap-floor', document.getElementById('property_floor')?.value);
+    updateRecapField('recap-surface', document.getElementById('property_surface')?.value ? document.getElementById('property_surface').value + ' m²' : '');
+    updateRecapField('recap-capacity', getSelectText('property_capacity'));
+    updateRecapField('recap-wifi', document.getElementById('property_wifi_name')?.value);
+    updateRecapField('recap-smartlock', getSelectText('has_smart_lock'));
+
+    // Logistique
+    updateRecapField('recap-shooting', document.getElementById('shooting_availability')?.value);
+    updateRecapField('recap-launch', document.getElementById('launch_date')?.value);
+    const emergencyName = document.getElementById('emergency_contact_name')?.value;
+    const emergencyPhone = document.getElementById('emergency_contact_phone')?.value;
+    updateRecapField('recap-emergency', emergencyName && emergencyPhone ? `${emergencyName} (${emergencyPhone})` : emergencyName || emergencyPhone || '');
+    updateRecapField('recap-linen', getSelectText('linen_provider'));
+  }
+
+  function updateRecapField(elementId, value, isFile = false) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    if (value && value.trim() !== '') {
+      el.textContent = value;
+      el.classList.remove('missing');
+      if (isFile) {
+        el.style.color = 'var(--green-2)';
+      }
+    } else {
+      el.textContent = '-';
+      el.classList.add('missing');
+    }
+  }
+
+  function getSelectText(selectId) {
+    const select = document.getElementById(selectId);
+    if (!select || !select.value) return '';
+    const option = select.options[select.selectedIndex];
+    return option ? option.text : '';
+  }
+
+  function initRecapUpdates() {
+    // Mettre à jour le récap quand on change de slide
+    const originalGoTo = goTo;
+    window.goToOriginal = originalGoTo;
+
+    // Observer les changements dans les champs de formulaire
+    formFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        el.addEventListener('change', () => {
+          setTimeout(updateRecap, 100);
+        });
+        el.addEventListener('input', () => {
+          setTimeout(updateRecap, 500);
+        });
+      }
+    });
   }
 
   // Lancer l'initialisation
