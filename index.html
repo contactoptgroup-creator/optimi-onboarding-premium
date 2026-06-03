@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPT IM GROUP — Onboarding Premium Conciergerie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #070810;
+      --bg-2: #0f1119;
+      --bg-3: #131623;
+      --card: #0f1119;
+      --card-2: #1a1d2e;
+      --border: rgba(255,255,255,0.06);
+      --border-2: rgba(255,255,255,0.12);
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+
+      --gold: #d4af37;
+      --gold-2: #f5d77a;
+      --primary: #2563eb;
+      --primary-2: #3b82f6;
+      --green: #22c55e;
+      --green-2: #4ade80;
+      --purple: #a78bfa;
+      --pink: #f472b6;
+      --orange: #f59e0b;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(900px ellipse at 15% 5%, rgba(212,175,55,0.08), transparent 60%),
+        radial-gradient(700px ellipse at 85% 80%, rgba(37,99,235,0.06), transparent 60%),
+        radial-gradient(500px ellipse at 50% 50%, rgba(34,197,94,0.04), transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .slides-wrap {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      z-index: 2;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 60px 90px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform .5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: translateY(30px) scale(0.98);
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
+
+    .slide.active .anim {
+      animation: fadeInUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+    .slide.active .anim:nth-child(1){animation-delay:.05s}
+    .slide.active .anim:nth-child(2){animation-delay:.12s}
+    .slide.active .anim:nth-child(3){animation-delay:.19s}
+    .slide.active .anim:nth-child(4){animation-delay:.26s}
+    .slide.active .anim:nth-child(5){animation-delay:.33s}
+    .slide.active .anim:nth-child(6){animation-delay:.40s}
+    .slide.active .anim:nth-child(7){animation-delay:.47s}
+    .slide.active .anim:nth-child(8){animation-delay:.54s}
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    @keyframes borderSpin {
+      to { --border-angle: 360deg; }
+    }
+
+    @property --border-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.02); }
+    }
+
+    .t-hero {
+      font-size: clamp(42px, 8vw, 90px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+    .t-h1 {
+      font-size: clamp(32px, 5.5vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .t-h2 {
+      font-size: clamp(24px, 4vw, 48px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .t-h3 {
+      font-size: clamp(18px, 2.5vw, 32px);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .t-body {
+      font-size: clamp(14px, 1.8vw, 20px);
+      font-weight: 400;
+      line-height: 1.7;
+      max-width: 720px;
+      color: var(--text-muted);
+    }
+    .t-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 25%, #fff 50%, var(--gold-2) 75%, var(--gold) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 5s linear infinite;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .badge-blue {
+      background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(37,99,235,0.05));
+      border-color: rgba(37,99,235,0.3);
+      color: var(--primary-2);
+    }
+    .badge-green {
+      background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05));
+      border-color: rgba(34,197,94,0.3);
+      color: var(--green-2);
+    }
+    .badge-purple {
+      background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(167,139,250,0.05));
+      border-color: rgba(167,139,250,0.3);
+      color: var(--purple);
+    }
+    .badge-pink {
+      background: linear-gradient(135deg, rgba(244,114,182,0.15), rgba(244,114,182,0.05));
+      border-color: rgba(244,114,182,0.3);
+      color: var(--pink);
+    }
+    .badge-orange {
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.05));
+      border-color: rgba(245,158,11,0.3);
+      color: var(--orange);
+    }
+
+    .stat-card {
+      position: relative;
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
+      border: 1px solid var(--border-2);
+      border-radius: 24px;
+      padding: 40px 48px;
+      text-align: center;
+      max-width: 540px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: conic-gradient(from var(--border-angle, 0deg),
+        var(--gold) 0deg, transparent 60deg, transparent 300deg, var(--gold) 360deg);
+      border-radius: 26px;
+      z-index: -1;
+      animation: borderSpin 8s linear infinite;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
+      border-radius: 23px;
+      z-index: -1;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .stat-card .value {
+      font-size: clamp(48px, 10vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 60px rgba(212,175,55,0.4);
+    }
+    .stat-card .sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    .data-table {
+      width: 100%;
+      max-width: 920px;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+    .data-table th {
+      background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+      color: var(--text);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-2);
+    }
+    .data-table th:first-child { text-align: left; padding-left: 20px; }
+    .data-table td {
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td:first-child { text-align: left; padding-left: 20px; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr.total {
+      background: linear-gradient(90deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%);
+    }
+    .data-table tr.total td {
+      font-weight: 800;
+      color: var(--green-2);
+      font-size: 14px;
+      border-bottom: none;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 700px;
+      width: 100%;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding: 16px 0;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 60px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary) 0%, transparent 100%);
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 0 24px rgba(37,99,235,0.4);
+    }
+    .timeline-content {
+      text-align: left;
+      padding-top: 4px;
+      flex: 1;
+    }
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .timeline-status {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-left: auto;
+      align-self: center;
+    }
+    .status-done {
+      background: rgba(34,197,94,0.15);
+      color: var(--green-2);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+    .status-todo {
+      background: rgba(245,158,11,0.15);
+      color: var(--orange);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+
+    .services-section {
+      max-width: 900px;
+      width: 100%;
+    }
+    .services-category {
+      margin-bottom: 24px;
+    }
+    .services-category-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      text-align: left;
+      padding-left: 8px;
+      border-left: 3px solid var(--gold);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .service-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .service-item:hover {
+      border-color: rgba(34,197,94,0.3);
+      background: linear-gradient(90deg, rgba(34,197,94,0.05) 0%, transparent 100%);
+    }
+    .service-item .check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(34,197,94,0.3);
+    }
+    .service-item .text {
+      flex: 1;
+      text-align: left;
+    }
+    .service-item .note {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-width: 800px;
+      width: 100%;
+    }
+    .resource-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: left;
+      transition: all 0.25s ease;
+    }
+    .resource-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(37,99,235,0.3);
+      box-shadow: 0 12px 32px -8px rgba(37,99,235,0.2);
+    }
+    .resource-card .num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary-2);
+      margin-bottom: 8px;
+    }
+    .resource-card .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .resource-card .desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .resource-card .link {
+      font-size: 11px;
+      color: var(--primary-2);
+      margin-top: 10px;
+      display: block;
+      word-break: break-all;
+    }
+
+    .info-section {
+      max-width: 800px;
+      width: 100%;
+    }
+    .info-category {
+      margin-bottom: 20px;
+    }
+    .info-category-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 12px;
+      text-align: left;
+      padding-left: 8px;
+      border-left: 3px solid var(--purple);
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+    }
+    .info-item .label {
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+      text-align: left;
+    }
+    .info-item .hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-align: right;
+    }
+    .info-item .status {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 8px;
+      border-radius: 100px;
+      background: rgba(245,158,11,0.15);
+      color: var(--orange);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+
+    .recap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 600px;
+      width: 100%;
+    }
+    .recap-item {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+    .recap-item .label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .recap-item .value {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .recap-item.highlight {
+      background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.02) 100%);
+      border-color: rgba(34,197,94,0.3);
+    }
+    .recap-item.highlight .value {
+      color: var(--green-2);
+      text-shadow: 0 0 30px rgba(34,197,94,0.4);
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 800px;
+      width: 100%;
+    }
+    .toc-item {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .toc-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,175,55,0.3);
+      box-shadow: 0 16px 40px -12px rgba(212,175,55,0.2);
+    }
+    .toc-item .num {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .toc-item .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .toc-item .desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .cta-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 40px;
+      background: var(--bg-2);
+      border: none;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: conic-gradient(from var(--border-angle, 0deg),
+        #d4af37 0deg, #60a5fa 60deg, #22c55e 120deg,
+        #f59e0b 180deg, #a78bfa 240deg, #f472b6 300deg, #d4af37 360deg);
+      border-radius: 17px;
+      z-index: -2;
+      animation: borderSpin 8s linear infinite;
+    }
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: var(--bg-2);
+      border-radius: 12px;
+      z-index: -1;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 30px rgba(212,175,55,0.3),
+        0 0 60px rgba(37,99,235,0.2);
+    }
+
+    .logo-corner {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      color: #000;
+      box-shadow: 0 4px 16px rgba(212,175,55,0.4);
+    }
+    .logo-text {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .logo-text span { color: var(--gold); }
+
+    .progress-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--border);
+      z-index: 200;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--primary), var(--green));
+      transition: width 0.4s cubic-bezier(0.2,0.8,0.2,1);
+      box-shadow: 0 0 20px rgba(212,175,55,0.5);
+    }
+
+    .hud-left {
+      position: fixed;
+      bottom: 16px;
+      left: 24px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      z-index: 200;
+    }
+    .hud-right {
+      position: fixed;
+      bottom: 16px;
+      right: 24px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      z-index: 200;
+    }
+
+    .nav-wrap {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 200;
+    }
+    .nav-btn {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: var(--bg-3);
+      color: var(--text);
+      border-color: var(--border-2);
+      transform: translateY(-2px);
+    }
+
+    .slide-tag {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 6px 14px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid, .resources-grid, .info-grid, .recap-grid { grid-template-columns: 1fr; }
+      .toc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .slide { padding: 60px 20px 80px; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .timeline-item { flex-wrap: wrap; }
+      .timeline-status { margin-left: 64px; margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="logo-corner">
+  <div class="logo-mark">O</div>
+  <div class="logo-text">OPT IM <span>GROUP</span></div>
+</div>
+
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div class="hud-left">Onboarding Premium</div>
+<div class="hud-right" id="counter">1 / 12</div>
+
+<div class="nav-wrap">
+  <button class="nav-btn" id="btnPrev" onclick="prev()">&#8592;</button>
+  <button class="nav-btn" id="btnNext" onclick="next()">&#8594;</button>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+  <!-- SLIDE 1 — HERO -->
+  <div class="slide active">
+    <div class="slide-tag">Bienvenue</div>
+    <div class="badge anim">Conciergerie Premium Paris</div>
+    <h1 class="t-hero gradient-text anim" style="margin-bottom:24px;">
+      OPT IM GROUP
+    </h1>
+    <p class="t-h3 anim" style="color:var(--text-muted); font-weight:600; margin-bottom:28px;">
+      Bienvenue dans votre Onboarding
+    </p>
+    <p class="t-body anim" style="margin-bottom:32px;">
+      Nous sommes ravis de vous accompagner dans la mise en valeur de votre bien.
+    </p>
+    <div class="anim" style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+      <span style="font-size:20px; font-weight:700; color:var(--text);">Studio 38m<sup>2</sup></span>
+      <span style="font-size:16px; color:var(--gold); font-weight:600;">Paris 12 - Bastille</span>
+      <span style="font-size:14px; color:var(--green-2); font-weight:600; margin-top:8px;">Commission tout inclus : 20%</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — ESTIMATION -->
+  <div class="slide">
+    <div class="slide-tag">Estimation</div>
+    <div class="badge anim">Revenus Nets Annuels</div>
+    <div class="stat-card anim">
+      <div class="label">Estimation de vos revenus</div>
+      <div class="value">23 008 EUR</div>
+      <div class="sub">net / an</div>
+    </div>
+    <div class="anim" style="margin-top:28px; display:flex; flex-direction:column; align-items:center; gap:6px;">
+      <span style="font-size:16px; color:var(--text-muted);">Soit environ <strong style="color:#fff;">2 396 EUR</strong> brut/mois</span>
+      <span style="font-size:16px; color:var(--text-muted);"><strong style="color:var(--green-2);">1 917 EUR</strong> net/mois apres commission</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — TABLE DES MATIERES -->
+  <div class="slide">
+    <div class="slide-tag">Sommaire</div>
+    <div class="badge anim">Ce dossier contient</div>
+    <h2 class="t-h2 anim" style="margin-bottom:32px;">
+      Votre <span class="gradient-text">parcours</span>
+    </h2>
+    <div class="toc-grid anim">
+      <div class="toc-item" onclick="goTo(3)">
+        <div class="num">1</div>
+        <div class="title">Roadmap</div>
+        <div class="desc">Votre parcours d'onboarding etape par etape</div>
+      </div>
+      <div class="toc-item" onclick="goTo(4)">
+        <div class="num">2</div>
+        <div class="title">Services</div>
+        <div class="desc">Detail des prestations incluses dans nos 20%</div>
+      </div>
+      <div class="toc-item" onclick="goTo(6)">
+        <div class="num">3</div>
+        <div class="title">Ressources</div>
+        <div class="desc">Documents et liens a telecharger</div>
+      </div>
+      <div class="toc-item" onclick="goTo(7)">
+        <div class="num">4</div>
+        <div class="title">Informations</div>
+        <div class="desc">Formulaire a completer pour demarrer</div>
+      </div>
+      <div class="toc-item" onclick="goTo(9)">
+        <div class="num">5</div>
+        <div class="title">Projection CA</div>
+        <div class="desc">Estimation mensuelle avec saisonnalite</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — ROADMAP -->
+  <div class="slide">
+    <div class="slide-tag">Roadmap</div>
+    <div class="badge badge-blue anim">Votre parcours d'onboarding</div>
+    <h2 class="t-h2 anim" style="margin-bottom:12px;">
+      De la signature a votre <span style="color:var(--primary-2);">premiere reservation</span>
+    </h2>
+    <p class="t-body anim" style="margin-bottom:28px;">en 10 jours</p>
+    <div class="timeline anim">
+      <div class="timeline-item">
+        <div class="timeline-num">J+0</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Signature contrat</div>
+          <div class="timeline-desc">Validation du partenariat et envoi des documents</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+1</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Kickoff call</div>
+          <div class="timeline-desc">Appel de lancement pour repondre a vos questions</div>
+        </div>
+        <span class="timeline-status status-done">Fait</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+2-3</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Collecte infos</div>
+          <div class="timeline-desc">Reception de vos documents et informations</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+3</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Visite du bien</div>
+          <div class="timeline-desc">Visite sur place ou visite virtuelle</div>
+        </div>
+        <span class="timeline-status status-done">Fait</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+4-5</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Shooting photo</div>
+          <div class="timeline-desc">Seance photo professionnelle de votre appartement</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 — ROADMAP SUITE -->
+  <div class="slide">
+    <div class="slide-tag">Roadmap</div>
+    <div class="badge badge-blue anim">Suite du parcours</div>
+    <div class="timeline anim">
+      <div class="timeline-item">
+        <div class="timeline-num">J+6-7</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Redaction annonce</div>
+          <div class="timeline-desc">Creation du contenu optimise multi-plateformes</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+8</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Validation</div>
+          <div class="timeline-desc">Envoi pour votre approbation finale</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+9</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Mise en ligne</div>
+          <div class="timeline-desc">Publication sur Airbnb, Booking, Abritel...</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+10</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Activation pricing</div>
+          <div class="timeline-desc">Configuration du pricing dynamique</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">J+14</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Point d'etape</div>
+          <div class="timeline-desc">Premier bilan et ajustements si necessaires</div>
+        </div>
+        <span class="timeline-status status-todo">A faire</span>
+      </div>
+    </div>
+    <p class="anim" style="font-size:12px; color:var(--text-dim); margin-top:20px;">
+      * Les delais sont indicatifs et peuvent varier selon votre disponibilite pour le shooting photo
+    </p>
+  </div>
+
+  <!-- SLIDE 6 — SERVICES -->
+  <div class="slide">
+    <div class="slide-tag">Services</div>
+    <div class="badge badge-green anim">Ce qui est inclus dans nos 20%</div>
+    <h2 class="t-h2 anim" style="margin-bottom:28px;">
+      Service <span class="gradient-text">tout compris</span>
+    </h2>
+    <div class="services-section anim">
+      <div class="services-category">
+        <div class="services-category-title">Creation & Lancement</div>
+        <div class="services-grid">
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Shooting photo professionnel<br><span class="note">Photos HD valorisant votre bien</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Redaction annonce optimisee<br><span class="note">Titre accrocheur, description SEO</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Multi-diffusion<br><span class="note">Airbnb, Booking, Abritel, VRBO...</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Pricing dynamique<br><span class="note">Tarifs ajustes selon la demande</span></div></div>
+        </div>
+      </div>
+      <div class="services-category">
+        <div class="services-category-title">Gestion Quotidienne</div>
+        <div class="services-grid">
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Communication voyageurs<br><span class="note">Reponses 7j/7, check-in/out</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Support 24h pendant sejour<br><span class="note">Assistance en cas de probleme</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Gestion des avis<br><span class="note">Reponses professionnelles aux commentaires</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Calendrier synchronise<br><span class="note">Aucun risque de double reservation</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 — SERVICES SUITE -->
+  <div class="slide">
+    <div class="slide-tag">Services</div>
+    <div class="badge badge-green anim">Suite des services</div>
+    <div class="services-section anim">
+      <div class="services-category">
+        <div class="services-category-title">Menage & Linge</div>
+        <div class="services-grid">
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Coordination menage *<br><span class="note">Equipe de confiance, controle qualite</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Gestion du linge *<br><span class="note">Draps, serviettes, renouvellement</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Controle qualite<br><span class="note">Verification avant chaque arrivee</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Restockage consommables *<br><span class="note">Savon, papier toilette, cafe...</span></div></div>
+        </div>
+      </div>
+      <div class="services-category">
+        <div class="services-category-title">Maintenance & Suivi</div>
+        <div class="services-grid">
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Petites interventions<br><span class="note">Ampoules, joints, petites reparations</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Coordination artisans<br><span class="note">Gestion des urgences techniques</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Dashboard de suivi<br><span class="note">Acces temps reel a vos performances</span></div></div>
+          <div class="service-item"><div class="check">&#10003;</div><div class="text">Reporting mensuel<br><span class="note">Bilan detaille chaque mois</span></div></div>
+        </div>
+      </div>
+    </div>
+    <p class="anim" style="font-size:12px; color:var(--text-dim); margin-top:20px;">
+      * Frais de prestation (menage, linge, consommables) factures en sus au cout reel
+    </p>
+  </div>
+
+  <!-- SLIDE 8 — RESSOURCES -->
+  <div class="slide">
+    <div class="slide-tag">Ressources</div>
+    <div class="badge badge-purple anim">Vos ressources & documents</div>
+    <h2 class="t-h2 anim" style="margin-bottom:28px;">
+      Tout ce dont vous avez <span style="color:var(--purple);">besoin</span>
+    </h2>
+    <div class="resources-grid anim">
+      <div class="resource-card">
+        <div class="num">01</div>
+        <div class="title">Contrat de gestion</div>
+        <div class="desc">Conditions de notre partenariat, engagements mutuels, tarification</div>
+        <a class="link" href="https://bit.ly/3PvsXqp" target="_blank">bit.ly/3PvsXqp</a>
+      </div>
+      <div class="resource-card">
+        <div class="num">02</div>
+        <div class="title">Guide shooting photo</div>
+        <div class="desc">Comment preparer votre appartement pour des photos parfaites</div>
+        <a class="link" href="https://bit.ly/4wu88wm" target="_blank">bit.ly/4wu88wm</a>
+      </div>
+      <div class="resource-card">
+        <div class="num">03</div>
+        <div class="title">Exemples d'annonces</div>
+        <div class="desc">Inspirez-vous de nos annonces qui performent le mieux</div>
+        <a class="link" href="https://bit.ly/4wu5vuu" target="_blank">bit.ly/4wu5vuu</a>
+      </div>
+      <div class="resource-card">
+        <div class="num">04</div>
+        <div class="title">Projection CA detaillee</div>
+        <div class="desc">Estimation mois par mois avec saisonnalite</div>
+        <span class="link">[Voir slide Projection CA]</span>
+      </div>
+      <div class="resource-card">
+        <div class="num">05</div>
+        <div class="title">FAQ Proprietaires</div>
+        <div class="desc">Fiscalite, assurance, reglementation, questions frequentes</div>
+        <a class="link" href="https://bit.ly/4uASXPY" target="_blank">bit.ly/4uASXPY</a>
+      </div>
+      <div class="resource-card">
+        <div class="num">06</div>
+        <div class="title">Apercu Dashboard</div>
+        <div class="desc">Decouvrez l'interface de suivi de vos performances</div>
+        <span class="link">Lien a venir</span>
+      </div>
+      <div class="resource-card">
+        <div class="num">07</div>
+        <div class="title">Liste des indispensables</div>
+        <div class="desc">Tout ce qu'il faut pour accueillir vos voyageurs</div>
+        <a class="link" href="https://bit.ly/4ffZNG4" target="_blank">bit.ly/4ffZNG4</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 — INFORMATIONS -->
+  <div class="slide">
+    <div class="slide-tag">Informations</div>
+    <div class="badge badge-orange anim">Informations a nous fournir</div>
+    <h2 class="t-h2 anim" style="margin-bottom:12px;">
+      Completez les <span style="color:var(--orange);">informations</span>
+    </h2>
+    <p class="t-body anim" style="margin-bottom:24px; font-size:14px;">
+      Ces informations sont essentielles pour demarrer.
+    </p>
+    <div class="info-section anim">
+      <div class="info-category">
+        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Documents Administratifs</div>
+        <div class="info-grid">
+          <div class="info-item"><span class="label">Piece d'identite</span><span class="hint">CNI ou passeport</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">RIB</span><span class="hint">Pour le versement</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">N enregistrement mairie</span><span class="hint">Si applicable</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Attestation assurance</span><span class="hint">Location saisonniere</span><span class="status">A remplir</span></div>
+        </div>
+      </div>
+      <div class="info-category">
+        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Informations sur le bien</div>
+        <div class="info-grid">
+          <div class="info-item"><span class="label">Adresse complete</span><span class="hint">N, rue, CP, ville</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Etage / Ascenseur</span><span class="hint">Ex: 3eme avec asc.</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Codes d'acces</span><span class="hint">Digicode, interphone</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Superficie</span><span class="hint">En m2</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Capacite d'accueil</span><span class="hint">Voyageurs max</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">WiFi</span><span class="hint">Reseau + mot de passe</span><span class="status">A remplir</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 — INFORMATIONS SUITE -->
+  <div class="slide">
+    <div class="slide-tag">Informations</div>
+    <div class="badge badge-orange anim">Suite des informations</div>
+    <div class="info-section anim">
+      <div class="info-category">
+        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Informations sur le bien (suite)</div>
+        <div class="info-grid">
+          <div class="info-item"><span class="label">Equipements</span><span class="hint">TV, lave-linge, parking</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Reglement copropriete</span><span class="hint">Restrictions, heures silence</span><span class="status">A remplir</span></div>
+        </div>
+      </div>
+      <div class="info-category">
+        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Logistique & Planning</div>
+        <div class="info-grid">
+          <div class="info-item"><span class="label">Nombre de jeux de cles</span><span class="hint">Minimum 2 recommande</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Serrure connectee?</span><span class="hint">Check-in autonomes</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Disponibilites shooting</span><span class="hint">Vos creneaux possibles</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Date de lancement</span><span class="hint">Quand demarrer?</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Contact de secours</span><span class="hint">Nom + telephone</span><span class="status">A remplir</span></div>
+          <div class="info-item"><span class="label">Linge de maison</span><span class="hint">Fourni par vous ou nous?</span><span class="status">A remplir</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 — PROJECTION CA -->
+  <div class="slide">
+    <div class="slide-tag">Projection CA</div>
+    <div class="badge badge-green anim">Projection de vos revenus</div>
+    <h2 class="t-h2 anim" style="margin-bottom:12px;">
+      Revenus <span style="color:var(--green-2);">mois par mois</span>
+    </h2>
+    <p class="t-body anim" style="margin-bottom:20px; font-size:13px;">
+      Studio 38m<sup>2</sup> au 4 rue Moreau, Paris 12 - Bastille
+    </p>
+    <table class="data-table anim">
+      <tr>
+        <th>Mois</th>
+        <th>CA Brut</th>
+        <th>Taux Occ.</th>
+        <th>Net Proprio</th>
+        <th>Saison</th>
+      </tr>
+      <tr><td>Janvier</td><td>1 558 EUR</td><td>60%</td><td>1 246 EUR</td><td>Basse</td></tr>
+      <tr><td>Fevrier</td><td>1 530 EUR</td><td>63%</td><td>1 224 EUR</td><td>Basse</td></tr>
+      <tr><td>Mars</td><td>2 024 EUR</td><td>70%</td><td>1 619 EUR</td><td>Moyenne</td></tr>
+      <tr><td>Avril</td><td>2 346 EUR</td><td>78%</td><td>1 876 EUR</td><td>Haute</td></tr>
+      <tr><td>Mai</td><td>2 700 EUR</td><td>80%</td><td>2 160 EUR</td><td>Haute</td></tr>
+      <tr><td>Juin</td><td>3 068 EUR</td><td>85%</td><td>2 454 EUR</td><td>Tres haute</td></tr>
+      <tr><td>Juillet</td><td>3 375 EUR</td><td>88%</td><td>2 700 EUR</td><td>Tres haute</td></tr>
+      <tr><td>Aout</td><td>3 172 EUR</td><td>85%</td><td>2 537 EUR</td><td>Tres haute</td></tr>
+      <tr><td>Septembre</td><td>2 700 EUR</td><td>82%</td><td>2 160 EUR</td><td>Haute</td></tr>
+      <tr><td>Octobre</td><td>2 090 EUR</td><td>72%</td><td>1 672 EUR</td><td>Moyenne</td></tr>
+      <tr><td>Novembre</td><td>1 558 EUR</td><td>62%</td><td>1 246 EUR</td><td>Basse</td></tr>
+      <tr><td>Decembre</td><td>2 640 EUR</td><td>78%</td><td>2 112 EUR</td><td>Haute</td></tr>
+      <tr class="total"><td>TOTAL ANNUEL</td><td>28 761 EUR</td><td>~75%</td><td>23 008 EUR</td><td></td></tr>
+    </table>
+    <p class="anim" style="font-size:11px; color:var(--text-dim); margin-top:16px;">
+      * Estimations basees sur les donnees du marche local. Les resultats reels peuvent varier.
+    </p>
+  </div>
+
+  <!-- SLIDE 12 — RECAPITULATIF & CTA -->
+  <div class="slide">
+    <div class="slide-tag">Recapitulatif</div>
+    <div class="badge anim">Votre estimation</div>
+    <h2 class="t-h1 gradient-text anim" style="margin-bottom:28px;">
+      Pret a demarrer ?
+    </h2>
+    <div class="recap-grid anim" style="margin-bottom:28px;">
+      <div class="recap-item">
+        <div class="label">CA Brut annuel estime</div>
+        <div class="value">28 761 EUR</div>
+      </div>
+      <div class="recap-item">
+        <div class="label">Commission OPT IM GROUP (20%)</div>
+        <div class="value" style="color:var(--text-muted);">-5 752 EUR</div>
+      </div>
+      <div class="recap-item highlight" style="grid-column: span 2;">
+        <div class="label">Votre revenu net annuel</div>
+        <div class="value" style="font-size:32px;">23 008 EUR</div>
+      </div>
+    </div>
+    <p class="anim" style="font-size:16px; color:var(--text-muted); margin-bottom:28px;">
+      Soit en moyenne <strong style="color:var(--green-2);">1 917 EUR</strong> / mois
+    </p>
+    <button class="cta-btn anim">
+      contactoptgroup@gmail.com
+    </button>
+    <p class="anim" style="font-size:13px; color:var(--text-dim); margin-top:20px;">
+      Questions ? Contactez-nous a tout moment.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let cur = 0;
+
+  document.getElementById('counter').textContent = `1 / ${total}`;
+
+  function goTo(n) {
+    if (n < 0 || n >= total) return;
+    slides[cur].classList.remove('active');
+    cur = n;
+    slides[cur].classList.add('active');
+    document.getElementById('progressBar').style.width = ((cur + 1) / total * 100) + '%';
+    document.getElementById('counter').textContent = `${cur + 1} / ${total}`;
+    document.getElementById('btnPrev').style.opacity = cur === 0 ? '0.3' : '1';
+    document.getElementById('btnNext').style.opacity = cur === total - 1 ? '0.3' : '1';
+  }
+
+  function next() { goTo(cur + 1); }
+  function prev() { goTo(cur - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  });
+
+  document.getElementById('slidesWrap').addEventListener('click', e => {
+    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a')) return;
+    if (e.clientX > window.innerWidth * 0.3) next();
+    else prev();
+  });
+
+  let touchStartX = 0;
+  document.getElementById('slidesWrap').addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  });
+  document.getElementById('slidesWrap').addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+  });
+
+  document.getElementById('progressBar').style.width = (1 / total * 100) + '%';
+  document.getElementById('btnPrev').style.opacity = '0.3';
+</script>
+</body>
+</html>
