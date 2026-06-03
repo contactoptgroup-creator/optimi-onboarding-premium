@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OPT IM GROUP — Onboarding Premium Conciergerie</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -813,6 +815,272 @@
       .timeline-item { flex-wrap: wrap; }
       .timeline-status { margin-left: 64px; margin-top: 8px; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       STYLES FORMULAIRES SUPABASE
+    ═══════════════════════════════════════════════════════════════ */
+    .form-section {
+      max-width: 800px;
+      width: 100%;
+    }
+    .form-category {
+      margin-bottom: 24px;
+    }
+    .form-category-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+      text-align: left;
+      padding-left: 8px;
+      border-left: 3px solid var(--orange);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      transition: all 0.2s ease;
+    }
+    .form-item:hover {
+      border-color: var(--border-2);
+    }
+    .form-item:focus-within {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 2px rgba(245,158,11,0.15);
+    }
+    .form-item.saved {
+      border-color: rgba(34,197,94,0.4);
+      background: linear-gradient(90deg, rgba(34,197,94,0.05) 0%, transparent 100%);
+    }
+    .form-item .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .form-item .label-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .form-item .hint {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+    .form-item .save-indicator {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+    }
+    .save-indicator.pending {
+      background: rgba(245,158,11,0.15);
+      color: var(--orange);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+    .save-indicator.saved {
+      background: rgba(34,197,94,0.15);
+      color: var(--green-2);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+    .save-indicator.saving {
+      background: rgba(37,99,235,0.15);
+      color: var(--primary-2);
+      border: 1px solid rgba(37,99,235,0.3);
+    }
+    .form-input {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: var(--bg-2);
+    }
+    .form-input::placeholder {
+      color: var(--text-dim);
+    }
+    .form-input.filled {
+      border-color: rgba(34,197,94,0.3);
+    }
+    select.form-input {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2371717a' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+    textarea.form-input {
+      resize: vertical;
+      min-height: 60px;
+    }
+    .form-item.full-width {
+      grid-column: span 2;
+    }
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .btn-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-2) 100%);
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+    }
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(34,197,94,0.4);
+    }
+    .btn-save:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-save.loading {
+      pointer-events: none;
+    }
+    .btn-save.loading::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .upload-area {
+      border: 2px dashed var(--border-2);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .upload-area:hover {
+      border-color: var(--orange);
+      background: rgba(245,158,11,0.05);
+    }
+    .upload-area.dragover {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.05);
+    }
+    .upload-area .upload-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .upload-area .upload-text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .upload-area .upload-hint {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .upload-area.has-file {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.05);
+    }
+    .upload-area.has-file .upload-icon {
+      color: var(--green-2);
+    }
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--bg-2);
+      border: 1px solid var(--border-2);
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast.success {
+      border-color: rgba(34,197,94,0.3);
+    }
+    .toast.success::before {
+      content: '✓';
+      color: var(--green-2);
+      font-weight: 800;
+    }
+    .toast.error {
+      border-color: rgba(239,68,68,0.3);
+    }
+    .toast.error::before {
+      content: '✗';
+      color: #ef4444;
+      font-weight: 800;
+    }
+    .progress-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .progress-indicator .progress-count {
+      color: var(--green-2);
+      font-weight: 800;
+    }
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-item.full-width { grid-column: span 1; }
+    }
   </style>
 </head>
 <body>
@@ -1119,62 +1387,239 @@
     </div>
   </div>
 
-  <!-- SLIDE 9 — INFORMATIONS -->
+  <!-- SLIDE 9 — FORMULAIRE INFORMATIONS -->
   <div class="slide">
     <div class="slide-tag">Informations</div>
     <div class="badge badge-orange anim">Informations a nous fournir</div>
     <h2 class="t-h2 anim" style="margin-bottom:12px;">
       Completez les <span style="color:var(--orange);">informations</span>
     </h2>
-    <p class="t-body anim" style="margin-bottom:24px; font-size:14px;">
-      Ces informations sont essentielles pour demarrer.
-    </p>
-    <div class="info-section anim">
-      <div class="info-category">
-        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Documents Administratifs</div>
-        <div class="info-grid">
-          <div class="info-item"><span class="label">Piece d'identite</span><span class="hint">CNI ou passeport</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">RIB</span><span class="hint">Pour le versement</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">N enregistrement mairie</span><span class="hint">Si applicable</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Attestation assurance</span><span class="hint">Location saisonniere</span><span class="status">A remplir</span></div>
+    <div class="progress-indicator anim">
+      <span>Progression:</span>
+      <span class="progress-count" id="formProgress1">0/10</span>
+      <span>champs remplis</span>
+    </div>
+    <div class="form-section anim">
+      <div class="form-category">
+        <div class="form-category-title">Documents Administratifs</div>
+        <div class="form-grid">
+          <div class="form-item" data-field="doc_identity">
+            <div class="form-label">
+              <span class="label-text">Piece d'identite</span>
+              <span class="save-indicator pending" id="ind-doc_identity">A remplir</span>
+            </div>
+            <span class="hint">CNI ou passeport (numero)</span>
+            <input type="text" class="form-input" id="doc_identity" placeholder="Ex: 12AB34567" data-field="doc_identity">
+          </div>
+          <div class="form-item" data-field="doc_rib">
+            <div class="form-label">
+              <span class="label-text">IBAN</span>
+              <span class="save-indicator pending" id="ind-doc_rib">A remplir</span>
+            </div>
+            <span class="hint">Pour le versement de vos revenus</span>
+            <input type="text" class="form-input" id="doc_rib" placeholder="FR76 XXXX XXXX XXXX" data-field="doc_rib">
+          </div>
+          <div class="form-item" data-field="doc_registration_number">
+            <div class="form-label">
+              <span class="label-text">N° enregistrement mairie</span>
+              <span class="save-indicator pending" id="ind-doc_registration_number">A remplir</span>
+            </div>
+            <span class="hint">Si applicable (13 chiffres)</span>
+            <input type="text" class="form-input" id="doc_registration_number" placeholder="Ex: 7512300012345" data-field="doc_registration_number">
+          </div>
+          <div class="form-item" data-field="doc_insurance">
+            <div class="form-label">
+              <span class="label-text">N° police assurance</span>
+              <span class="save-indicator pending" id="ind-doc_insurance">A remplir</span>
+            </div>
+            <span class="hint">Assurance location saisonniere</span>
+            <input type="text" class="form-input" id="doc_insurance" placeholder="Ex: POL-123456" data-field="doc_insurance">
+          </div>
         </div>
       </div>
-      <div class="info-category">
-        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Informations sur le bien</div>
-        <div class="info-grid">
-          <div class="info-item"><span class="label">Adresse complete</span><span class="hint">N, rue, CP, ville</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Etage / Ascenseur</span><span class="hint">Ex: 3eme avec asc.</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Codes d'acces</span><span class="hint">Digicode, interphone</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Superficie</span><span class="hint">En m2</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Capacite d'accueil</span><span class="hint">Voyageurs max</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">WiFi</span><span class="hint">Reseau + mot de passe</span><span class="status">A remplir</span></div>
+      <div class="form-category">
+        <div class="form-category-title">Informations sur le bien</div>
+        <div class="form-grid">
+          <div class="form-item full-width" data-field="property_full_address">
+            <div class="form-label">
+              <span class="label-text">Adresse complete</span>
+              <span class="save-indicator pending" id="ind-property_full_address">A remplir</span>
+            </div>
+            <span class="hint">Numero, rue, code postal, ville</span>
+            <input type="text" class="form-input" id="property_full_address" placeholder="Ex: 4 rue Moreau, 75012 Paris" data-field="property_full_address">
+          </div>
+          <div class="form-item" data-field="property_floor">
+            <div class="form-label">
+              <span class="label-text">Etage / Ascenseur</span>
+              <span class="save-indicator pending" id="ind-property_floor">A remplir</span>
+            </div>
+            <span class="hint">Ex: 3eme avec ascenseur</span>
+            <input type="text" class="form-input" id="property_floor" placeholder="Ex: 2eme etage, avec ascenseur" data-field="property_floor">
+          </div>
+          <div class="form-item" data-field="property_access_codes">
+            <div class="form-label">
+              <span class="label-text">Codes d'acces</span>
+              <span class="save-indicator pending" id="ind-property_access_codes">A remplir</span>
+            </div>
+            <span class="hint">Digicode, interphone, boite a cles</span>
+            <input type="text" class="form-input" id="property_access_codes" placeholder="Ex: Digicode 1234A, Interphone DUPONT" data-field="property_access_codes">
+          </div>
+          <div class="form-item" data-field="property_surface">
+            <div class="form-label">
+              <span class="label-text">Superficie</span>
+              <span class="save-indicator pending" id="ind-property_surface">A remplir</span>
+            </div>
+            <span class="hint">En metres carres</span>
+            <input type="text" class="form-input" id="property_surface" placeholder="Ex: 38" data-field="property_surface">
+          </div>
+          <div class="form-item" data-field="property_capacity">
+            <div class="form-label">
+              <span class="label-text">Capacite d'accueil</span>
+              <span class="save-indicator pending" id="ind-property_capacity">A remplir</span>
+            </div>
+            <span class="hint">Nombre max de voyageurs</span>
+            <select class="form-input" id="property_capacity" data-field="property_capacity">
+              <option value="">Selectionnez...</option>
+              <option value="1">1 voyageur</option>
+              <option value="2">2 voyageurs</option>
+              <option value="3">3 voyageurs</option>
+              <option value="4">4 voyageurs</option>
+              <option value="5">5 voyageurs</option>
+              <option value="6">6+ voyageurs</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 10 — INFORMATIONS SUITE -->
+  <!-- SLIDE 10 — FORMULAIRE INFORMATIONS SUITE -->
   <div class="slide">
     <div class="slide-tag">Informations</div>
     <div class="badge badge-orange anim">Suite des informations</div>
-    <div class="info-section anim">
-      <div class="info-category">
-        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Informations sur le bien (suite)</div>
-        <div class="info-grid">
-          <div class="info-item"><span class="label">Equipements</span><span class="hint">TV, lave-linge, parking</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Reglement copropriete</span><span class="hint">Restrictions, heures silence</span><span class="status">A remplir</span></div>
+    <div class="progress-indicator anim">
+      <span>Progression:</span>
+      <span class="progress-count" id="formProgress2">0/10</span>
+      <span>champs remplis</span>
+    </div>
+    <div class="form-section anim">
+      <div class="form-category">
+        <div class="form-category-title">Informations sur le bien (suite)</div>
+        <div class="form-grid">
+          <div class="form-item" data-field="property_wifi_name">
+            <div class="form-label">
+              <span class="label-text">Nom du WiFi</span>
+              <span class="save-indicator pending" id="ind-property_wifi_name">A remplir</span>
+            </div>
+            <span class="hint">Nom du reseau</span>
+            <input type="text" class="form-input" id="property_wifi_name" placeholder="Ex: Livebox-A1B2" data-field="property_wifi_name">
+          </div>
+          <div class="form-item" data-field="property_wifi_password">
+            <div class="form-label">
+              <span class="label-text">Mot de passe WiFi</span>
+              <span class="save-indicator pending" id="ind-property_wifi_password">A remplir</span>
+            </div>
+            <span class="hint">Cle de securite</span>
+            <input type="text" class="form-input" id="property_wifi_password" placeholder="Ex: aBcD1234EfGh" data-field="property_wifi_password">
+          </div>
+          <div class="form-item full-width" data-field="property_equipment">
+            <div class="form-label">
+              <span class="label-text">Equipements disponibles</span>
+              <span class="save-indicator pending" id="ind-property_equipment">A remplir</span>
+            </div>
+            <span class="hint">TV, lave-linge, seche-linge, parking, climatisation, etc.</span>
+            <textarea class="form-input" id="property_equipment" placeholder="Ex: TV connectee, lave-linge, seche-cheveux, fer a repasser, climatisation reversible" data-field="property_equipment"></textarea>
+          </div>
+          <div class="form-item full-width" data-field="property_copro_rules">
+            <div class="form-label">
+              <span class="label-text">Reglement copropriete</span>
+              <span class="save-indicator pending" id="ind-property_copro_rules">A remplir</span>
+            </div>
+            <span class="hint">Restrictions, heures de silence, regles particulieres</span>
+            <textarea class="form-input" id="property_copro_rules" placeholder="Ex: Silence 22h-8h, pas de fetes, poubelles au local RDC" data-field="property_copro_rules"></textarea>
+          </div>
         </div>
       </div>
-      <div class="info-category">
-        <div class="info-category-title" style="color:var(--orange); border-color:var(--orange);">Logistique & Planning</div>
-        <div class="info-grid">
-          <div class="info-item"><span class="label">Nombre de jeux de cles</span><span class="hint">Minimum 2 recommande</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Serrure connectee?</span><span class="hint">Check-in autonomes</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Disponibilites shooting</span><span class="hint">Vos creneaux possibles</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Date de lancement</span><span class="hint">Quand demarrer?</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Contact de secours</span><span class="hint">Nom + telephone</span><span class="status">A remplir</span></div>
-          <div class="info-item"><span class="label">Linge de maison</span><span class="hint">Fourni par vous ou nous?</span><span class="status">A remplir</span></div>
+      <div class="form-category">
+        <div class="form-category-title">Logistique & Planning</div>
+        <div class="form-grid">
+          <div class="form-item" data-field="keys_count">
+            <div class="form-label">
+              <span class="label-text">Nombre de jeux de cles</span>
+              <span class="save-indicator pending" id="ind-keys_count">A remplir</span>
+            </div>
+            <span class="hint">Minimum 2 recommande</span>
+            <select class="form-input" id="keys_count" data-field="keys_count">
+              <option value="">Selectionnez...</option>
+              <option value="1">1 jeu</option>
+              <option value="2">2 jeux (recommande)</option>
+              <option value="3">3 jeux ou plus</option>
+            </select>
+          </div>
+          <div class="form-item" data-field="has_smart_lock">
+            <div class="form-label">
+              <span class="label-text">Serrure connectee</span>
+              <span class="save-indicator pending" id="ind-has_smart_lock">A remplir</span>
+            </div>
+            <span class="hint">Pour check-in autonomes</span>
+            <select class="form-input" id="has_smart_lock" data-field="has_smart_lock">
+              <option value="">Selectionnez...</option>
+              <option value="true">Oui, j'en ai une</option>
+              <option value="false">Non, pas de serrure connectee</option>
+              <option value="interested">Non mais interesse</option>
+            </select>
+          </div>
+          <div class="form-item" data-field="shooting_availability">
+            <div class="form-label">
+              <span class="label-text">Disponibilites shooting</span>
+              <span class="save-indicator pending" id="ind-shooting_availability">A remplir</span>
+            </div>
+            <span class="hint">Vos creneaux possibles</span>
+            <input type="text" class="form-input" id="shooting_availability" placeholder="Ex: Lundi et mardi matin" data-field="shooting_availability">
+          </div>
+          <div class="form-item" data-field="launch_date">
+            <div class="form-label">
+              <span class="label-text">Date de lancement souhaitee</span>
+              <span class="save-indicator pending" id="ind-launch_date">A remplir</span>
+            </div>
+            <span class="hint">Quand voulez-vous demarrer?</span>
+            <input type="date" class="form-input" id="launch_date" data-field="launch_date">
+          </div>
+          <div class="form-item" data-field="emergency_contact_name">
+            <div class="form-label">
+              <span class="label-text">Contact de secours (nom)</span>
+              <span class="save-indicator pending" id="ind-emergency_contact_name">A remplir</span>
+            </div>
+            <span class="hint">Personne a contacter en cas d'urgence</span>
+            <input type="text" class="form-input" id="emergency_contact_name" placeholder="Ex: Marie Dupont" data-field="emergency_contact_name">
+          </div>
+          <div class="form-item" data-field="emergency_contact_phone">
+            <div class="form-label">
+              <span class="label-text">Contact de secours (tel)</span>
+              <span class="save-indicator pending" id="ind-emergency_contact_phone">A remplir</span>
+            </div>
+            <span class="hint">Numero de telephone</span>
+            <input type="tel" class="form-input" id="emergency_contact_phone" placeholder="Ex: 06 12 34 56 78" data-field="emergency_contact_phone">
+          </div>
+          <div class="form-item full-width" data-field="linen_provider">
+            <div class="form-label">
+              <span class="label-text">Linge de maison</span>
+              <span class="save-indicator pending" id="ind-linen_provider">A remplir</span>
+            </div>
+            <span class="hint">Qui fournit draps et serviettes?</span>
+            <select class="form-input" id="linen_provider" data-field="linen_provider">
+              <option value="">Selectionnez...</option>
+              <option value="owner">Je fournis le linge</option>
+              <option value="optimi">Je veux le service linge OPT IM GROUP</option>
+              <option value="discuss">A discuter</option>
+            </select>
+          </div>
         </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-save" id="btnSaveAll" onclick="saveAllToSupabase()">
+          Enregistrer toutes les informations
+        </button>
       </div>
     </div>
   </div>
@@ -1250,7 +1695,26 @@
 
 </div>
 
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
 <script>
+  // ═══════════════════════════════════════════════════════════════
+  // CONFIGURATION SUPABASE
+  // ═══════════════════════════════════════════════════════════════
+  const SUPABASE_URL = 'https://ojupynkafgzcoxbakdkb.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdXB5bmthZmd6Y294YmFrZGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTA3MjMsImV4cCI6MjA5NjA2NjcyM30.C4fkVfpglut0-C5WpMcf9yExRY8zHOCTU_Zhk0Oa0ys';
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Client slug - extraire de l'URL ou utiliser une valeur par défaut
+  const urlParams = new URLSearchParams(window.location.search);
+  const CLIENT_SLUG = urlParams.get('client') || 'moreau-paris12';
+  let CLIENT_ID = null;
+
+  // ═══════════════════════════════════════════════════════════════
+  // NAVIGATION DES SLIDES
+  // ═══════════════════════════════════════════════════════════════
   const slides = document.querySelectorAll('.slide');
   const total = slides.length;
   let cur = 0;
@@ -1277,7 +1741,7 @@
   });
 
   document.getElementById('slidesWrap').addEventListener('click', e => {
-    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a') || e.target.closest('.timeline-status')) return;
+    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a') || e.target.closest('.timeline-status') || e.target.closest('.form-item') || e.target.closest('.btn-save') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea')) return;
     if (e.clientX > window.innerWidth * 0.3) next();
     else prev();
   });
@@ -1295,13 +1759,127 @@
   document.getElementById('btnPrev').style.opacity = '0.3';
 
   // ═══════════════════════════════════════════════════════════════
-  // GESTION DES STATUTS INTERACTIFS (localStorage)
+  // TOAST NOTIFICATIONS
   // ═══════════════════════════════════════════════════════════════
+  function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
 
+  // ═══════════════════════════════════════════════════════════════
+  // GESTION DES STATUTS ROADMAP (SUPABASE + localStorage fallback)
+  // ═══════════════════════════════════════════════════════════════
   const STORAGE_KEY = 'optimi-onboarding-statuses';
+  const STORAGE_KEY_FORM = 'optimi-onboarding-form';
 
-  // Charger les statuts sauvegardés
-  function loadStatuses() {
+  // Charger le client depuis Supabase
+  async function loadClient() {
+    try {
+      const { data, error } = await supabase
+        .from('onboarding_clients')
+        .select('id')
+        .eq('client_slug', CLIENT_SLUG)
+        .single();
+
+      if (error) {
+        console.log('Client non trouve, creation en cours...');
+        // Créer le client s'il n'existe pas
+        const { data: newClient, error: createError } = await supabase
+          .from('onboarding_clients')
+          .insert({
+            client_slug: CLIENT_SLUG,
+            property_name: 'Studio 38m²',
+            property_address: '4 rue Moreau, Paris 12',
+            property_surface: 38,
+            property_district: 'Paris 12 - Bastille',
+            commission_rate: 20,
+            estimated_revenue_annual: 23008,
+            estimated_revenue_monthly_gross: 2396,
+            estimated_revenue_monthly_net: 1917
+          })
+          .select('id')
+          .single();
+
+        if (createError) {
+          console.error('Erreur creation client:', createError);
+          return null;
+        }
+        CLIENT_ID = newClient.id;
+        return newClient.id;
+      }
+
+      CLIENT_ID = data.id;
+      return data.id;
+    } catch (e) {
+      console.error('Erreur loadClient:', e);
+      return null;
+    }
+  }
+
+  // Charger les statuts depuis Supabase
+  async function loadStatusesFromSupabase() {
+    if (!CLIENT_ID) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('onboarding_progress')
+        .select('step_id, status')
+        .eq('client_id', CLIENT_ID);
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        data.forEach(row => {
+          const el = document.querySelector(`[data-step="${row.step_id}"]`);
+          if (el) {
+            applyStatus(el, row.status);
+          }
+        });
+      }
+    } catch (e) {
+      console.error('Erreur chargement statuts Supabase:', e);
+      // Fallback localStorage
+      loadStatusesFromLocalStorage();
+    }
+  }
+
+  // Sauvegarder un statut dans Supabase
+  async function saveStatusToSupabase(stepId, status, stepName) {
+    if (!CLIENT_ID) {
+      // Fallback localStorage
+      saveStatusesToLocalStorage();
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('onboarding_progress')
+        .upsert({
+          client_id: CLIENT_ID,
+          step_id: stepId,
+          step_name: stepName,
+          status: status,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'client_id,step_id'
+        });
+
+      if (error) throw error;
+
+      // Aussi sauvegarder en localStorage comme backup
+      saveStatusesToLocalStorage();
+    } catch (e) {
+      console.error('Erreur sauvegarde statut Supabase:', e);
+      saveStatusesToLocalStorage();
+    }
+  }
+
+  // Fallback localStorage pour les statuts
+  function loadStatusesFromLocalStorage() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const statuses = JSON.parse(saved);
@@ -1314,8 +1892,7 @@
     }
   }
 
-  // Sauvegarder les statuts
-  function saveStatuses() {
+  function saveStatusesToLocalStorage() {
     const statuses = {};
     document.querySelectorAll('[data-step]').forEach(el => {
       const stepId = el.getAttribute('data-step');
@@ -1342,6 +1919,8 @@
   function toggleStatus(el) {
     event.stopPropagation();
     const isDone = el.classList.contains('status-done');
+    const stepId = el.getAttribute('data-step');
+    const stepName = el.closest('.timeline-item')?.querySelector('.timeline-title')?.textContent || stepId;
 
     // Animation de transition
     el.style.transform = 'scale(0.9)';
@@ -1349,29 +1928,303 @@
       el.style.transform = '';
     }, 150);
 
-    if (isDone) {
-      applyStatus(el, 'todo');
+    const newStatus = isDone ? 'todo' : 'done';
+    applyStatus(el, newStatus);
+
+    // Sauvegarder dans Supabase
+    saveStatusToSupabase(stepId, newStatus, stepName);
+    updateRoadmapProgress();
+  }
+
+  // Mettre à jour la progression roadmap
+  function updateRoadmapProgress() {
+    const totalSteps = document.querySelectorAll('[data-step]').length;
+    const doneSteps = document.querySelectorAll('[data-step].status-done').length;
+    console.log(`Progression roadmap: ${doneSteps}/${totalSteps}`);
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // GESTION DES FORMULAIRES (SUPABASE)
+  // ═══════════════════════════════════════════════════════════════
+  const formFields = [
+    'doc_identity', 'doc_rib', 'doc_registration_number', 'doc_insurance',
+    'property_full_address', 'property_floor', 'property_access_codes',
+    'property_surface', 'property_capacity', 'property_wifi_name',
+    'property_wifi_password', 'property_equipment', 'property_copro_rules',
+    'keys_count', 'has_smart_lock', 'shooting_availability', 'launch_date',
+    'emergency_contact_name', 'emergency_contact_phone', 'linen_provider'
+  ];
+
+  let saveTimeout = null;
+  let formData = {};
+
+  // Charger les données du formulaire depuis Supabase
+  async function loadFormFromSupabase() {
+    if (!CLIENT_ID) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('onboarding_info')
+        .select('*')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      if (error && error.code !== 'PGRST116') throw error;
+
+      if (data) {
+        formData = data;
+        // Remplir les champs
+        formFields.forEach(field => {
+          const el = document.getElementById(field);
+          if (el && data[field] !== null && data[field] !== undefined) {
+            el.value = data[field];
+            el.classList.add('filled');
+            updateFieldIndicator(field, 'saved');
+            el.closest('.form-item')?.classList.add('saved');
+          }
+        });
+        updateFormProgress();
+      }
+    } catch (e) {
+      console.error('Erreur chargement formulaire:', e);
+      loadFormFromLocalStorage();
+    }
+  }
+
+  // Fallback localStorage pour le formulaire
+  function loadFormFromLocalStorage() {
+    const saved = localStorage.getItem(STORAGE_KEY_FORM);
+    if (saved) {
+      formData = JSON.parse(saved);
+      formFields.forEach(field => {
+        const el = document.getElementById(field);
+        if (el && formData[field]) {
+          el.value = formData[field];
+          el.classList.add('filled');
+          updateFieldIndicator(field, 'saved');
+          el.closest('.form-item')?.classList.add('saved');
+        }
+      });
+      updateFormProgress();
+    }
+  }
+
+  function saveFormToLocalStorage() {
+    const data = {};
+    formFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el && el.value) {
+        data[field] = el.value;
+      }
+    });
+    localStorage.setItem(STORAGE_KEY_FORM, JSON.stringify(data));
+  }
+
+  // Mettre à jour l'indicateur d'un champ
+  function updateFieldIndicator(field, status) {
+    const indicator = document.getElementById(`ind-${field}`);
+    if (!indicator) return;
+
+    indicator.classList.remove('pending', 'saved', 'saving');
+    indicator.classList.add(status);
+
+    switch(status) {
+      case 'saving':
+        indicator.textContent = 'Sauvegarde...';
+        break;
+      case 'saved':
+        indicator.textContent = 'Enregistre';
+        break;
+      default:
+        indicator.textContent = 'A remplir';
+    }
+  }
+
+  // Mettre à jour la progression du formulaire
+  function updateFormProgress() {
+    let filled = 0;
+    formFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el && el.value) filled++;
+    });
+
+    const progress1 = document.getElementById('formProgress1');
+    const progress2 = document.getElementById('formProgress2');
+    if (progress1) progress1.textContent = `${filled}/${formFields.length}`;
+    if (progress2) progress2.textContent = `${filled}/${formFields.length}`;
+  }
+
+  // Auto-save sur modification d'un champ
+  function handleFieldChange(field) {
+    const el = document.getElementById(field);
+    if (!el) return;
+
+    const value = el.value;
+
+    if (value) {
+      el.classList.add('filled');
+      el.closest('.form-item')?.classList.add('saved');
     } else {
-      applyStatus(el, 'done');
+      el.classList.remove('filled');
+      el.closest('.form-item')?.classList.remove('saved');
     }
 
-    saveStatuses();
-    updateProgress();
+    updateFieldIndicator(field, 'saving');
+
+    // Debounce pour eviter trop de requetes
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+      autoSaveField(field, value);
+    }, 800);
+
+    updateFormProgress();
   }
 
-  // Mettre à jour la progression
-  function updateProgress() {
-    const total = document.querySelectorAll('[data-step]').length;
-    const done = document.querySelectorAll('[data-step].status-done').length;
-    const percent = Math.round((done / total) * 100);
+  // Sauvegarde automatique d'un champ
+  async function autoSaveField(field, value) {
+    formData[field] = value;
+    saveFormToLocalStorage();
 
-    // Afficher la progression dans la console (optionnel)
-    console.log(`Progression onboarding: ${done}/${total} (${percent}%)`);
+    if (!CLIENT_ID) {
+      updateFieldIndicator(field, value ? 'saved' : 'pending');
+      return;
+    }
+
+    try {
+      // Vérifier si une entrée existe
+      const { data: existing } = await supabase
+        .from('onboarding_info')
+        .select('id')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      const updateData = { [field]: value, updated_at: new Date().toISOString() };
+
+      if (existing) {
+        // Update
+        await supabase
+          .from('onboarding_info')
+          .update(updateData)
+          .eq('client_id', CLIENT_ID);
+      } else {
+        // Insert
+        await supabase
+          .from('onboarding_info')
+          .insert({ client_id: CLIENT_ID, ...updateData });
+      }
+
+      updateFieldIndicator(field, value ? 'saved' : 'pending');
+    } catch (e) {
+      console.error('Erreur auto-save:', e);
+      updateFieldIndicator(field, value ? 'saved' : 'pending');
+    }
   }
 
-  // Charger les statuts au démarrage
-  loadStatuses();
-  updateProgress();
+  // Sauvegarder tout le formulaire
+  async function saveAllToSupabase() {
+    const btn = document.getElementById('btnSaveAll');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    const data = { updated_at: new Date().toISOString() };
+    formFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        let value = el.value;
+        // Convertir les types appropriés
+        if (field === 'property_capacity' || field === 'keys_count') {
+          value = value ? parseInt(value) : null;
+        }
+        if (field === 'has_smart_lock') {
+          value = value === 'true' ? true : value === 'false' ? false : value;
+        }
+        data[field] = value || null;
+      }
+    });
+
+    saveFormToLocalStorage();
+
+    if (!CLIENT_ID) {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      showToast('Donnees sauvegardees localement', 'success');
+      return;
+    }
+
+    try {
+      // Vérifier si une entrée existe
+      const { data: existing } = await supabase
+        .from('onboarding_info')
+        .select('id')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      if (existing) {
+        await supabase
+          .from('onboarding_info')
+          .update(data)
+          .eq('client_id', CLIENT_ID);
+      } else {
+        await supabase
+          .from('onboarding_info')
+          .insert({ client_id: CLIENT_ID, ...data });
+      }
+
+      showToast('Toutes les informations ont ete enregistrees !', 'success');
+
+      // Marquer tous les champs comme saved
+      formFields.forEach(field => {
+        const el = document.getElementById(field);
+        if (el && el.value) {
+          updateFieldIndicator(field, 'saved');
+        }
+      });
+    } catch (e) {
+      console.error('Erreur sauvegarde complete:', e);
+      showToast('Erreur lors de la sauvegarde', 'error');
+    }
+
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+
+  // Attacher les event listeners aux champs
+  function initFormListeners() {
+    formFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        el.addEventListener('input', () => handleFieldChange(field));
+        el.addEventListener('change', () => handleFieldChange(field));
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // INITIALISATION
+  // ═══════════════════════════════════════════════════════════════
+  async function init() {
+    // Charger les données localStorage en premier (rapide)
+    loadStatusesFromLocalStorage();
+    loadFormFromLocalStorage();
+
+    // Initialiser les listeners de formulaire
+    initFormListeners();
+    updateFormProgress();
+    updateRoadmapProgress();
+
+    // Puis charger depuis Supabase (asynchrone)
+    await loadClient();
+    if (CLIENT_ID) {
+      await loadStatusesFromSupabase();
+      await loadFormFromSupabase();
+      console.log('Donnees Supabase chargees pour client:', CLIENT_SLUG);
+    } else {
+      console.log('Mode hors-ligne: utilisation du localStorage');
+    }
+  }
+
+  // Lancer l'initialisation
+  init();
 </script>
 </body>
 </html>
