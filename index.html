@@ -1850,6 +1850,114 @@
       pointer-events: none !important;
       z-index: -1 !important;
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       STYLES SLIDE CONFIRMATION
+    ═══════════════════════════════════════════════════════════════ */
+    .confirmation-box {
+      background: linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(20,20,20,0.98) 100%);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 16px;
+      padding: 28px;
+      max-width: min(420px, calc(100vw - 60px));
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+    .confirmation-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: #000;
+    }
+    .confirmation-icon.success {
+      background: linear-gradient(135deg, var(--green-2) 0%, #1a7a3a 100%);
+    }
+    .confirmation-icon.error {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    }
+    .confirmation-status h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .confirmation-status p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .confirmation-checklist {
+      margin-top: 20px;
+      text-align: left;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 16px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    .checklist-item .check-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .checklist-item.done {
+      color: var(--green-2);
+    }
+    .checklist-item.done .check-icon {
+      color: var(--green-2);
+    }
+    .checklist-item.missing {
+      color: #e67e22;
+    }
+    .checklist-item.missing .check-icon {
+      color: #e67e22;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+      color: #000;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 220px;
+      transition: all 0.3s ease;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,175,55,0.3);
+    }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-submit.success {
+      background: linear-gradient(135deg, var(--green-2) 0%, #1a7a3a 100%);
+      color: #fff;
+    }
+    .btn-submit.error {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -2651,6 +2759,63 @@
     </p>
   </div>
 
+  <!-- SLIDE — CONFIRMATION & SOUMISSION -->
+  <div class="slide" id="confirmationSlide">
+    <div class="slide-tag">Confirmation</div>
+    <div class="badge badge-green anim">Derniere etape</div>
+    <h2 class="t-h1 gradient-text anim" style="margin-bottom:20px;">
+      Confirmer votre inscription
+    </h2>
+
+    <div class="confirmation-box anim" id="confirmationBox">
+      <div class="confirmation-icon" id="confirmationIcon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 12l2 2 4-4"/>
+          <circle cx="12" cy="12" r="10"/>
+        </svg>
+      </div>
+      <div class="confirmation-status" id="confirmationStatus">
+        <h3 id="confirmationTitle">Pret a soumettre ?</h3>
+        <p id="confirmationMessage">Cliquez sur le bouton ci-dessous pour envoyer votre dossier d'inscription a notre equipe.</p>
+      </div>
+
+      <div class="confirmation-checklist" id="confirmationChecklist">
+        <div class="checklist-item" id="check-identity">
+          <span class="check-icon">○</span>
+          <span class="check-label">Piece d'identite</span>
+        </div>
+        <div class="checklist-item" id="check-iban">
+          <span class="check-icon">○</span>
+          <span class="check-label">RIB / IBAN</span>
+        </div>
+        <div class="checklist-item" id="check-address">
+          <span class="check-icon">○</span>
+          <span class="check-label">Adresse du bien</span>
+        </div>
+        <div class="checklist-item" id="check-contact">
+          <span class="check-icon">○</span>
+          <span class="check-label">Coordonnees de contact</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-submit anim" id="btnSubmitFinal" onclick="submitFinalData()">
+      <span class="btn-submit-text">Soumettre mon dossier</span>
+      <span class="btn-submit-loader" style="display:none;">
+        <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+        Envoi en cours...
+      </span>
+    </button>
+
+    <p class="anim" style="font-size:12px; color:var(--text-dim); margin-top:16px;">
+      En soumettant, vous confirmez l'exactitude des informations fournies
+    </p>
+  </div>
+
   <!-- SLIDE 14 — PROCHAINES ETAPES & CTA -->
   <div class="slide">
     <div class="slide-tag">Prochaines etapes</div>
@@ -2719,16 +2884,22 @@
 
   // Initialisation Supabase avec gestion d'erreur
   let supabaseClient = null;
+  let SUPABASE_CONNECTED = false;
   try {
     if (window.supabase && window.supabase.createClient) {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      console.log('Supabase initialise avec succes');
+      SUPABASE_CONNECTED = true;
+      console.log('✅ Supabase initialisé avec succès');
+      console.log('📡 URL:', SUPABASE_URL);
     } else {
-      console.warn('SDK Supabase non charge, mode hors-ligne');
+      console.warn('⚠️ SDK Supabase non chargé, mode hors-ligne');
     }
   } catch (e) {
-    console.error('Erreur initialisation Supabase:', e);
+    console.error('❌ Erreur initialisation Supabase:', e);
   }
+
+  // Variable pour suivre si les données ont été soumises
+  let DATA_SUBMITTED = false;
 
   // Client slug et identification
   const urlParams = new URLSearchParams(window.location.search);
@@ -2962,6 +3133,16 @@
     document.getElementById('btnPrev').style.opacity = cur === 0 ? '0.3' : '1';
     document.getElementById('btnNext').style.opacity = cur === total - 1 ? '0.3' : '1';
     console.log('goTo: navigation réussie vers slide', cur + 1);
+
+    // Mettre à jour la checklist si on arrive sur la slide de confirmation
+    if (slides[cur].id === 'confirmationSlide') {
+      updateConfirmationChecklist();
+    }
+
+    // Mettre à jour le récapitulatif si on arrive sur la slide récapitulatif
+    if (slides[cur].querySelector('.recap-section')) {
+      updateRecap();
+    }
   }
 
   function next() {
@@ -3816,6 +3997,169 @@
         el.addEventListener('change', () => handleFieldChange(field));
       }
     });
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // SOUMISSION FINALE & CONFIRMATION
+  // ═══════════════════════════════════════════════════════════════
+
+  // Mettre à jour la checklist de confirmation
+  function updateConfirmationChecklist() {
+    const checks = {
+      'check-identity': uploadedFiles.identity?.path ? true : false,
+      'check-iban': uploadedFiles.iban?.path ? true : false,
+      'check-address': document.getElementById('property_full_address')?.value ? true : false,
+      'check-contact': (CLIENT_EMAIL && CLIENT_PHONE) ? true : false
+    };
+
+    Object.entries(checks).forEach(([id, done]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('done', 'missing');
+        el.classList.add(done ? 'done' : 'missing');
+        el.querySelector('.check-icon').textContent = done ? '✓' : '○';
+      }
+    });
+  }
+
+  // Fonction de soumission finale
+  async function submitFinalData() {
+    const btn = document.getElementById('btnSubmitFinal');
+    const btnText = btn.querySelector('.btn-submit-text');
+    const btnLoader = btn.querySelector('.btn-submit-loader');
+    const icon = document.getElementById('confirmationIcon');
+    const title = document.getElementById('confirmationTitle');
+    const message = document.getElementById('confirmationMessage');
+
+    // État de chargement
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'flex';
+
+    console.log('📤 Début soumission finale...');
+    console.log('📋 CLIENT_ID:', CLIENT_ID);
+    console.log('📋 CLIENT_EMAIL:', CLIENT_EMAIL);
+    console.log('📋 CLIENT_PHONE:', CLIENT_PHONE);
+    console.log('📋 SUPABASE_CONNECTED:', SUPABASE_CONNECTED);
+
+    try {
+      if (!supabaseClient) {
+        throw new Error('Connexion à la base de données non disponible');
+      }
+
+      if (!CLIENT_ID) {
+        throw new Error('ID client non trouvé - veuillez rafraîchir la page');
+      }
+
+      // Récupérer toutes les données du formulaire
+      const formDataToSubmit = {
+        client_id: CLIENT_ID,
+        full_name: CLIENT_NAME,
+        email: CLIENT_EMAIL,
+        phone: CLIENT_PHONE,
+        updated_at: new Date().toISOString()
+      };
+
+      // Ajouter tous les champs de formulaire
+      formFields.forEach(field => {
+        const el = document.getElementById(field);
+        if (el && el.value) {
+          formDataToSubmit[field] = el.value;
+        }
+      });
+
+      // Ajouter les chemins des fichiers uploadés
+      if (uploadedFiles.identity?.path) {
+        formDataToSubmit.id_card_path = uploadedFiles.identity.path;
+      }
+      if (uploadedFiles.iban?.path) {
+        formDataToSubmit.rib_path = uploadedFiles.iban.path;
+      }
+
+      console.log('📦 Données à soumettre:', formDataToSubmit);
+
+      // Vérifier si une entrée existe déjà
+      const { data: existing, error: selectError } = await supabaseClient
+        .from('onboarding_info')
+        .select('id')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      if (selectError && selectError.code !== 'PGRST116') {
+        console.error('❌ Erreur SELECT:', selectError);
+      }
+
+      let result;
+      if (existing) {
+        // Update
+        console.log('📝 Mise à jour des données existantes...');
+        result = await supabaseClient
+          .from('onboarding_info')
+          .update(formDataToSubmit)
+          .eq('client_id', CLIENT_ID)
+          .select();
+      } else {
+        // Insert
+        console.log('➕ Création nouvelle entrée...');
+        result = await supabaseClient
+          .from('onboarding_info')
+          .insert(formDataToSubmit)
+          .select();
+      }
+
+      if (result.error) {
+        console.error('❌ Erreur Supabase:', result.error);
+        throw new Error(result.error.message || 'Erreur lors de la sauvegarde');
+      }
+
+      console.log('✅ Données sauvegardées:', result.data);
+
+      // Marquer comme soumis
+      DATA_SUBMITTED = true;
+
+      // Mettre à jour le statut du client
+      await supabaseClient
+        .from('onboarding_clients')
+        .update({
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', CLIENT_ID);
+
+      // Succès !
+      icon.classList.add('success');
+      icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>';
+      title.textContent = 'Dossier soumis avec succes !';
+      message.textContent = 'Votre dossier a ete envoye a notre equipe. Nous vous contacterons dans les 24h.';
+
+      btn.classList.add('success');
+      btnText.textContent = '✓ Dossier envoye';
+      btnText.style.display = 'block';
+      btnLoader.style.display = 'none';
+
+      showToast('Dossier soumis avec succes !', 'success');
+
+      // Passer automatiquement à la slide suivante après 2 secondes
+      setTimeout(() => {
+        next();
+      }, 2000);
+
+    } catch (error) {
+      console.error('❌ Erreur soumission:', error);
+
+      // Erreur
+      icon.classList.add('error');
+      icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+      title.textContent = 'Erreur de soumission';
+      message.textContent = error.message || 'Une erreur est survenue. Veuillez reessayer.';
+
+      btn.classList.add('error');
+      btnText.textContent = 'Reessayer';
+      btnText.style.display = 'block';
+      btnLoader.style.display = 'none';
+      btn.disabled = false;
+
+      showToast('Erreur: ' + error.message, 'error');
+    }
   }
 
   // ═══════════════════════════════════════════════════════════════
