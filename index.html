@@ -1710,10 +1710,10 @@
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdXB5bmthZmd6Y294YmFrZGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTA3MjMsImV4cCI6MjA5NjA2NjcyM30.C4fkVfpglut0-C5WpMcf9yExRY8zHOCTU_Zhk0Oa0ys';
 
   // Initialisation Supabase avec gestion d'erreur
-  let supabase = null;
+  let supabaseClient = null;
   try {
     if (window.supabase && window.supabase.createClient) {
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       console.log('Supabase initialise avec succes');
     } else {
       console.warn('SDK Supabase non charge, mode hors-ligne');
@@ -1812,12 +1812,12 @@
 
   // Charger le client depuis Supabase
   async function loadClient() {
-    if (!supabase) {
+    if (!supabaseClient) {
       console.log('Supabase non disponible, mode localStorage');
       return null;
     }
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('onboarding_clients')
         .select('id')
         .eq('client_slug', CLIENT_SLUG)
@@ -1826,7 +1826,7 @@
       if (error) {
         console.log('Client non trouve, creation en cours...');
         // Créer le client s'il n'existe pas
-        const { data: newClient, error: createError } = await supabase
+        const { data: newClient, error: createError } = await supabaseClient
           .from('onboarding_clients')
           .insert({
             client_slug: CLIENT_SLUG,
@@ -1860,10 +1860,10 @@
 
   // Charger les statuts depuis Supabase
   async function loadStatusesFromSupabase() {
-    if (!CLIENT_ID || !supabase) return;
+    if (!CLIENT_ID || !supabaseClient) return;
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('onboarding_progress')
         .select('step_id, status')
         .eq('client_id', CLIENT_ID);
@@ -1894,7 +1894,7 @@
     }
 
     try {
-      const { error } = await supabase
+      const { error } = await supabaseClient
         .from('onboarding_progress')
         .upsert({
           client_id: CLIENT_ID,
@@ -1998,10 +1998,10 @@
 
   // Charger les données du formulaire depuis Supabase
   async function loadFormFromSupabase() {
-    if (!CLIENT_ID || !supabase) return;
+    if (!CLIENT_ID || !supabaseClient) return;
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('onboarding_info')
         .select('*')
         .eq('client_id', CLIENT_ID)
@@ -2130,7 +2130,7 @@
 
     try {
       // Vérifier si une entrée existe
-      const { data: existing } = await supabase
+      const { data: existing } = await supabaseClient
         .from('onboarding_info')
         .select('id')
         .eq('client_id', CLIENT_ID)
@@ -2140,13 +2140,13 @@
 
       if (existing) {
         // Update
-        await supabase
+        await supabaseClient
           .from('onboarding_info')
           .update(updateData)
           .eq('client_id', CLIENT_ID);
       } else {
         // Insert
-        await supabase
+        await supabaseClient
           .from('onboarding_info')
           .insert({ client_id: CLIENT_ID, ...updateData });
       }
@@ -2191,19 +2191,19 @@
 
     try {
       // Vérifier si une entrée existe
-      const { data: existing } = await supabase
+      const { data: existing } = await supabaseClient
         .from('onboarding_info')
         .select('id')
         .eq('client_id', CLIENT_ID)
         .single();
 
       if (existing) {
-        await supabase
+        await supabaseClient
           .from('onboarding_info')
           .update(data)
           .eq('client_id', CLIENT_ID);
       } else {
-        await supabase
+        await supabaseClient
           .from('onboarding_info')
           .insert({ client_id: CLIENT_ID, ...data });
       }
