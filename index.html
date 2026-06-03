@@ -2974,22 +2974,13 @@
     if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
   });
 
-  document.getElementById('slidesWrap').addEventListener('click', e => {
-    if (!VERIFICATION_PASSED) return; // Bloquer si non vérifié
-    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a') || e.target.closest('.timeline-status') || e.target.closest('.form-item') || e.target.closest('.btn-save') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea') || e.target.closest('.file-upload-area') || e.target.closest('.file-upload-preview') || e.target.closest('.file-remove')) return;
-    if (e.clientX > window.innerWidth * 0.3) next();
-    else prev();
-  });
+  // Navigation par clic sur slides DÉSACTIVÉE - uniquement par flèches
+  // document.getElementById('slidesWrap').addEventListener('click', e => { ... });
 
-  let touchStartX = 0;
-  document.getElementById('slidesWrap').addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-  });
-  document.getElementById('slidesWrap').addEventListener('touchend', e => {
-    if (!VERIFICATION_PASSED) return; // Bloquer si non vérifié
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
-  });
+  // Navigation par swipe tactile DÉSACTIVÉE - uniquement par flèches
+  // let touchStartX = 0;
+  // document.getElementById('slidesWrap').addEventListener('touchstart', e => { ... });
+  // document.getElementById('slidesWrap').addEventListener('touchend', e => { ... });
 
   document.getElementById('progressBar').style.width = (1 / total * 100) + '%';
   document.getElementById('btnPrev').style.opacity = '0.3';
