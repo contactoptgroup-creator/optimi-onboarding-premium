@@ -1705,7 +1705,18 @@
   const SUPABASE_URL = 'https://ojupynkafgzcoxbakdkb.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdXB5bmthZmd6Y294YmFrZGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTA3MjMsImV4cCI6MjA5NjA2NjcyM30.C4fkVfpglut0-C5WpMcf9yExRY8zHOCTU_Zhk0Oa0ys';
 
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // Initialisation Supabase avec gestion d'erreur
+  let supabase = null;
+  try {
+    if (window.supabase && window.supabase.createClient) {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log('Supabase initialise avec succes');
+    } else {
+      console.warn('SDK Supabase non charge, mode hors-ligne');
+    }
+  } catch (e) {
+    console.error('Erreur initialisation Supabase:', e);
+  }
 
   // Client slug - extraire de l'URL ou utiliser une valeur par défaut
   const urlParams = new URLSearchParams(window.location.search);
@@ -1778,6 +1789,10 @@
 
   // Charger le client depuis Supabase
   async function loadClient() {
+    if (!supabase) {
+      console.log('Supabase non disponible, mode localStorage');
+      return null;
+    }
     try {
       const { data, error } = await supabase
         .from('onboarding_clients')
@@ -1822,7 +1837,7 @@
 
   // Charger les statuts depuis Supabase
   async function loadStatusesFromSupabase() {
-    if (!CLIENT_ID) return;
+    if (!CLIENT_ID || !supabase) return;
 
     try {
       const { data, error } = await supabase
@@ -1960,7 +1975,7 @@
 
   // Charger les données du formulaire depuis Supabase
   async function loadFormFromSupabase() {
-    if (!CLIENT_ID) return;
+    if (!CLIENT_ID || !supabase) return;
 
     try {
       const { data, error } = await supabase
