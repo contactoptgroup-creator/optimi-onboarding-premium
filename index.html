@@ -2323,7 +2323,7 @@
                   <div class="file-name" id="filename-identity"></div>
                   <div class="file-size" id="filesize-identity"></div>
                 </div>
-                <button class="file-remove" onclick="removeFile('identity')" type="button">✕</button>
+                <button class="file-remove" onclick="removeFile('identity', event)" type="button">✕</button>
               </div>
               <div class="file-upload-progress" id="progress-identity">
                 <div class="file-upload-progress-bar">
@@ -2352,7 +2352,7 @@
                   <div class="file-name" id="filename-iban"></div>
                   <div class="file-size" id="filesize-iban"></div>
                 </div>
-                <button class="file-remove" onclick="removeFile('iban')" type="button">✕</button>
+                <button class="file-remove" onclick="removeFile('iban', event)" type="button">✕</button>
               </div>
               <div class="file-upload-progress" id="progress-iban">
                 <div class="file-upload-progress-bar">
@@ -2367,7 +2367,7 @@
               <span class="save-indicator pending" id="ind-doc_registration_number">A remplir</span>
             </div>
             <span class="hint">Si applicable (13 chiffres)</span>
-            <input type="text" class="form-input" id="doc_registration_number" placeholder="Ex: 7512300012345" data-field="doc_registration_number">
+            <input type="text" class="form-input" autocomplete="off" id="doc_registration_number" placeholder="Ex: 7512300012345" data-field="doc_registration_number">
           </div>
           <div class="form-item" data-field="doc_insurance" data-category="admin-docs">
             <div class="form-label">
@@ -2375,7 +2375,7 @@
               <span class="save-indicator pending" id="ind-doc_insurance">A remplir</span>
             </div>
             <span class="hint">Assurance location saisonniere</span>
-            <input type="text" class="form-input" id="doc_insurance" placeholder="Ex: POL-123456" data-field="doc_insurance">
+            <input type="text" class="form-input" autocomplete="off" id="doc_insurance" placeholder="Ex: POL-123456" data-field="doc_insurance">
           </div>
         </div>
       </div>
@@ -2401,7 +2401,7 @@
               <span class="save-indicator pending" id="ind-property_full_address">A remplir</span>
             </div>
             <span class="hint">Numero, rue, code postal, ville</span>
-            <input type="text" class="form-input" id="property_full_address" placeholder="Ex: 4 rue Moreau, 75012 Paris" data-field="property_full_address">
+            <input type="text" class="form-input" autocomplete="off" id="property_full_address" placeholder="Ex: 4 rue Moreau, 75012 Paris" data-field="property_full_address">
           </div>
           <div class="form-item" data-field="property_floor" data-category="property-info">
             <div class="form-label">
@@ -2409,7 +2409,7 @@
               <span class="save-indicator pending" id="ind-property_floor">A remplir</span>
             </div>
             <span class="hint">Ex: 3eme avec ascenseur</span>
-            <input type="text" class="form-input" id="property_floor" placeholder="Ex: 2eme etage, avec ascenseur" data-field="property_floor">
+            <input type="text" class="form-input" autocomplete="off" id="property_floor" placeholder="Ex: 2eme etage, avec ascenseur" data-field="property_floor">
           </div>
           <div class="form-item" data-field="property_access_codes" data-category="property-info">
             <div class="form-label">
@@ -2417,7 +2417,7 @@
               <span class="save-indicator pending" id="ind-property_access_codes">A remplir</span>
             </div>
             <span class="hint">Digicode, interphone, boite a cles</span>
-            <input type="text" class="form-input" id="property_access_codes" placeholder="Ex: Digicode 1234A, Interphone DUPONT" data-field="property_access_codes">
+            <input type="text" class="form-input" autocomplete="off" id="property_access_codes" placeholder="Ex: Digicode 1234A, Interphone DUPONT" data-field="property_access_codes">
           </div>
           <div class="form-item" data-field="property_surface" data-category="property-info">
             <div class="form-label">
@@ -2425,7 +2425,7 @@
               <span class="save-indicator pending" id="ind-property_surface">A remplir</span>
             </div>
             <span class="hint">En metres carres</span>
-            <input type="text" class="form-input" id="property_surface" placeholder="Ex: 38" data-field="property_surface">
+            <input type="text" class="form-input" autocomplete="off" id="property_surface" placeholder="Ex: 38" data-field="property_surface">
           </div>
           <div class="form-item" data-field="property_capacity" data-category="property-info">
             <div class="form-label">
@@ -2433,7 +2433,7 @@
               <span class="save-indicator pending" id="ind-property_capacity">A remplir</span>
             </div>
             <span class="hint">Nombre max de voyageurs</span>
-            <select class="form-input" id="property_capacity" data-field="property_capacity">
+            <select class="form-input" autocomplete="off" id="property_capacity" data-field="property_capacity">
               <option value="">Selectionnez...</option>
               <option value="1">1 voyageur</option>
               <option value="2">2 voyageurs</option>
@@ -2480,7 +2480,7 @@
               <span class="save-indicator pending" id="ind-property_wifi_name">A remplir</span>
             </div>
             <span class="hint">Nom du reseau</span>
-            <input type="text" class="form-input" id="property_wifi_name" placeholder="Ex: Livebox-A1B2" data-field="property_wifi_name">
+            <input type="text" class="form-input" autocomplete="off" id="property_wifi_name" placeholder="Ex: Livebox-A1B2" data-field="property_wifi_name">
           </div>
           <div class="form-item" data-field="property_wifi_password" data-category="property-suite">
             <div class="form-label">
@@ -2488,7 +2488,7 @@
               <span class="save-indicator pending" id="ind-property_wifi_password">A remplir</span>
             </div>
             <span class="hint">Cle de securite</span>
-            <input type="text" class="form-input" id="property_wifi_password" placeholder="Ex: aBcD1234EfGh" data-field="property_wifi_password">
+            <input type="text" class="form-input" autocomplete="off" id="property_wifi_password" placeholder="Ex: aBcD1234EfGh" data-field="property_wifi_password">
           </div>
           <div class="form-item full-width" data-field="property_equipment" data-category="property-suite">
             <div class="form-label">
@@ -2496,7 +2496,7 @@
               <span class="save-indicator pending" id="ind-property_equipment">A remplir</span>
             </div>
             <span class="hint">TV, lave-linge, seche-linge, parking, climatisation, etc.</span>
-            <textarea class="form-input" id="property_equipment" placeholder="Ex: TV connectee, lave-linge, seche-cheveux, fer a repasser, climatisation reversible" data-field="property_equipment"></textarea>
+            <textarea class="form-input" autocomplete="off" id="property_equipment" placeholder="Ex: TV connectee, lave-linge, seche-cheveux, fer a repasser, climatisation reversible" data-field="property_equipment"></textarea>
           </div>
           <div class="form-item full-width" data-field="property_copro_rules" data-category="property-suite">
             <div class="form-label">
@@ -2504,7 +2504,7 @@
               <span class="save-indicator pending" id="ind-property_copro_rules">A remplir</span>
             </div>
             <span class="hint">Restrictions, heures de silence, regles particulieres</span>
-            <textarea class="form-input" id="property_copro_rules" placeholder="Ex: Silence 22h-8h, pas de fetes, poubelles au local RDC" data-field="property_copro_rules"></textarea>
+            <textarea class="form-input" autocomplete="off" id="property_copro_rules" placeholder="Ex: Silence 22h-8h, pas de fetes, poubelles au local RDC" data-field="property_copro_rules"></textarea>
           </div>
         </div>
       </div>
@@ -2530,7 +2530,7 @@
               <span class="save-indicator pending" id="ind-keys_count">A remplir</span>
             </div>
             <span class="hint">Minimum 2 recommande</span>
-            <select class="form-input" id="keys_count" data-field="keys_count">
+            <select class="form-input" autocomplete="off" id="keys_count" data-field="keys_count">
               <option value="">Selectionnez...</option>
               <option value="1">1 jeu</option>
               <option value="2">2 jeux (recommande)</option>
@@ -2543,7 +2543,7 @@
               <span class="save-indicator pending" id="ind-has_smart_lock">A remplir</span>
             </div>
             <span class="hint">Pour check-in autonomes</span>
-            <select class="form-input" id="has_smart_lock" data-field="has_smart_lock">
+            <select class="form-input" autocomplete="off" id="has_smart_lock" data-field="has_smart_lock">
               <option value="">Selectionnez...</option>
               <option value="true">Oui, j'en ai une</option>
               <option value="false">Non, pas de serrure connectee</option>
@@ -2556,7 +2556,7 @@
               <span class="save-indicator pending" id="ind-shooting_availability">A remplir</span>
             </div>
             <span class="hint">Vos creneaux possibles</span>
-            <input type="text" class="form-input" id="shooting_availability" placeholder="Ex: Lundi et mardi matin" data-field="shooting_availability">
+            <input type="text" class="form-input" autocomplete="off" id="shooting_availability" placeholder="Ex: Lundi et mardi matin" data-field="shooting_availability">
           </div>
           <div class="form-item" data-field="launch_date" data-category="logistics">
             <div class="form-label">
@@ -2564,7 +2564,7 @@
               <span class="save-indicator pending" id="ind-launch_date">A remplir</span>
             </div>
             <span class="hint">Quand voulez-vous demarrer?</span>
-            <input type="date" class="form-input" id="launch_date" data-field="launch_date">
+            <input type="date" class="form-input" autocomplete="off" id="launch_date" data-field="launch_date">
           </div>
           <div class="form-item" data-field="emergency_contact_name" data-category="logistics">
             <div class="form-label">
@@ -2572,7 +2572,7 @@
               <span class="save-indicator pending" id="ind-emergency_contact_name">A remplir</span>
             </div>
             <span class="hint">Personne a contacter en cas d'urgence</span>
-            <input type="text" class="form-input" id="emergency_contact_name" placeholder="Ex: Marie Dupont" data-field="emergency_contact_name">
+            <input type="text" class="form-input" autocomplete="off" id="emergency_contact_name" placeholder="Ex: Marie Dupont" data-field="emergency_contact_name">
           </div>
           <div class="form-item" data-field="emergency_contact_phone" data-category="logistics">
             <div class="form-label">
@@ -2580,7 +2580,7 @@
               <span class="save-indicator pending" id="ind-emergency_contact_phone">A remplir</span>
             </div>
             <span class="hint">Numero de telephone</span>
-            <input type="tel" class="form-input" id="emergency_contact_phone" placeholder="Ex: 06 12 34 56 78" data-field="emergency_contact_phone">
+            <input type="tel" class="form-input" autocomplete="off" id="emergency_contact_phone" placeholder="Ex: 06 12 34 56 78" data-field="emergency_contact_phone">
           </div>
           <div class="form-item full-width" data-field="linen_provider" data-category="logistics">
             <div class="form-label">
@@ -2588,7 +2588,7 @@
               <span class="save-indicator pending" id="ind-linen_provider">A remplir</span>
             </div>
             <span class="hint">Qui fournit draps et serviettes?</span>
-            <select class="form-input" id="linen_provider" data-field="linen_provider">
+            <select class="form-input" autocomplete="off" id="linen_provider" data-field="linen_provider">
               <option value="">Selectionnez...</option>
               <option value="owner">Je fournis le linge</option>
               <option value="optimi">Je veux le service linge OPTIMI GROUP</option>
@@ -3332,16 +3332,26 @@
     return (bytes / (1024 * 1024)).toFixed(1) + ' Mo';
   }
 
-  function removeFile(type) {
-    event.stopPropagation();
+  function removeFile(type, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
     const area = document.getElementById(`upload-area-${type}`);
     const preview = document.getElementById(`preview-${type}`);
     const input = document.getElementById(`file-${type}`);
 
-    area.classList.remove('has-file');
-    preview.style.display = 'none';
-    input.value = '';
+    if (area) {
+      area.classList.remove('has-file');
+      area.style.display = 'flex';
+    }
+    if (preview) {
+      preview.style.display = 'none';
+    }
+    if (input) {
+      input.value = '';
+    }
 
     uploadedFiles[type] = null;
     updateFieldIndicator(`doc_${type}_file`, 'pending');
@@ -3349,6 +3359,9 @@
     saveFilesToLocalStorage();
     deleteFileFromSupabase(type);
     updateCategoryProgress('admin-docs');
+    updateRecap();
+
+    console.log(`Fichier ${type} supprimé`);
   }
 
   async function uploadFileToSupabase(file, type) {
@@ -3838,6 +3851,12 @@
     // Réinitialiser les fichiers uploadés
     uploadedFiles = { identity: null, iban: null };
 
+    // Réinitialiser les inputs de fichiers
+    const fileIdentity = document.getElementById('file-identity');
+    const fileIban = document.getElementById('file-iban');
+    if (fileIdentity) fileIdentity.value = '';
+    if (fileIban) fileIban.value = '';
+
     // Réinitialiser les previews de fichiers
     const identityPreview = document.getElementById('preview-identity');
     const ibanPreview = document.getElementById('preview-iban');
@@ -3846,8 +3865,18 @@
 
     if (identityPreview) identityPreview.style.display = 'none';
     if (ibanPreview) ibanPreview.style.display = 'none';
-    if (identityArea) identityArea.style.display = 'flex';
-    if (ibanArea) ibanArea.style.display = 'flex';
+    if (identityArea) {
+      identityArea.style.display = 'flex';
+      identityArea.classList.remove('has-file');
+    }
+    if (ibanArea) {
+      ibanArea.style.display = 'flex';
+      ibanArea.classList.remove('has-file');
+    }
+
+    // Réinitialiser les indicateurs de fichiers
+    updateFieldIndicator('doc_identity_file', 'pending');
+    updateFieldIndicator('doc_iban_file', 'pending');
 
     // Réinitialiser les statuts de la roadmap à "A faire"
     document.querySelectorAll('[data-step]').forEach(el => {
@@ -3858,6 +3887,11 @@
 
     // Vider les données en mémoire
     formData = {};
+
+    // Effacer le localStorage
+    localStorage.removeItem('optimi-onboarding-statuses');
+    localStorage.removeItem('optimi-onboarding-form');
+    localStorage.removeItem('optimi-onboarding-files');
 
     console.log('Tous les champs de formulaire réinitialisés');
   }
