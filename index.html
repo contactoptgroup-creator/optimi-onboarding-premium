@@ -1779,6 +1779,15 @@
     body.verification-mode .progress-wrap {
       display: none !important;
     }
+
+    /* Cacher complètement la slide de vérification après validation */
+    .slide.verification-slide.hidden {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      z-index: -1 !important;
+    }
   </style>
 </head>
 <body>
@@ -2789,16 +2798,23 @@
     // IMPORTANT: Cacher la slide de vérification et afficher la première slide
     const verificationSlide = document.getElementById('verificationSlide');
     verificationSlide.classList.remove('active');
-    verificationSlide.style.display = 'none';
+    verificationSlide.classList.add('hidden');
+    verificationSlide.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; z-index: -9999 !important; position: absolute !important; left: -9999px !important;';
 
     // Retirer le mode vérification du body
     document.body.classList.remove('verification-mode');
 
-    // Activer la première slide (Hero)
+    // Activer la première slide (Hero) - s'assurer qu'elle est bien la seule active
+    const allSlides = document.querySelectorAll('.slide');
+    allSlides.forEach(s => s.classList.remove('active'));
+
     const firstSlide = document.querySelector('.slide:not(.verification-slide)');
     if (firstSlide) {
       firstSlide.classList.add('active');
     }
+
+    // Forcer le reflow pour appliquer les styles
+    void verificationSlide.offsetWidth;
 
     // Mettre à jour la navigation
     updateRoadmapProgress();
