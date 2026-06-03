@@ -3735,38 +3735,72 @@
   // INITIALISATION
   // ═══════════════════════════════════════════════════════════════
   async function init() {
-    // Charger les données localStorage en premier (rapide)
-    loadStatusesFromLocalStorage();
-    loadFormFromLocalStorage();
+    // NE PAS charger les données au démarrage - attendre la vérification
+    // Les données seront chargées dans verifyAndContinue() après identification
+
+    // Réinitialiser tous les champs de formulaire à vide
+    resetAllFormFields();
 
     // Initialiser les listeners de formulaire et les uploads
     initFormListeners();
     initFileUploads();
 
-    // Mettre à jour les progressions
+    // Mettre à jour les progressions (tout à zéro)
     updateFormProgress();
     updateRoadmapProgress();
     updateAllCategoryProgress();
 
-    // Puis charger depuis Supabase (asynchrone)
-    await loadClient();
-    if (CLIENT_ID) {
-      await loadStatusesFromSupabase();
-      await loadFormFromSupabase();
-      await loadClientName();
-      updateRoadmapProgress();
-      updateAllCategoryProgress();
-      console.log('Donnees Supabase chargees pour client:', CLIENT_SLUG);
-    } else {
-      console.log('Mode hors-ligne: utilisation du localStorage');
-    }
-
-    // Initialiser le récapitulatif
+    // Initialiser le récapitulatif (vide)
     initRecapUpdates();
     updateRecap();
 
     // Configurer le contact dédié
     updateContactInfo();
+
+    console.log('Init terminé - formulaire vierge, en attente de vérification');
+  }
+
+  // Fonction pour réinitialiser tous les champs de formulaire
+  function resetAllFormFields() {
+    // Réinitialiser les champs texte et select
+    formFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        if (el.tagName === 'SELECT') {
+          el.selectedIndex = 0;
+        } else {
+          el.value = '';
+        }
+        // Réinitialiser l'indicateur
+        updateFieldIndicator(field, 'pending');
+      }
+    });
+
+    // Réinitialiser les fichiers uploadés
+    uploadedFiles = { identity: null, iban: null };
+
+    // Réinitialiser les previews de fichiers
+    const identityPreview = document.getElementById('preview-identity');
+    const ibanPreview = document.getElementById('preview-iban');
+    const identityArea = document.getElementById('upload-area-identity');
+    const ibanArea = document.getElementById('upload-area-iban');
+
+    if (identityPreview) identityPreview.style.display = 'none';
+    if (ibanPreview) ibanPreview.style.display = 'none';
+    if (identityArea) identityArea.style.display = 'flex';
+    if (ibanArea) ibanArea.style.display = 'flex';
+
+    // Réinitialiser les statuts de la roadmap à "A faire"
+    document.querySelectorAll('[data-step]').forEach(el => {
+      el.classList.remove('status-done');
+      el.classList.add('status-todo');
+      el.textContent = 'A faire';
+    });
+
+    // Vider les données en mémoire
+    formData = {};
+
+    console.log('Tous les champs de formulaire réinitialisés');
   }
 
   // ═══════════════════════════════════════════════════════════════
