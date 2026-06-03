@@ -1082,6 +1082,219 @@
       color: var(--green-2);
       font-weight: 800;
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       BARRE DE PROGRESSION ROADMAP
+    ═══════════════════════════════════════════════════════════════ */
+    .roadmap-progress-container {
+      width: 100%;
+      max-width: 700px;
+      margin-bottom: 24px;
+    }
+    .roadmap-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .roadmap-progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .roadmap-progress-percent {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--green-2);
+    }
+    .roadmap-progress-bar {
+      width: 100%;
+      height: 10px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .roadmap-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--green) 100%);
+      border-radius: 100px;
+      transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       BARRE DE PROGRESSION CATEGORIES (FORMULAIRES)
+    ═══════════════════════════════════════════════════════════════ */
+    .category-progress-container {
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+    .category-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .category-progress-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .category-progress-percent {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green-2);
+    }
+    .category-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .category-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange) 0%, var(--green) 100%);
+      border-radius: 100px;
+      transition: width 0.4s ease;
+    }
+    .category-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 12px;
+    }
+    .category-status-badge.pending {
+      background: rgba(245,158,11,0.15);
+      color: var(--orange);
+      border: 1px solid rgba(245,158,11,0.3);
+    }
+    .category-status-badge.complete {
+      background: rgba(34,197,94,0.15);
+      color: var(--green-2);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       UPLOAD DE FICHIERS
+    ═══════════════════════════════════════════════════════════════ */
+    .file-upload-container {
+      position: relative;
+    }
+    .file-upload-area {
+      border: 2px dashed var(--border-2);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--bg-3);
+    }
+    .file-upload-area:hover {
+      border-color: var(--orange);
+      background: rgba(245,158,11,0.05);
+    }
+    .file-upload-area.dragover {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.05);
+    }
+    .file-upload-area.has-file {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.05);
+    }
+    .file-upload-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+    .file-upload-area.has-file .file-upload-icon {
+      color: var(--green-2);
+    }
+    .file-upload-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .file-upload-hint {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+    .file-upload-input {
+      display: none;
+    }
+    .file-upload-preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+    .file-upload-preview .file-icon {
+      font-size: 20px;
+      color: var(--primary-2);
+    }
+    .file-upload-preview .file-info {
+      flex: 1;
+      text-align: left;
+    }
+    .file-upload-preview .file-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+    }
+    .file-upload-preview .file-size {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+    .file-upload-preview .file-remove {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(239,68,68,0.15);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #ef4444;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+    .file-upload-preview .file-remove:hover {
+      background: rgba(239,68,68,0.25);
+    }
+    .file-upload-progress {
+      margin-top: 8px;
+      display: none;
+    }
+    .file-upload-progress.active {
+      display: block;
+    }
+    .file-upload-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--bg-3);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .file-upload-progress-fill {
+      height: 100%;
+      background: var(--primary-2);
+      border-radius: 100px;
+      transition: width 0.3s ease;
+    }
     @media (max-width: 640px) {
       .form-grid { grid-template-columns: 1fr; }
       .form-item.full-width { grid-column: span 1; }
@@ -1164,6 +1377,18 @@
       De la signature a votre <span style="color:var(--primary-2);">premiere reservation</span>
     </h2>
     <p class="t-body anim" style="margin-bottom:28px;">en 10 jours</p>
+
+    <!-- Barre de progression Roadmap -->
+    <div class="roadmap-progress-container anim">
+      <div class="roadmap-progress-header">
+        <span class="roadmap-progress-label">Progression de votre onboarding</span>
+        <span class="roadmap-progress-percent" id="roadmapPercent1">0%</span>
+      </div>
+      <div class="roadmap-progress-bar">
+        <div class="roadmap-progress-fill" id="roadmapFill1" style="width: 0%;"></div>
+      </div>
+    </div>
+
     <div class="timeline anim">
       <div class="timeline-item">
         <div class="timeline-num">J+0</div>
@@ -1213,6 +1438,18 @@
   <div class="slide">
     <div class="slide-tag">Roadmap</div>
     <div class="badge badge-blue anim">Suite du parcours</div>
+
+    <!-- Barre de progression Roadmap -->
+    <div class="roadmap-progress-container anim">
+      <div class="roadmap-progress-header">
+        <span class="roadmap-progress-label">Progression de votre onboarding</span>
+        <span class="roadmap-progress-percent" id="roadmapPercent2">0%</span>
+      </div>
+      <div class="roadmap-progress-bar">
+        <div class="roadmap-progress-fill" id="roadmapFill2" style="width: 0%;"></div>
+      </div>
+    </div>
+
     <div class="timeline anim">
       <div class="timeline-item">
         <div class="timeline-num">J+6-7</div>
@@ -1384,26 +1621,81 @@
       <span>champs remplis</span>
     </div>
     <div class="form-section anim">
-      <div class="form-category">
-        <div class="form-category-title">Documents Administratifs</div>
+      <div class="form-category" data-category="admin-docs">
+        <div class="form-category-title" style="display:flex; align-items:center;">
+          Documents Administratifs
+          <span class="category-status-badge pending" id="cat-status-admin">A remplir</span>
+        </div>
+        <!-- Barre de progression catégorie -->
+        <div class="category-progress-container">
+          <div class="category-progress-header">
+            <span class="category-progress-label">Progression</span>
+            <span class="category-progress-percent" id="cat-percent-admin">0%</span>
+          </div>
+          <div class="category-progress-bar">
+            <div class="category-progress-fill" id="cat-fill-admin" style="width: 0%;"></div>
+          </div>
+        </div>
         <div class="form-grid">
-          <div class="form-item" data-field="doc_identity">
+          <!-- Upload Pièce d'identité -->
+          <div class="form-item" data-field="doc_identity_file" data-category="admin-docs">
             <div class="form-label">
-              <span class="label-text">Piece d'identite</span>
-              <span class="save-indicator pending" id="ind-doc_identity">A remplir</span>
+              <span class="label-text">Piece d'identite (fichier)</span>
+              <span class="save-indicator pending" id="ind-doc_identity_file">A remplir</span>
             </div>
-            <span class="hint">CNI ou passeport (numero)</span>
-            <input type="text" class="form-input" id="doc_identity" placeholder="Ex: 12AB34567" data-field="doc_identity">
+            <span class="hint">CNI ou passeport - PDF, JPG, PNG (max 10 Mo)</span>
+            <div class="file-upload-container">
+              <div class="file-upload-area" id="upload-area-identity" onclick="document.getElementById('file-identity').click()">
+                <div class="file-upload-icon">📄</div>
+                <div class="file-upload-text">Cliquez ou glissez votre fichier ici</div>
+                <div class="file-upload-hint">PDF, JPG, PNG acceptes</div>
+              </div>
+              <input type="file" class="file-upload-input" id="file-identity" accept=".pdf,.jpg,.jpeg,.png" data-field="doc_identity_file">
+              <div class="file-upload-preview" id="preview-identity" style="display:none;">
+                <span class="file-icon">📎</span>
+                <div class="file-info">
+                  <div class="file-name" id="filename-identity"></div>
+                  <div class="file-size" id="filesize-identity"></div>
+                </div>
+                <button class="file-remove" onclick="removeFile('identity')" type="button">✕</button>
+              </div>
+              <div class="file-upload-progress" id="progress-identity">
+                <div class="file-upload-progress-bar">
+                  <div class="file-upload-progress-fill" id="progress-fill-identity" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-item" data-field="doc_rib">
+          <!-- Upload IBAN -->
+          <div class="form-item" data-field="doc_iban_file" data-category="admin-docs">
             <div class="form-label">
-              <span class="label-text">IBAN</span>
-              <span class="save-indicator pending" id="ind-doc_rib">A remplir</span>
+              <span class="label-text">RIB / IBAN (fichier)</span>
+              <span class="save-indicator pending" id="ind-doc_iban_file">A remplir</span>
             </div>
-            <span class="hint">Pour le versement de vos revenus</span>
-            <input type="text" class="form-input" id="doc_rib" placeholder="FR76 XXXX XXXX XXXX" data-field="doc_rib">
+            <span class="hint">Pour le versement de vos revenus - PDF, JPG, PNG (max 10 Mo)</span>
+            <div class="file-upload-container">
+              <div class="file-upload-area" id="upload-area-iban" onclick="document.getElementById('file-iban').click()">
+                <div class="file-upload-icon">📄</div>
+                <div class="file-upload-text">Cliquez ou glissez votre fichier ici</div>
+                <div class="file-upload-hint">PDF, JPG, PNG acceptes</div>
+              </div>
+              <input type="file" class="file-upload-input" id="file-iban" accept=".pdf,.jpg,.jpeg,.png" data-field="doc_iban_file">
+              <div class="file-upload-preview" id="preview-iban" style="display:none;">
+                <span class="file-icon">📎</span>
+                <div class="file-info">
+                  <div class="file-name" id="filename-iban"></div>
+                  <div class="file-size" id="filesize-iban"></div>
+                </div>
+                <button class="file-remove" onclick="removeFile('iban')" type="button">✕</button>
+              </div>
+              <div class="file-upload-progress" id="progress-iban">
+                <div class="file-upload-progress-bar">
+                  <div class="file-upload-progress-fill" id="progress-fill-iban" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-item" data-field="doc_registration_number">
+          <div class="form-item" data-field="doc_registration_number" data-category="admin-docs">
             <div class="form-label">
               <span class="label-text">N° enregistrement mairie</span>
               <span class="save-indicator pending" id="ind-doc_registration_number">A remplir</span>
@@ -1411,7 +1703,7 @@
             <span class="hint">Si applicable (13 chiffres)</span>
             <input type="text" class="form-input" id="doc_registration_number" placeholder="Ex: 7512300012345" data-field="doc_registration_number">
           </div>
-          <div class="form-item" data-field="doc_insurance">
+          <div class="form-item" data-field="doc_insurance" data-category="admin-docs">
             <div class="form-label">
               <span class="label-text">N° police assurance</span>
               <span class="save-indicator pending" id="ind-doc_insurance">A remplir</span>
@@ -1421,10 +1713,23 @@
           </div>
         </div>
       </div>
-      <div class="form-category">
-        <div class="form-category-title">Informations sur le bien</div>
+      <div class="form-category" data-category="property-info">
+        <div class="form-category-title" style="display:flex; align-items:center;">
+          Informations sur le bien
+          <span class="category-status-badge pending" id="cat-status-property">A remplir</span>
+        </div>
+        <!-- Barre de progression catégorie -->
+        <div class="category-progress-container">
+          <div class="category-progress-header">
+            <span class="category-progress-label">Progression</span>
+            <span class="category-progress-percent" id="cat-percent-property">0%</span>
+          </div>
+          <div class="category-progress-bar">
+            <div class="category-progress-fill" id="cat-fill-property" style="width: 0%;"></div>
+          </div>
+        </div>
         <div class="form-grid">
-          <div class="form-item full-width" data-field="property_full_address">
+          <div class="form-item full-width" data-field="property_full_address" data-category="property-info">
             <div class="form-label">
               <span class="label-text">Adresse complete</span>
               <span class="save-indicator pending" id="ind-property_full_address">A remplir</span>
@@ -1432,7 +1737,7 @@
             <span class="hint">Numero, rue, code postal, ville</span>
             <input type="text" class="form-input" id="property_full_address" placeholder="Ex: 4 rue Moreau, 75012 Paris" data-field="property_full_address">
           </div>
-          <div class="form-item" data-field="property_floor">
+          <div class="form-item" data-field="property_floor" data-category="property-info">
             <div class="form-label">
               <span class="label-text">Etage / Ascenseur</span>
               <span class="save-indicator pending" id="ind-property_floor">A remplir</span>
@@ -1440,7 +1745,7 @@
             <span class="hint">Ex: 3eme avec ascenseur</span>
             <input type="text" class="form-input" id="property_floor" placeholder="Ex: 2eme etage, avec ascenseur" data-field="property_floor">
           </div>
-          <div class="form-item" data-field="property_access_codes">
+          <div class="form-item" data-field="property_access_codes" data-category="property-info">
             <div class="form-label">
               <span class="label-text">Codes d'acces</span>
               <span class="save-indicator pending" id="ind-property_access_codes">A remplir</span>
@@ -1448,7 +1753,7 @@
             <span class="hint">Digicode, interphone, boite a cles</span>
             <input type="text" class="form-input" id="property_access_codes" placeholder="Ex: Digicode 1234A, Interphone DUPONT" data-field="property_access_codes">
           </div>
-          <div class="form-item" data-field="property_surface">
+          <div class="form-item" data-field="property_surface" data-category="property-info">
             <div class="form-label">
               <span class="label-text">Superficie</span>
               <span class="save-indicator pending" id="ind-property_surface">A remplir</span>
@@ -1456,7 +1761,7 @@
             <span class="hint">En metres carres</span>
             <input type="text" class="form-input" id="property_surface" placeholder="Ex: 38" data-field="property_surface">
           </div>
-          <div class="form-item" data-field="property_capacity">
+          <div class="form-item" data-field="property_capacity" data-category="property-info">
             <div class="form-label">
               <span class="label-text">Capacite d'accueil</span>
               <span class="save-indicator pending" id="ind-property_capacity">A remplir</span>
@@ -1487,10 +1792,23 @@
       <span>champs remplis</span>
     </div>
     <div class="form-section anim">
-      <div class="form-category">
-        <div class="form-category-title">Informations sur le bien (suite)</div>
+      <div class="form-category" data-category="property-suite">
+        <div class="form-category-title" style="display:flex; align-items:center;">
+          Informations sur le bien (suite)
+          <span class="category-status-badge pending" id="cat-status-property-suite">A remplir</span>
+        </div>
+        <!-- Barre de progression catégorie -->
+        <div class="category-progress-container">
+          <div class="category-progress-header">
+            <span class="category-progress-label">Progression</span>
+            <span class="category-progress-percent" id="cat-percent-property-suite">0%</span>
+          </div>
+          <div class="category-progress-bar">
+            <div class="category-progress-fill" id="cat-fill-property-suite" style="width: 0%;"></div>
+          </div>
+        </div>
         <div class="form-grid">
-          <div class="form-item" data-field="property_wifi_name">
+          <div class="form-item" data-field="property_wifi_name" data-category="property-suite">
             <div class="form-label">
               <span class="label-text">Nom du WiFi</span>
               <span class="save-indicator pending" id="ind-property_wifi_name">A remplir</span>
@@ -1498,7 +1816,7 @@
             <span class="hint">Nom du reseau</span>
             <input type="text" class="form-input" id="property_wifi_name" placeholder="Ex: Livebox-A1B2" data-field="property_wifi_name">
           </div>
-          <div class="form-item" data-field="property_wifi_password">
+          <div class="form-item" data-field="property_wifi_password" data-category="property-suite">
             <div class="form-label">
               <span class="label-text">Mot de passe WiFi</span>
               <span class="save-indicator pending" id="ind-property_wifi_password">A remplir</span>
@@ -1506,7 +1824,7 @@
             <span class="hint">Cle de securite</span>
             <input type="text" class="form-input" id="property_wifi_password" placeholder="Ex: aBcD1234EfGh" data-field="property_wifi_password">
           </div>
-          <div class="form-item full-width" data-field="property_equipment">
+          <div class="form-item full-width" data-field="property_equipment" data-category="property-suite">
             <div class="form-label">
               <span class="label-text">Equipements disponibles</span>
               <span class="save-indicator pending" id="ind-property_equipment">A remplir</span>
@@ -1514,7 +1832,7 @@
             <span class="hint">TV, lave-linge, seche-linge, parking, climatisation, etc.</span>
             <textarea class="form-input" id="property_equipment" placeholder="Ex: TV connectee, lave-linge, seche-cheveux, fer a repasser, climatisation reversible" data-field="property_equipment"></textarea>
           </div>
-          <div class="form-item full-width" data-field="property_copro_rules">
+          <div class="form-item full-width" data-field="property_copro_rules" data-category="property-suite">
             <div class="form-label">
               <span class="label-text">Reglement copropriete</span>
               <span class="save-indicator pending" id="ind-property_copro_rules">A remplir</span>
@@ -1524,10 +1842,23 @@
           </div>
         </div>
       </div>
-      <div class="form-category">
-        <div class="form-category-title">Logistique & Planning</div>
+      <div class="form-category" data-category="logistics">
+        <div class="form-category-title" style="display:flex; align-items:center;">
+          Logistique & Planning
+          <span class="category-status-badge pending" id="cat-status-logistics">A remplir</span>
+        </div>
+        <!-- Barre de progression catégorie -->
+        <div class="category-progress-container">
+          <div class="category-progress-header">
+            <span class="category-progress-label">Progression</span>
+            <span class="category-progress-percent" id="cat-percent-logistics">0%</span>
+          </div>
+          <div class="category-progress-bar">
+            <div class="category-progress-fill" id="cat-fill-logistics" style="width: 0%;"></div>
+          </div>
+        </div>
         <div class="form-grid">
-          <div class="form-item" data-field="keys_count">
+          <div class="form-item" data-field="keys_count" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Nombre de jeux de cles</span>
               <span class="save-indicator pending" id="ind-keys_count">A remplir</span>
@@ -1540,7 +1871,7 @@
               <option value="3">3 jeux ou plus</option>
             </select>
           </div>
-          <div class="form-item" data-field="has_smart_lock">
+          <div class="form-item" data-field="has_smart_lock" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Serrure connectee</span>
               <span class="save-indicator pending" id="ind-has_smart_lock">A remplir</span>
@@ -1553,7 +1884,7 @@
               <option value="interested">Non mais interesse</option>
             </select>
           </div>
-          <div class="form-item" data-field="shooting_availability">
+          <div class="form-item" data-field="shooting_availability" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Disponibilites shooting</span>
               <span class="save-indicator pending" id="ind-shooting_availability">A remplir</span>
@@ -1561,7 +1892,7 @@
             <span class="hint">Vos creneaux possibles</span>
             <input type="text" class="form-input" id="shooting_availability" placeholder="Ex: Lundi et mardi matin" data-field="shooting_availability">
           </div>
-          <div class="form-item" data-field="launch_date">
+          <div class="form-item" data-field="launch_date" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Date de lancement souhaitee</span>
               <span class="save-indicator pending" id="ind-launch_date">A remplir</span>
@@ -1569,7 +1900,7 @@
             <span class="hint">Quand voulez-vous demarrer?</span>
             <input type="date" class="form-input" id="launch_date" data-field="launch_date">
           </div>
-          <div class="form-item" data-field="emergency_contact_name">
+          <div class="form-item" data-field="emergency_contact_name" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Contact de secours (nom)</span>
               <span class="save-indicator pending" id="ind-emergency_contact_name">A remplir</span>
@@ -1577,7 +1908,7 @@
             <span class="hint">Personne a contacter en cas d'urgence</span>
             <input type="text" class="form-input" id="emergency_contact_name" placeholder="Ex: Marie Dupont" data-field="emergency_contact_name">
           </div>
-          <div class="form-item" data-field="emergency_contact_phone">
+          <div class="form-item" data-field="emergency_contact_phone" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Contact de secours (tel)</span>
               <span class="save-indicator pending" id="ind-emergency_contact_phone">A remplir</span>
@@ -1585,7 +1916,7 @@
             <span class="hint">Numero de telephone</span>
             <input type="tel" class="form-input" id="emergency_contact_phone" placeholder="Ex: 06 12 34 56 78" data-field="emergency_contact_phone">
           </div>
-          <div class="form-item full-width" data-field="linen_provider">
+          <div class="form-item full-width" data-field="linen_provider" data-category="logistics">
             <div class="form-label">
               <span class="label-text">Linge de maison</span>
               <span class="save-indicator pending" id="ind-linen_provider">A remplir</span>
@@ -1705,7 +2036,7 @@
   });
 
   document.getElementById('slidesWrap').addEventListener('click', e => {
-    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a') || e.target.closest('.timeline-status') || e.target.closest('.form-item') || e.target.closest('.btn-save') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea')) return;
+    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a') || e.target.closest('.timeline-status') || e.target.closest('.form-item') || e.target.closest('.btn-save') || e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea') || e.target.closest('.file-upload-area') || e.target.closest('.file-upload-preview') || e.target.closest('.file-remove')) return;
     if (e.clientX > window.innerWidth * 0.3) next();
     else prev();
   });
@@ -1800,11 +2131,13 @@
             applyStatus(el, row.status);
           }
         });
+        updateRoadmapProgress();
       }
     } catch (e) {
       console.error('Erreur chargement statuts Supabase:', e);
       // Fallback localStorage
       loadStatusesFromLocalStorage();
+      updateRoadmapProgress();
     }
   }
 
@@ -1897,18 +2230,31 @@
     updateRoadmapProgress();
   }
 
-  // Mettre à jour la progression roadmap
+  // Mettre à jour la progression roadmap (barres visuelles)
   function updateRoadmapProgress() {
     const totalSteps = document.querySelectorAll('[data-step]').length;
     const doneSteps = document.querySelectorAll('[data-step].status-done').length;
-    console.log(`Progression roadmap: ${doneSteps}/${totalSteps}`);
+    const percent = totalSteps > 0 ? Math.round((doneSteps / totalSteps) * 100) : 0;
+
+    // Mettre à jour les barres de progression sur les pages 3 et 4
+    const percentEls = [document.getElementById('roadmapPercent1'), document.getElementById('roadmapPercent2')];
+    const fillEls = [document.getElementById('roadmapFill1'), document.getElementById('roadmapFill2')];
+
+    percentEls.forEach(el => {
+      if (el) el.textContent = percent + '%';
+    });
+    fillEls.forEach(el => {
+      if (el) el.style.width = percent + '%';
+    });
+
+    console.log(`Progression roadmap: ${doneSteps}/${totalSteps} (${percent}%)`);
   }
 
   // ═══════════════════════════════════════════════════════════════
   // GESTION DES FORMULAIRES (SUPABASE)
   // ═══════════════════════════════════════════════════════════════
   const formFields = [
-    'doc_identity', 'doc_rib', 'doc_registration_number', 'doc_insurance',
+    'doc_registration_number', 'doc_insurance',
     'property_full_address', 'property_floor', 'property_access_codes',
     'property_surface', 'property_capacity', 'property_wifi_name',
     'property_wifi_password', 'property_equipment', 'property_copro_rules',
@@ -1916,8 +2262,336 @@
     'emergency_contact_name', 'emergency_contact_phone', 'linen_provider'
   ];
 
+  // Champs fichiers (uploads)
+  const fileFields = ['doc_identity_file', 'doc_iban_file'];
+
+  // Définition des catégories et leurs champs
+  const categoryFields = {
+    'admin-docs': ['doc_identity_file', 'doc_iban_file', 'doc_registration_number', 'doc_insurance'],
+    'property-info': ['property_full_address', 'property_floor', 'property_access_codes', 'property_surface', 'property_capacity'],
+    'property-suite': ['property_wifi_name', 'property_wifi_password', 'property_equipment', 'property_copro_rules'],
+    'logistics': ['keys_count', 'has_smart_lock', 'shooting_availability', 'launch_date', 'emergency_contact_name', 'emergency_contact_phone', 'linen_provider']
+  };
+
   let saveTimeout = null;
   let formData = {};
+  let uploadedFiles = { identity: null, iban: null };
+
+  // ═══════════════════════════════════════════════════════════════
+  // GESTION DES UPLOADS DE FICHIERS (SUPABASE STORAGE)
+  // ═══════════════════════════════════════════════════════════════
+  const STORAGE_BUCKET = 'onboarding-documents';
+  const STORAGE_KEY_FILES = 'optimi-onboarding-files';
+
+  // Initialiser les zones d'upload
+  function initFileUploads() {
+    // Identity file
+    const identityInput = document.getElementById('file-identity');
+    const identityArea = document.getElementById('upload-area-identity');
+
+    if (identityInput) {
+      identityInput.addEventListener('change', (e) => handleFileSelect(e, 'identity'));
+    }
+    if (identityArea) {
+      identityArea.addEventListener('dragover', (e) => handleDragOver(e, 'identity'));
+      identityArea.addEventListener('dragleave', (e) => handleDragLeave(e, 'identity'));
+      identityArea.addEventListener('drop', (e) => handleDrop(e, 'identity'));
+    }
+
+    // IBAN file
+    const ibanInput = document.getElementById('file-iban');
+    const ibanArea = document.getElementById('upload-area-iban');
+
+    if (ibanInput) {
+      ibanInput.addEventListener('change', (e) => handleFileSelect(e, 'iban'));
+    }
+    if (ibanArea) {
+      ibanArea.addEventListener('dragover', (e) => handleDragOver(e, 'iban'));
+      ibanArea.addEventListener('dragleave', (e) => handleDragLeave(e, 'iban'));
+      ibanArea.addEventListener('drop', (e) => handleDrop(e, 'iban'));
+    }
+
+    // Charger les fichiers sauvegardés
+    loadFilesFromLocalStorage();
+  }
+
+  function handleDragOver(e, type) {
+    e.preventDefault();
+    e.stopPropagation();
+    document.getElementById(`upload-area-${type}`).classList.add('dragover');
+  }
+
+  function handleDragLeave(e, type) {
+    e.preventDefault();
+    e.stopPropagation();
+    document.getElementById(`upload-area-${type}`).classList.remove('dragover');
+  }
+
+  function handleDrop(e, type) {
+    e.preventDefault();
+    e.stopPropagation();
+    document.getElementById(`upload-area-${type}`).classList.remove('dragover');
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      processFile(files[0], type);
+    }
+  }
+
+  function handleFileSelect(e, type) {
+    const files = e.target.files;
+    if (files.length > 0) {
+      processFile(files[0], type);
+    }
+  }
+
+  async function processFile(file, type) {
+    // Vérifier le type de fichier
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+    if (!allowedTypes.includes(file.type)) {
+      showToast('Format non accepte. Utilisez PDF, JPG ou PNG.', 'error');
+      return;
+    }
+
+    // Vérifier la taille (max 10 Mo)
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('Fichier trop volumineux (max 10 Mo)', 'error');
+      return;
+    }
+
+    // Afficher l'aperçu
+    showFilePreview(file, type);
+
+    // Upload vers Supabase Storage
+    await uploadFileToSupabase(file, type);
+  }
+
+  function showFilePreview(file, type) {
+    const area = document.getElementById(`upload-area-${type}`);
+    const preview = document.getElementById(`preview-${type}`);
+    const filename = document.getElementById(`filename-${type}`);
+    const filesize = document.getElementById(`filesize-${type}`);
+
+    area.classList.add('has-file');
+    preview.style.display = 'flex';
+
+    filename.textContent = file.name;
+    filesize.textContent = formatFileSize(file.size);
+
+    uploadedFiles[type] = {
+      name: file.name,
+      size: file.size,
+      type: file.type
+    };
+
+    saveFilesToLocalStorage();
+    updateCategoryProgress('admin-docs');
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' o';
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' Ko';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' Mo';
+  }
+
+  function removeFile(type) {
+    event.stopPropagation();
+
+    const area = document.getElementById(`upload-area-${type}`);
+    const preview = document.getElementById(`preview-${type}`);
+    const input = document.getElementById(`file-${type}`);
+
+    area.classList.remove('has-file');
+    preview.style.display = 'none';
+    input.value = '';
+
+    uploadedFiles[type] = null;
+    updateFieldIndicator(`doc_${type}_file`, 'pending');
+
+    saveFilesToLocalStorage();
+    deleteFileFromSupabase(type);
+    updateCategoryProgress('admin-docs');
+  }
+
+  async function uploadFileToSupabase(file, type) {
+    if (!supabaseClient || !CLIENT_ID) {
+      updateFieldIndicator(`doc_${type}_file`, 'saved');
+      showToast('Fichier sauvegarde localement', 'success');
+      return;
+    }
+
+    const progressEl = document.getElementById(`progress-${type}`);
+    const progressFill = document.getElementById(`progress-fill-${type}`);
+
+    progressEl.classList.add('active');
+    updateFieldIndicator(`doc_${type}_file`, 'saving');
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${CLIENT_SLUG}/${type}_${Date.now()}.${fileExt}`;
+
+      // Simuler la progression
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += 10;
+        if (progress <= 90) {
+          progressFill.style.width = progress + '%';
+        }
+      }, 100);
+
+      const { data, error } = await supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      clearInterval(progressInterval);
+      progressFill.style.width = '100%';
+
+      if (error) throw error;
+
+      // Sauvegarder le chemin du fichier dans onboarding_info
+      const fieldName = type === 'identity' ? 'doc_identity_file' : 'doc_iban_file';
+      await saveFilePathToDatabase(fieldName, fileName);
+
+      uploadedFiles[type].path = fileName;
+      saveFilesToLocalStorage();
+
+      setTimeout(() => {
+        progressEl.classList.remove('active');
+        progressFill.style.width = '0%';
+      }, 500);
+
+      updateFieldIndicator(`doc_${type}_file`, 'saved');
+      showToast('Fichier telecharge avec succes', 'success');
+
+    } catch (e) {
+      console.error('Erreur upload:', e);
+      progressEl.classList.remove('active');
+      progressFill.style.width = '0%';
+      updateFieldIndicator(`doc_${type}_file`, 'saved');
+      showToast('Fichier sauvegarde localement', 'success');
+    }
+  }
+
+  async function saveFilePathToDatabase(fieldName, filePath) {
+    if (!supabaseClient || !CLIENT_ID) return;
+
+    try {
+      const { data: existing } = await supabaseClient
+        .from('onboarding_info')
+        .select('id')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      const updateData = { [fieldName]: filePath, updated_at: new Date().toISOString() };
+
+      if (existing) {
+        await supabaseClient
+          .from('onboarding_info')
+          .update(updateData)
+          .eq('client_id', CLIENT_ID);
+      } else {
+        await supabaseClient
+          .from('onboarding_info')
+          .insert({ client_id: CLIENT_ID, ...updateData });
+      }
+    } catch (e) {
+      console.error('Erreur sauvegarde chemin fichier:', e);
+    }
+  }
+
+  async function deleteFileFromSupabase(type) {
+    if (!supabaseClient || !CLIENT_ID || !uploadedFiles[type]?.path) return;
+
+    try {
+      await supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .remove([uploadedFiles[type].path]);
+    } catch (e) {
+      console.error('Erreur suppression fichier:', e);
+    }
+  }
+
+  function saveFilesToLocalStorage() {
+    localStorage.setItem(STORAGE_KEY_FILES, JSON.stringify(uploadedFiles));
+  }
+
+  function loadFilesFromLocalStorage() {
+    const saved = localStorage.getItem(STORAGE_KEY_FILES);
+    if (saved) {
+      uploadedFiles = JSON.parse(saved);
+
+      ['identity', 'iban'].forEach(type => {
+        if (uploadedFiles[type]) {
+          const area = document.getElementById(`upload-area-${type}`);
+          const preview = document.getElementById(`preview-${type}`);
+          const filename = document.getElementById(`filename-${type}`);
+          const filesize = document.getElementById(`filesize-${type}`);
+
+          if (area && preview && filename && filesize) {
+            area.classList.add('has-file');
+            preview.style.display = 'flex';
+            filename.textContent = uploadedFiles[type].name || 'Document';
+            filesize.textContent = formatFileSize(uploadedFiles[type].size || 0);
+            updateFieldIndicator(`doc_${type}_file`, 'saved');
+          }
+        }
+      });
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // GESTION DES BARRES DE PROGRESSION PAR CATEGORIE
+  // ═══════════════════════════════════════════════════════════════
+  function updateCategoryProgress(category) {
+    const fields = categoryFields[category];
+    if (!fields) return;
+
+    let filled = 0;
+    let total = fields.length;
+
+    fields.forEach(field => {
+      // Vérifier les champs fichiers
+      if (field === 'doc_identity_file') {
+        if (uploadedFiles.identity) filled++;
+      } else if (field === 'doc_iban_file') {
+        if (uploadedFiles.iban) filled++;
+      } else {
+        // Champs normaux
+        const el = document.getElementById(field);
+        if (el && el.value) filled++;
+      }
+    });
+
+    const percent = total > 0 ? Math.round((filled / total) * 100) : 0;
+
+    // Mettre à jour la barre de progression
+    const percentEl = document.getElementById(`cat-percent-${category.replace('admin-docs', 'admin').replace('property-info', 'property').replace('property-suite', 'property-suite')}`);
+    const fillEl = document.getElementById(`cat-fill-${category.replace('admin-docs', 'admin').replace('property-info', 'property').replace('property-suite', 'property-suite')}`);
+    const statusEl = document.getElementById(`cat-status-${category.replace('admin-docs', 'admin').replace('property-info', 'property').replace('property-suite', 'property-suite')}`);
+
+    if (percentEl) percentEl.textContent = percent + '%';
+    if (fillEl) fillEl.style.width = percent + '%';
+
+    // Mettre à jour le badge de statut
+    if (statusEl) {
+      if (percent === 100) {
+        statusEl.classList.remove('pending');
+        statusEl.classList.add('complete');
+        statusEl.textContent = 'Complete';
+      } else {
+        statusEl.classList.remove('complete');
+        statusEl.classList.add('pending');
+        statusEl.textContent = 'A remplir';
+      }
+    }
+  }
+
+  function updateAllCategoryProgress() {
+    Object.keys(categoryFields).forEach(cat => updateCategoryProgress(cat));
+  }
 
   // Charger les données du formulaire depuis Supabase
   async function loadFormFromSupabase() {
@@ -2004,15 +2678,24 @@
   // Mettre à jour la progression du formulaire
   function updateFormProgress() {
     let filled = 0;
+    // Compter les champs texte
     formFields.forEach(field => {
       const el = document.getElementById(field);
       if (el && el.value) filled++;
     });
+    // Compter les fichiers uploadés
+    if (uploadedFiles.identity) filled++;
+    if (uploadedFiles.iban) filled++;
+
+    const total = formFields.length + 2; // +2 pour les fichiers
 
     const progress1 = document.getElementById('formProgress1');
     const progress2 = document.getElementById('formProgress2');
-    if (progress1) progress1.textContent = `${filled}/${formFields.length}`;
-    if (progress2) progress2.textContent = `${filled}/${formFields.length}`;
+    if (progress1) progress1.textContent = `${filled}/${total}`;
+    if (progress2) progress2.textContent = `${filled}/${total}`;
+
+    // Mettre à jour les barres de progression des catégories
+    updateAllCategoryProgress();
   }
 
   // Auto-save sur modification d'un champ
@@ -2039,6 +2722,13 @@
     }, 800);
 
     updateFormProgress();
+
+    // Mettre à jour la progression de la catégorie
+    const formItem = el.closest('.form-item');
+    if (formItem) {
+      const category = formItem.getAttribute('data-category');
+      if (category) updateCategoryProgress(category);
+    }
   }
 
   // Sauvegarde automatique d'un champ
@@ -2168,16 +2858,22 @@
     loadStatusesFromLocalStorage();
     loadFormFromLocalStorage();
 
-    // Initialiser les listeners de formulaire
+    // Initialiser les listeners de formulaire et les uploads
     initFormListeners();
+    initFileUploads();
+
+    // Mettre à jour les progressions
     updateFormProgress();
     updateRoadmapProgress();
+    updateAllCategoryProgress();
 
     // Puis charger depuis Supabase (asynchrone)
     await loadClient();
     if (CLIENT_ID) {
       await loadStatusesFromSupabase();
       await loadFormFromSupabase();
+      updateRoadmapProgress();
+      updateAllCategoryProgress();
       console.log('Donnees Supabase chargees pour client:', CLIENT_SLUG);
     } else {
       console.log('Mode hors-ligne: utilisation du localStorage');
