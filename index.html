@@ -373,16 +373,45 @@
       border-radius: 100px;
       margin-left: auto;
       align-self: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .timeline-status:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .timeline-status:active {
+      transform: scale(0.95);
     }
     .status-done {
       background: rgba(34,197,94,0.15);
       color: var(--green-2);
       border: 1px solid rgba(34,197,94,0.3);
     }
+    .status-done:hover {
+      background: rgba(34,197,94,0.25);
+      border-color: rgba(34,197,94,0.5);
+    }
     .status-todo {
       background: rgba(245,158,11,0.15);
       color: var(--orange);
       border: 1px solid rgba(245,158,11,0.3);
+    }
+    .status-todo:hover {
+      background: rgba(245,158,11,0.25);
+      border-color: rgba(245,158,11,0.5);
+    }
+    .status-toggle-hint {
+      font-size: 9px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .timeline-status:hover + .status-toggle-hint,
+    .timeline-item:hover .status-toggle-hint {
+      opacity: 1;
     }
 
     .services-section {
@@ -890,7 +919,7 @@
           <div class="timeline-title">Signature contrat</div>
           <div class="timeline-desc">Validation du partenariat et envoi des documents</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-0" onclick="toggleStatus(this)">A faire</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+1</div>
@@ -898,7 +927,7 @@
           <div class="timeline-title">Kickoff call</div>
           <div class="timeline-desc">Appel de lancement pour repondre a vos questions</div>
         </div>
-        <span class="timeline-status status-done">Fait</span>
+        <span class="timeline-status status-done" data-step="step-1" onclick="toggleStatus(this)">Fait</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+2-3</div>
@@ -906,7 +935,7 @@
           <div class="timeline-title">Collecte infos</div>
           <div class="timeline-desc">Reception de vos documents et informations</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-2" onclick="toggleStatus(this)">A faire</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+3</div>
@@ -914,7 +943,7 @@
           <div class="timeline-title">Visite du bien</div>
           <div class="timeline-desc">Visite sur place ou visite virtuelle</div>
         </div>
-        <span class="timeline-status status-done">Fait</span>
+        <span class="timeline-status status-done" data-step="step-3" onclick="toggleStatus(this)">Fait</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+4-5</div>
@@ -922,9 +951,10 @@
           <div class="timeline-title">Shooting photo</div>
           <div class="timeline-desc">Seance photo professionnelle de votre appartement</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-4" onclick="toggleStatus(this)">A faire</span>
       </div>
     </div>
+    <p class="anim" style="font-size:11px; color:var(--primary-2); margin-top:16px;">Cliquez sur un statut pour le changer</p>
   </div>
 
   <!-- SLIDE 5 — ROADMAP SUITE -->
@@ -938,7 +968,7 @@
           <div class="timeline-title">Redaction annonce</div>
           <div class="timeline-desc">Creation du contenu optimise multi-plateformes</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-5" onclick="toggleStatus(this)">A faire</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+8</div>
@@ -946,7 +976,7 @@
           <div class="timeline-title">Validation</div>
           <div class="timeline-desc">Envoi pour votre approbation finale</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-6" onclick="toggleStatus(this)">A faire</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+9</div>
@@ -954,7 +984,7 @@
           <div class="timeline-title">Mise en ligne</div>
           <div class="timeline-desc">Publication sur Airbnb, Booking, Abritel...</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-7" onclick="toggleStatus(this)">A faire</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+10</div>
@@ -962,7 +992,7 @@
           <div class="timeline-title">Activation pricing</div>
           <div class="timeline-desc">Configuration du pricing dynamique</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-8" onclick="toggleStatus(this)">A faire</span>
       </div>
       <div class="timeline-item">
         <div class="timeline-num">J+14</div>
@@ -970,7 +1000,7 @@
           <div class="timeline-title">Point d'etape</div>
           <div class="timeline-desc">Premier bilan et ajustements si necessaires</div>
         </div>
-        <span class="timeline-status status-todo">A faire</span>
+        <span class="timeline-status status-todo" data-step="step-9" onclick="toggleStatus(this)">A faire</span>
       </div>
     </div>
     <p class="anim" style="font-size:12px; color:var(--text-dim); margin-top:20px;">
@@ -1247,7 +1277,7 @@
   });
 
   document.getElementById('slidesWrap').addEventListener('click', e => {
-    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a')) return;
+    if (e.target.closest('.toc-item') || e.target.closest('.resource-card') || e.target.closest('a') || e.target.closest('.timeline-status')) return;
     if (e.clientX > window.innerWidth * 0.3) next();
     else prev();
   });
@@ -1263,6 +1293,85 @@
 
   document.getElementById('progressBar').style.width = (1 / total * 100) + '%';
   document.getElementById('btnPrev').style.opacity = '0.3';
+
+  // ═══════════════════════════════════════════════════════════════
+  // GESTION DES STATUTS INTERACTIFS (localStorage)
+  // ═══════════════════════════════════════════════════════════════
+
+  const STORAGE_KEY = 'optimi-onboarding-statuses';
+
+  // Charger les statuts sauvegardés
+  function loadStatuses() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const statuses = JSON.parse(saved);
+      Object.keys(statuses).forEach(stepId => {
+        const el = document.querySelector(`[data-step="${stepId}"]`);
+        if (el) {
+          applyStatus(el, statuses[stepId]);
+        }
+      });
+    }
+  }
+
+  // Sauvegarder les statuts
+  function saveStatuses() {
+    const statuses = {};
+    document.querySelectorAll('[data-step]').forEach(el => {
+      const stepId = el.getAttribute('data-step');
+      const isDone = el.classList.contains('status-done');
+      statuses[stepId] = isDone ? 'done' : 'todo';
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(statuses));
+  }
+
+  // Appliquer un statut à un élément
+  function applyStatus(el, status) {
+    if (status === 'done') {
+      el.classList.remove('status-todo');
+      el.classList.add('status-done');
+      el.textContent = 'Fait';
+    } else {
+      el.classList.remove('status-done');
+      el.classList.add('status-todo');
+      el.textContent = 'A faire';
+    }
+  }
+
+  // Toggle le statut au clic
+  function toggleStatus(el) {
+    event.stopPropagation();
+    const isDone = el.classList.contains('status-done');
+
+    // Animation de transition
+    el.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      el.style.transform = '';
+    }, 150);
+
+    if (isDone) {
+      applyStatus(el, 'todo');
+    } else {
+      applyStatus(el, 'done');
+    }
+
+    saveStatuses();
+    updateProgress();
+  }
+
+  // Mettre à jour la progression
+  function updateProgress() {
+    const total = document.querySelectorAll('[data-step]').length;
+    const done = document.querySelectorAll('[data-step].status-done').length;
+    const percent = Math.round((done / total) * 100);
+
+    // Afficher la progression dans la console (optionnel)
+    console.log(`Progression onboarding: ${done}/${total} (${percent}%)`);
+  }
+
+  // Charger les statuts au démarrage
+  loadStatuses();
+  updateProgress();
 </script>
 </body>
 </html>
