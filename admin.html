@@ -650,7 +650,7 @@
     const inProgress = allClients.filter(c => c.progressPercent > 0 && c.progressPercent < 100).length;
     document.getElementById('statInProgress').textContent = inProgress;
 
-    const filesCount = allClients.filter(c => c.info.doc_identity_file || c.info.doc_iban_file).length;
+    const filesCount = allClients.filter(c => c.info.doc_identity || c.info.doc_rib).length;
     document.getElementById('statFiles').textContent = filesCount;
   }
 
@@ -757,11 +757,11 @@
               <h3>Documents</h3>
               <div class="detail-row">
                 <span class="label">Piece d'identite</span>
-                <span class="value ${client.info.doc_identity_file ? 'success' : 'missing'}">${client.info.doc_identity_file ? '✓ Fourni' : 'Non fourni'}</span>
+                <span class="value ${client.info.doc_identity ? 'success' : 'missing'}">${client.info.doc_identity ? '✓ Fourni' : 'Non fourni'}</span>
               </div>
               <div class="detail-row">
                 <span class="label">RIB / IBAN</span>
-                <span class="value ${client.info.doc_iban_file ? 'success' : 'missing'}">${client.info.doc_iban_file ? '✓ Fourni' : 'Non fourni'}</span>
+                <span class="value ${client.info.doc_rib ? 'success' : 'missing'}">${client.info.doc_rib ? '✓ Fourni' : 'Non fourni'}</span>
               </div>
               <div class="detail-row">
                 <span class="label">N° enregistrement</span>

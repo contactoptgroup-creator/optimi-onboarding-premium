@@ -2308,10 +2308,10 @@
         </div>
         <div class="form-grid">
           <!-- Upload Pièce d'identité -->
-          <div class="form-item" data-field="doc_identity_file" data-category="admin-docs">
+          <div class="form-item" data-field="doc_identity" data-category="admin-docs">
             <div class="form-label">
               <span class="label-text">Piece d'identite (fichier)</span>
-              <span class="save-indicator pending" id="ind-doc_identity_file">A remplir</span>
+              <span class="save-indicator pending" id="ind-doc_identity">A remplir</span>
             </div>
             <span class="hint">CNI ou passeport - PDF, JPG, PNG (max 10 Mo)</span>
             <div class="file-upload-container">
@@ -2320,7 +2320,7 @@
                 <div class="file-upload-text">Cliquez ou glissez votre fichier ici</div>
                 <div class="file-upload-hint">PDF, JPG, PNG acceptes</div>
               </div>
-              <input type="file" class="file-upload-input" id="file-identity" accept=".pdf,.jpg,.jpeg,.png" data-field="doc_identity_file">
+              <input type="file" class="file-upload-input" id="file-identity" accept=".pdf,.jpg,.jpeg,.png" data-field="doc_identity">
               <div class="file-upload-preview" id="preview-identity" style="display:none;">
                 <span class="file-icon">📎</span>
                 <div class="file-info">
@@ -2337,10 +2337,10 @@
             </div>
           </div>
           <!-- Upload IBAN -->
-          <div class="form-item" data-field="doc_iban_file" data-category="admin-docs">
+          <div class="form-item" data-field="doc_rib" data-category="admin-docs">
             <div class="form-label">
               <span class="label-text">RIB / IBAN (fichier)</span>
-              <span class="save-indicator pending" id="ind-doc_iban_file">A remplir</span>
+              <span class="save-indicator pending" id="ind-doc_rib">A remplir</span>
             </div>
             <span class="hint">Pour le versement de vos revenus - PDF, JPG, PNG (max 10 Mo)</span>
             <div class="file-upload-container">
@@ -2349,7 +2349,7 @@
                 <div class="file-upload-text">Cliquez ou glissez votre fichier ici</div>
                 <div class="file-upload-hint">PDF, JPG, PNG acceptes</div>
               </div>
-              <input type="file" class="file-upload-input" id="file-iban" accept=".pdf,.jpg,.jpeg,.png" data-field="doc_iban_file">
+              <input type="file" class="file-upload-input" id="file-iban" accept=".pdf,.jpg,.jpeg,.png" data-field="doc_rib">
               <div class="file-upload-preview" id="preview-iban" style="display:none;">
                 <span class="file-icon">📎</span>
                 <div class="file-info">
@@ -3228,11 +3228,11 @@
   ];
 
   // Champs fichiers (uploads)
-  const fileFields = ['doc_identity_file', 'doc_iban_file'];
+  const fileFields = ['doc_identity', 'doc_rib'];
 
   // Définition des catégories et leurs champs
   const categoryFields = {
-    'admin-docs': ['doc_identity_file', 'doc_iban_file', 'doc_registration_number', 'doc_insurance'],
+    'admin-docs': ['doc_identity', 'doc_rib', 'doc_registration_number', 'doc_insurance'],
     'property-info': ['property_full_address', 'property_floor', 'property_access_codes', 'property_surface', 'property_capacity'],
     'property-suite': ['property_wifi_name', 'property_wifi_password', 'property_equipment', 'property_copro_rules'],
     'logistics': ['keys_count', 'has_smart_lock', 'shooting_availability', 'launch_date', 'emergency_contact_name', 'emergency_contact_phone', 'linen_provider']
@@ -3430,7 +3430,7 @@
       if (error) throw error;
 
       // Sauvegarder le chemin du fichier dans onboarding_info
-      const fieldName = type === 'identity' ? 'doc_identity_file' : 'doc_iban_file';
+      const fieldName = type === 'identity' ? 'doc_identity' : 'doc_rib';
       await saveFilePathToDatabase(fieldName, fileName);
 
       uploadedFiles[type].path = fileName;
@@ -3534,9 +3534,9 @@
 
     fields.forEach(field => {
       // Vérifier les champs fichiers
-      if (field === 'doc_identity_file') {
+      if (field === 'doc_identity') {
         if (uploadedFiles.identity) filled++;
-      } else if (field === 'doc_iban_file') {
+      } else if (field === 'doc_rib') {
         if (uploadedFiles.iban) filled++;
       } else {
         // Champs normaux
@@ -3928,8 +3928,8 @@
     }
 
     // Réinitialiser les indicateurs de fichiers
-    updateFieldIndicator('doc_identity_file', 'pending');
-    updateFieldIndicator('doc_iban_file', 'pending');
+    updateFieldIndicator('doc_identity', 'pending');
+    updateFieldIndicator('doc_rib', 'pending');
 
     // Réinitialiser les statuts de la roadmap à "A faire"
     document.querySelectorAll('[data-step]').forEach(el => {
