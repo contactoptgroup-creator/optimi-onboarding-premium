@@ -3823,6 +3823,32 @@
         el.addEventListener('change', () => handleFieldChange(field));
       }
     });
+
+    // Bloquer la touche Entrée sur tous les inputs et textareas pour éviter les changements de slide
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          e.stopPropagation();
+          // Pour les textareas, on autorise le saut de ligne avec Shift+Enter
+          if (el.tagName === 'TEXTAREA' && e.shiftKey) {
+            return true;
+          }
+          // Pour les selects, on peut permettre l'ouverture mais pas la navigation
+          if (el.tagName === 'SELECT') {
+            return;
+          }
+          // Passer au champ suivant si c'est un input normal
+          if (el.tagName === 'INPUT') {
+            const allInputs = Array.from(document.querySelectorAll('input:not([type="file"]), select, textarea'));
+            const currentIndex = allInputs.indexOf(el);
+            if (currentIndex >= 0 && currentIndex < allInputs.length - 1) {
+              allInputs[currentIndex + 1].focus();
+            }
+          }
+        }
+      });
+    });
   }
 
   // ═══════════════════════════════════════════════════════════════
