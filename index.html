@@ -2731,30 +2731,6 @@
         </div>
       </div>
 
-      <!-- Section Photos du bien -->
-      <div class="form-category" data-category="photos">
-        <div class="form-category-title" style="display:flex; align-items:center;">
-          Photos de votre bien
-          <span class="category-status-badge pending" id="cat-status-photos">Optionnel</span>
-        </div>
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
-          Ajoutez des photos de votre appartement pour nous aider a creer votre annonce. Ces photos serviront de base avant le shooting professionnel.
-        </p>
-        <div class="photos-upload-container">
-          <div class="photos-upload-area" id="photosUploadArea" onclick="document.getElementById('photosInput').click()">
-            <div class="photos-upload-icon">📸</div>
-            <div class="photos-upload-title">Cliquez ou glissez vos photos ici</div>
-            <div class="photos-upload-hint">JPG, PNG, WEBP - Max 10 Mo par photo - Jusqu'a 50 photos</div>
-            <div class="photos-upload-count"><span id="photosCount">0</span> / 50 photos</div>
-          </div>
-          <input type="file" id="photosInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none">
-          <div class="photos-progress-bar" id="photosProgressBar">
-            <div class="photos-progress-fill" id="photosProgressFill" style="width: 0%"></div>
-          </div>
-          <div class="photos-gallery" id="photosGallery"></div>
-        </div>
-      </div>
-
       <div class="form-actions">
         <button class="btn-save" id="btnSaveAll" onclick="saveAllToSupabase()">
           Enregistrer toutes les informations
@@ -2763,7 +2739,40 @@
     </div>
   </div>
 
-  <!-- SLIDE 13 — RECAPITULATIF DES INFORMATIONS -->
+  <!-- SLIDE 11 — PHOTOS DU BIEN (OPTIONNEL) -->
+  <div class="slide">
+    <div class="slide-tag">Photos</div>
+    <div class="badge badge-purple anim">Optionnel</div>
+    <h2 class="t-h2 anim" style="margin-bottom:12px;">
+      <span style="color:var(--purple);">Photos</span> de votre bien
+    </h2>
+    <p class="t-body anim" style="max-width:600px; margin-bottom:24px; color:var(--text-muted);">
+      Ajoutez des photos de votre appartement pour nous aider a preparer votre annonce.<br>
+      <strong style="color:var(--text);">Cette etape est facultative</strong> — un shooting professionnel sera organise.
+    </p>
+
+    <div class="photos-section anim" style="max-width:700px; width:100%;">
+      <div class="photos-upload-container">
+        <div class="photos-upload-area" id="photosUploadArea" onclick="document.getElementById('photosInput').click()">
+          <div class="photos-upload-icon">📸</div>
+          <div class="photos-upload-title">Cliquez ou glissez vos photos ici</div>
+          <div class="photos-upload-hint">JPG, PNG, WEBP - Max 10 Mo par photo - Jusqu'a 50 photos</div>
+          <div class="photos-upload-count"><span id="photosCount">0</span> / 50 photos</div>
+        </div>
+        <input type="file" id="photosInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none">
+        <div class="photos-progress-bar" id="photosProgressBar">
+          <div class="photos-progress-fill" id="photosProgressFill" style="width: 0%"></div>
+        </div>
+        <div class="photos-gallery" id="photosGallery"></div>
+      </div>
+
+      <p style="margin-top:20px; font-size:13px; color:var(--text-dim);">
+        Vous pouvez passer cette etape et continuer vers le recapitulatif →
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 — RECAPITULATIF DES INFORMATIONS -->
   <div class="slide">
     <div class="slide-tag">Recapitulatif</div>
     <div class="badge badge-green anim">Vos informations</div>
