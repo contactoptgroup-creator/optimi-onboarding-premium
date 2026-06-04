@@ -2827,26 +2827,28 @@
     if (supabaseClient) {
       try {
         // Chercher si le client existe déjà
-        const { data: existingClient } = await supabaseClient
+        const { data: existingClient, error: selectError } = await supabaseClient
           .from('onboarding_clients')
-          .select('id, client_name')
+          .select('id, client_email')
           .eq('client_slug', CLIENT_SLUG)
           .single();
 
-        if (existingClient) {
+        if (existingClient && !selectError) {
           CLIENT_ID = existingClient.id;
+          console.log('Client existant trouvé, ID:', CLIENT_ID);
           // Charger les données existantes
           await loadStatusesFromSupabase();
           await loadFormFromSupabase();
         } else {
           // Créer un nouveau client
+          console.log('Création nouveau client avec slug:', CLIENT_SLUG);
           const { data: newClient, error: insertError } = await supabaseClient
             .from('onboarding_clients')
             .insert({
               client_slug: CLIENT_SLUG,
-              client_name: name,
               client_email: email,
               client_phone: phone,
+              property_name: name,
               commission_rate: 20
             })
             .select('id')
@@ -2854,29 +2856,32 @@
 
           if (insertError) {
             console.error('Erreur création client:', insertError);
+            showToast('Erreur de connexion, mode hors-ligne', 'error');
           }
 
           if (newClient) {
             CLIENT_ID = newClient.id;
+            console.log('Nouveau client créé, ID:', CLIENT_ID);
 
-            // Sauvegarder les coordonnées dans onboarding_info
+            // Créer une entrée vide dans onboarding_info pour ce client
             const { error: infoError } = await supabaseClient
               .from('onboarding_info')
               .insert({
                 client_id: CLIENT_ID,
-                full_name: name,
-                email: email,
-                phone: phone
+                emergency_contact_name: name
               });
 
             if (infoError) {
-              console.error('Erreur sauvegarde coordonnées:', infoError);
+              console.error('Erreur création onboarding_info:', infoError);
+            } else {
+              console.log('Entrée onboarding_info créée');
             }
           }
         }
       } catch (e) {
         console.error('Erreur Supabase:', e);
         console.log('Mode hors-ligne, utilisation localStorage');
+        showToast('Mode hors-ligne activé', 'warning');
       }
     }
 
@@ -3990,14 +3995,27 @@
     if (!supabaseClient || !CLIENT_ID) return;
 
     try {
+      // D'abord essayer de récupérer depuis onboarding_info (emergency_contact_name stocke le nom)
+      const { data: infoData } = await supabaseClient
+        .from('onboarding_info')
+        .select('emergency_contact_name')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      if (infoData && infoData.emergency_contact_name) {
+        updateClientNameDisplay(infoData.emergency_contact_name);
+        return;
+      }
+
+      // Sinon essayer property_name de onboarding_clients
       const { data, error } = await supabaseClient
         .from('onboarding_clients')
-        .select('client_name')
+        .select('property_name')
         .eq('id', CLIENT_ID)
         .single();
 
-      if (data && data.client_name) {
-        updateClientNameDisplay(data.client_name);
+      if (data && data.property_name) {
+        updateClientNameDisplay(data.property_name);
       } else {
         // Utiliser le slug formaté comme fallback
         const formattedName = formatSlugAsName(CLIENT_SLUG);

@@ -669,10 +669,10 @@
       <div class="client-card" id="card-${client.id}">
         <div class="client-header" onclick="toggleCard('${client.id}')">
           <div class="client-info">
-            <div class="client-avatar">${getInitials(client.client_name || client.client_slug)}</div>
+            <div class="client-avatar">${getInitials(client.info.emergency_contact_name || client.property_name || client.client_slug)}</div>
             <div>
-              <div class="client-name">${client.client_name || client.client_slug || 'Client'}</div>
-              <div class="client-email">${client.client_email || client.info.email || '-'}</div>
+              <div class="client-name">${client.info.emergency_contact_name || client.property_name || client.client_slug || 'Client'}</div>
+              <div class="client-email">${client.client_email || '-'}</div>
             </div>
           </div>
           <div class="client-meta">
@@ -690,15 +690,15 @@
               <h3>Contact</h3>
               <div class="detail-row">
                 <span class="label">Nom</span>
-                <span class="value">${client.client_name || client.info.full_name || '-'}</span>
+                <span class="value">${client.info.emergency_contact_name || client.property_name || '-'}</span>
               </div>
               <div class="detail-row">
                 <span class="label">Email</span>
-                <span class="value">${client.client_email || client.info.email || '-'}</span>
+                <span class="value">${client.client_email || '-'}</span>
               </div>
               <div class="detail-row">
                 <span class="label">Telephone</span>
-                <span class="value">${client.client_phone || client.info.phone || '-'}</span>
+                <span class="value">${client.client_phone || '-'}</span>
               </div>
               <div class="detail-row">
                 <span class="label">Contact urgence</span>
