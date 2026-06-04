@@ -600,11 +600,15 @@
         <div class="value blue" id="statInProgress">-</div>
       </div>
       <div class="stat-card">
+        <div class="label">Pas Commence</div>
+        <div class="value" style="color: var(--orange);" id="statNotStarted">-</div>
+      </div>
+      <div class="stat-card">
         <div class="label">Fichiers Uploades</div>
         <div class="value" id="statFiles">-</div>
       </div>
       <div class="stat-card">
-        <div class="label">Photos Biens</div>
+        <div class="label">Biens avec Photos</div>
         <div class="value gold" id="statPhotos">-</div>
       </div>
     </div>
@@ -750,12 +754,15 @@
     const inProgress = allClients.filter(c => c.progressPercent > 0 && c.progressPercent < 100).length;
     document.getElementById('statInProgress').textContent = inProgress;
 
+    const notStarted = allClients.filter(c => c.progressPercent === 0).length;
+    document.getElementById('statNotStarted').textContent = notStarted;
+
     const filesCount = allClients.filter(c => c.info.doc_identity || c.info.doc_rib).length;
     document.getElementById('statFiles').textContent = filesCount;
 
-    // Count total photos across all clients
-    const totalPhotos = allClients.reduce((sum, c) => sum + getPhotosCount(c.info.property_photos), 0);
-    document.getElementById('statPhotos').textContent = totalPhotos;
+    // Count clients who have at least one photo
+    const clientsWithPhotos = allClients.filter(c => getPhotosCount(c.info.property_photos) > 0).length;
+    document.getElementById('statPhotos').textContent = clientsWithPhotos;
   }
 
   // ═══════════════════════════════════════════════════════════════
@@ -978,45 +985,53 @@
   // ═══════════════════════════════════════════════════════════════
   // PHOTOS FUNCTIONS
   // ═══════════════════════════════════════════════════════════════
-  function getPhotosCount(photosData) {
-    if (!photosData) return 0;
-    try {
-      const photos = typeof photosData === 'string' ? JSON.parse(photosData) : photosData;
-      return Array.isArray(photos) ? photos.length : 0;
-    } catch (e) {
-      return 0;
+  function parsePhotosData(photosData) {
+    if (!photosData) return [];
+
+    // Handle comma-separated string format (from index.html)
+    if (typeof photosData === 'string') {
+      // Check if it's CSV format (most common)
+      if (!photosData.startsWith('[') && !photosData.startsWith('{')) {
+        return photosData.split(',').filter(p => p && p.trim());
+      }
+      // Try JSON parse as fallback
+      try {
+        const parsed = JSON.parse(photosData);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        // If JSON fails, treat as CSV
+        return photosData.split(',').filter(p => p && p.trim());
+      }
     }
+
+    return Array.isArray(photosData) ? photosData : [];
+  }
+
+  function getPhotosCount(photosData) {
+    return parsePhotosData(photosData).length;
   }
 
   function renderPhotosGallery(photosData, clientSlug) {
-    if (!photosData) {
+    const photos = parsePhotosData(photosData);
+
+    if (photos.length === 0) {
       return '<p class="photos-empty">Aucune photo uploadee</p>';
     }
 
-    try {
-      const photos = typeof photosData === 'string' ? JSON.parse(photosData) : photosData;
-
-      if (!Array.isArray(photos) || photos.length === 0) {
-        return '<p class="photos-empty">Aucune photo uploadee</p>';
-      }
-
-      const html = `
-        <div class="photos-gallery-admin">
-          ${photos.map(photo => {
-            const photoUrl = getPhotoUrl(photo.path || photo);
-            return `
-              <div class="photo-thumb-admin" onclick="openPhotoModal('${photoUrl}')">
-                <img src="${photoUrl}" alt="Photo du bien" loading="lazy">
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-      return html;
-    } catch (e) {
-      console.error('Erreur parsing photos:', e);
-      return '<p class="photos-empty">Erreur de chargement des photos</p>';
-    }
+    const html = `
+      <div class="photos-gallery-admin">
+        ${photos.map(photo => {
+          const photoPath = typeof photo === 'object' ? (photo.path || photo) : photo;
+          const photoUrl = getPhotoUrl(photoPath);
+          return `
+            <div class="photo-thumb-admin" onclick="openPhotoModal('${photoUrl}')">
+              <img src="${photoUrl}" alt="Photo du bien" loading="lazy">
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    return html;
   }
 
   function getPhotoUrl(path) {
