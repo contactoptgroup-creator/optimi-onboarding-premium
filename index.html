@@ -1354,6 +1354,137 @@
       border-radius: 100px;
       transition: width 0.3s ease;
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       GALERIE PHOTOS DU BIEN
+    ═══════════════════════════════════════════════════════════════ */
+    .photos-upload-container {
+      width: 100%;
+    }
+    .photos-upload-area {
+      border: 2px dashed var(--border-2);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--bg-3);
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .photos-upload-area:hover {
+      border-color: var(--purple);
+      background: rgba(167,139,250,0.05);
+    }
+    .photos-upload-area.dragover {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.1);
+      transform: scale(1.01);
+    }
+    .photos-upload-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+    .photos-upload-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .photos-upload-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .photos-upload-count {
+      margin-top: 12px;
+      padding: 6px 16px;
+      background: var(--bg-2);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .photos-upload-count span {
+      color: var(--purple);
+      font-weight: 600;
+    }
+    .photos-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .photo-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+    }
+    .photo-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .photo-thumb .photo-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .photo-thumb:hover .photo-remove {
+      opacity: 1;
+    }
+    .photo-thumb .photo-loading {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-thumb .photo-loading::after {
+      content: '';
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border-2);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .photos-progress-bar {
+      margin-top: 12px;
+      height: 6px;
+      background: var(--bg-2);
+      border-radius: 3px;
+      overflow: hidden;
+      display: none;
+    }
+    .photos-progress-bar.active {
+      display: block;
+    }
+    .photos-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
     @media (max-width: 640px) {
       .form-grid { grid-template-columns: 1fr; }
       .form-item.full-width { grid-column: span 1; }
@@ -2599,6 +2730,31 @@
           </div>
         </div>
       </div>
+
+      <!-- Section Photos du bien -->
+      <div class="form-category" data-category="photos">
+        <div class="form-category-title" style="display:flex; align-items:center;">
+          Photos de votre bien
+          <span class="category-status-badge pending" id="cat-status-photos">Optionnel</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+          Ajoutez des photos de votre appartement pour nous aider a creer votre annonce. Ces photos serviront de base avant le shooting professionnel.
+        </p>
+        <div class="photos-upload-container">
+          <div class="photos-upload-area" id="photosUploadArea" onclick="document.getElementById('photosInput').click()">
+            <div class="photos-upload-icon">📸</div>
+            <div class="photos-upload-title">Cliquez ou glissez vos photos ici</div>
+            <div class="photos-upload-hint">JPG, PNG, WEBP - Max 10 Mo par photo - Jusqu'a 50 photos</div>
+            <div class="photos-upload-count"><span id="photosCount">0</span> / 50 photos</div>
+          </div>
+          <input type="file" id="photosInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none">
+          <div class="photos-progress-bar" id="photosProgressBar">
+            <div class="photos-progress-fill" id="photosProgressFill" style="width: 0%"></div>
+          </div>
+          <div class="photos-gallery" id="photosGallery"></div>
+        </div>
+      </div>
+
       <div class="form-actions">
         <button class="btn-save" id="btnSaveAll" onclick="saveAllToSupabase()">
           Enregistrer toutes les informations
@@ -2837,6 +2993,7 @@
           // Charger les données existantes
           await loadStatusesFromSupabase();
           await loadFormFromSupabase();
+          await loadPhotosFromSupabase();
         } else {
           // Créer un nouveau client
           console.log('Création nouveau client avec slug:', CLIENT_SLUG);
@@ -3855,6 +4012,302 @@
   }
 
   // ═══════════════════════════════════════════════════════════════
+  // UPLOAD PHOTOS DU BIEN
+  // ═══════════════════════════════════════════════════════════════
+  const MAX_PHOTOS = 50;
+  const MAX_PHOTO_SIZE = 10 * 1024 * 1024; // 10 Mo
+  const PHOTOS_BUCKET = 'property-photos';
+  let uploadedPhotos = [];
+
+  function initPhotosUpload() {
+    const photosInput = document.getElementById('photosInput');
+    const photosArea = document.getElementById('photosUploadArea');
+
+    if (!photosInput || !photosArea) return;
+
+    // Click pour upload
+    photosInput.addEventListener('change', (e) => {
+      handlePhotosSelect(e.target.files);
+      e.target.value = ''; // Reset pour permettre de re-sélectionner les mêmes fichiers
+    });
+
+    // Drag & Drop
+    photosArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      photosArea.classList.add('dragover');
+    });
+
+    photosArea.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      photosArea.classList.remove('dragover');
+    });
+
+    photosArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      photosArea.classList.remove('dragover');
+      handlePhotosSelect(e.dataTransfer.files);
+    });
+  }
+
+  async function handlePhotosSelect(files) {
+    if (!files || files.length === 0) return;
+
+    const validFiles = [];
+    const currentCount = uploadedPhotos.length;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Vérifier le nombre max
+      if (currentCount + validFiles.length >= MAX_PHOTOS) {
+        showToast(`Maximum ${MAX_PHOTOS} photos autorisees`, 'error');
+        break;
+      }
+
+      // Vérifier le type
+      if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+        showToast(`${file.name}: format non supporte`, 'error');
+        continue;
+      }
+
+      // Vérifier la taille
+      if (file.size > MAX_PHOTO_SIZE) {
+        showToast(`${file.name}: fichier trop volumineux (max 10 Mo)`, 'error');
+        continue;
+      }
+
+      validFiles.push(file);
+    }
+
+    if (validFiles.length === 0) return;
+
+    // Afficher la barre de progression
+    const progressBar = document.getElementById('photosProgressBar');
+    const progressFill = document.getElementById('photosProgressFill');
+    progressBar.classList.add('active');
+    progressFill.style.width = '0%';
+
+    // Uploader les fichiers un par un
+    for (let i = 0; i < validFiles.length; i++) {
+      const file = validFiles[i];
+      const progress = ((i + 1) / validFiles.length) * 100;
+
+      try {
+        await uploadPhoto(file);
+        progressFill.style.width = progress + '%';
+      } catch (err) {
+        console.error('Erreur upload photo:', err);
+        showToast(`Erreur upload ${file.name}`, 'error');
+      }
+    }
+
+    // Masquer la barre de progression
+    setTimeout(() => {
+      progressBar.classList.remove('active');
+    }, 500);
+
+    updatePhotosCount();
+    renderPhotosGallery();
+    updatePhotosStatus();
+  }
+
+  async function uploadPhoto(file) {
+    if (!CLIENT_ID) {
+      // Mode hors-ligne: stocker en local
+      const reader = new FileReader();
+      return new Promise((resolve) => {
+        reader.onload = (e) => {
+          uploadedPhotos.push({
+            id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            name: file.name,
+            url: e.target.result,
+            isLocal: true
+          });
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Upload vers Supabase Storage
+    const fileName = `${CLIENT_SLUG}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+    try {
+      const { data, error } = await supabaseClient.storage
+        .from(PHOTOS_BUCKET)
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (error) throw error;
+
+      // Obtenir l'URL publique
+      const { data: urlData } = supabaseClient.storage
+        .from(PHOTOS_BUCKET)
+        .getPublicUrl(fileName);
+
+      uploadedPhotos.push({
+        id: data.path,
+        name: file.name,
+        path: fileName,
+        url: urlData.publicUrl,
+        isLocal: false
+      });
+
+      // Sauvegarder la liste des photos dans la base de données
+      await savePhotosListToDatabase();
+
+    } catch (err) {
+      console.error('Erreur Supabase Storage:', err);
+      // Fallback: stocker en local
+      const reader = new FileReader();
+      return new Promise((resolve) => {
+        reader.onload = (e) => {
+          uploadedPhotos.push({
+            id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            name: file.name,
+            url: e.target.result,
+            isLocal: true
+          });
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+  async function savePhotosListToDatabase() {
+    if (!CLIENT_ID || !supabaseClient) return;
+
+    const photosList = uploadedPhotos
+      .filter(p => !p.isLocal)
+      .map(p => p.path)
+      .join(',');
+
+    try {
+      const { data: existing } = await supabaseClient
+        .from('onboarding_info')
+        .select('id')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      if (existing) {
+        await supabaseClient
+          .from('onboarding_info')
+          .update({ property_photos: photosList, updated_at: new Date().toISOString() })
+          .eq('client_id', CLIENT_ID);
+      }
+    } catch (err) {
+      console.error('Erreur sauvegarde liste photos:', err);
+    }
+  }
+
+  async function removePhoto(photoId) {
+    const photo = uploadedPhotos.find(p => p.id === photoId);
+    if (!photo) return;
+
+    // Supprimer du storage si ce n'est pas local
+    if (!photo.isLocal && supabaseClient) {
+      try {
+        await supabaseClient.storage
+          .from(PHOTOS_BUCKET)
+          .remove([photo.path]);
+      } catch (err) {
+        console.error('Erreur suppression photo:', err);
+      }
+    }
+
+    // Retirer de la liste
+    uploadedPhotos = uploadedPhotos.filter(p => p.id !== photoId);
+
+    // Mettre à jour la base de données
+    await savePhotosListToDatabase();
+
+    updatePhotosCount();
+    renderPhotosGallery();
+    updatePhotosStatus();
+  }
+
+  function updatePhotosCount() {
+    const countEl = document.getElementById('photosCount');
+    if (countEl) {
+      countEl.textContent = uploadedPhotos.length;
+    }
+  }
+
+  function renderPhotosGallery() {
+    const gallery = document.getElementById('photosGallery');
+    if (!gallery) return;
+
+    if (uploadedPhotos.length === 0) {
+      gallery.innerHTML = '';
+      return;
+    }
+
+    gallery.innerHTML = uploadedPhotos.map(photo => `
+      <div class="photo-thumb" data-id="${photo.id}">
+        <img src="${photo.url}" alt="${photo.name}" loading="lazy">
+        <button class="photo-remove" onclick="removePhoto('${photo.id}')" type="button">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function updatePhotosStatus() {
+    const statusEl = document.getElementById('cat-status-photos');
+    if (statusEl) {
+      if (uploadedPhotos.length > 0) {
+        statusEl.classList.remove('pending');
+        statusEl.classList.add('complete');
+        statusEl.textContent = uploadedPhotos.length + ' photo' + (uploadedPhotos.length > 1 ? 's' : '');
+      } else {
+        statusEl.classList.remove('complete');
+        statusEl.classList.add('pending');
+        statusEl.textContent = 'Optionnel';
+      }
+    }
+  }
+
+  async function loadPhotosFromSupabase() {
+    if (!CLIENT_ID || !supabaseClient) return;
+
+    try {
+      const { data } = await supabaseClient
+        .from('onboarding_info')
+        .select('property_photos')
+        .eq('client_id', CLIENT_ID)
+        .single();
+
+      if (data && data.property_photos) {
+        const paths = data.property_photos.split(',').filter(p => p);
+
+        uploadedPhotos = paths.map(path => {
+          const { data: urlData } = supabaseClient.storage
+            .from(PHOTOS_BUCKET)
+            .getPublicUrl(path);
+
+          return {
+            id: path,
+            name: path.split('/').pop(),
+            path: path,
+            url: urlData.publicUrl,
+            isLocal: false
+          };
+        });
+
+        updatePhotosCount();
+        renderPhotosGallery();
+        updatePhotosStatus();
+      }
+    } catch (err) {
+      console.error('Erreur chargement photos:', err);
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
   // INITIALISATION
   // ═══════════════════════════════════════════════════════════════
   async function init() {
@@ -3867,6 +4320,7 @@
     // Initialiser les listeners de formulaire et les uploads
     initFormListeners();
     initFileUploads();
+    initPhotosUpload();
 
     // Mettre à jour les progressions (tout à zéro)
     updateFormProgress();

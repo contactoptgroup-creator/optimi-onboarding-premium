@@ -434,6 +434,95 @@
       text-decoration: underline;
     }
 
+    /* Photos Gallery */
+    .photos-gallery-admin {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .photo-thumb-admin {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .photo-thumb-admin:hover {
+      transform: scale(1.05);
+      border-color: var(--gold);
+    }
+
+    .photo-thumb-admin img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photos-count-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .photos-empty {
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 14px;
+      padding: 12px 0;
+    }
+
+    /* Photo Modal */
+    .photo-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .photo-modal.active {
+      display: flex;
+    }
+
+    .photo-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .photo-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 36px;
+      color: white;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .photo-modal-close:hover {
+      opacity: 1;
+    }
+
     /* Loading */
     .loading {
       text-align: center;
@@ -514,6 +603,10 @@
         <div class="label">Fichiers Uploades</div>
         <div class="value" id="statFiles">-</div>
       </div>
+      <div class="stat-card">
+        <div class="label">Photos Biens</div>
+        <div class="value gold" id="statPhotos">-</div>
+      </div>
     </div>
 
     <!-- Controls -->
@@ -531,6 +624,12 @@
     </div>
   </div>
 
+  <!-- Photo Modal -->
+  <div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
+    <span class="photo-modal-close">&times;</span>
+    <img id="photoModalImg" src="" alt="Photo du bien">
+  </div>
+
 <script>
   // ═══════════════════════════════════════════════════════════════
   // CONFIGURATION
@@ -539,6 +638,7 @@
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdXB5bmthZmd6Y294YmFrZGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTA3MjMsImV4cCI6MjA5NjA2NjcyM30.C4fkVfpglut0-C5WpMcf9yExRY8zHOCTU_Zhk0Oa0ys';
   const ADMIN_PASSWORD = 'optimi2024'; // A changer !
   const STORAGE_BUCKET = 'onboarding-documents';
+  const PHOTOS_BUCKET = 'property-photos';
 
   let supabaseClient = null;
   let allClients = [];
@@ -652,6 +752,10 @@
 
     const filesCount = allClients.filter(c => c.info.doc_identity || c.info.doc_rib).length;
     document.getElementById('statFiles').textContent = filesCount;
+
+    // Count total photos across all clients
+    const totalPhotos = allClients.reduce((sum, c) => sum + getPhotosCount(c.info.property_photos), 0);
+    document.getElementById('statPhotos').textContent = totalPhotos;
   }
 
   // ═══════════════════════════════════════════════════════════════
@@ -794,6 +898,12 @@
               </div>
             </div>
 
+            <!-- Photos du bien -->
+            <div class="detail-section">
+              <h3>Photos du Bien ${getPhotosCount(client.info.property_photos) > 0 ? '<span class="photos-count-badge">📷 ' + getPhotosCount(client.info.property_photos) + ' photos</span>' : ''}</h3>
+              ${renderPhotosGallery(client.info.property_photos, client.client_slug)}
+            </div>
+
             <!-- Progress -->
             <div class="detail-section">
               <h3>Progression Roadmap (${client.doneSteps}/${client.totalSteps})</h3>
@@ -864,6 +974,76 @@
     });
     renderClients(filtered);
   }
+
+  // ═══════════════════════════════════════════════════════════════
+  // PHOTOS FUNCTIONS
+  // ═══════════════════════════════════════════════════════════════
+  function getPhotosCount(photosData) {
+    if (!photosData) return 0;
+    try {
+      const photos = typeof photosData === 'string' ? JSON.parse(photosData) : photosData;
+      return Array.isArray(photos) ? photos.length : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function renderPhotosGallery(photosData, clientSlug) {
+    if (!photosData) {
+      return '<p class="photos-empty">Aucune photo uploadee</p>';
+    }
+
+    try {
+      const photos = typeof photosData === 'string' ? JSON.parse(photosData) : photosData;
+
+      if (!Array.isArray(photos) || photos.length === 0) {
+        return '<p class="photos-empty">Aucune photo uploadee</p>';
+      }
+
+      const html = `
+        <div class="photos-gallery-admin">
+          ${photos.map(photo => {
+            const photoUrl = getPhotoUrl(photo.path || photo);
+            return `
+              <div class="photo-thumb-admin" onclick="openPhotoModal('${photoUrl}')">
+                <img src="${photoUrl}" alt="Photo du bien" loading="lazy">
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+      return html;
+    } catch (e) {
+      console.error('Erreur parsing photos:', e);
+      return '<p class="photos-empty">Erreur de chargement des photos</p>';
+    }
+  }
+
+  function getPhotoUrl(path) {
+    if (!path) return '';
+    // If it's already a full URL
+    if (path.startsWith('http')) return path;
+    // Build the Supabase storage URL
+    return `${SUPABASE_URL}/storage/v1/object/public/${PHOTOS_BUCKET}/${path}`;
+  }
+
+  function openPhotoModal(url) {
+    event.stopPropagation();
+    document.getElementById('photoModalImg').src = url;
+    document.getElementById('photoModal').classList.add('active');
+  }
+
+  function closePhotoModal() {
+    document.getElementById('photoModal').classList.remove('active');
+    document.getElementById('photoModalImg').src = '';
+  }
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closePhotoModal();
+    }
+  });
 </script>
 
 </body>
